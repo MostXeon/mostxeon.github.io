@@ -2,11 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://mostxeon.github.io/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/difficulty/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/difficulty/easy/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/git/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/git-hooks/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/lfi/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/opensource/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/port-forwarding/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/python/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/source-code-review/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/</loc>
+    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
+  </url><url>
     <loc>https://mostxeon.github.io/about/</loc>
     <lastmod>2022-09-27T22:29:51+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/</loc>
-    <lastmod>2022-09-27T22:16:35+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/.net/</loc>
     <lastmod>2022-09-27T22:16:35+03:00</lastmod>
@@ -20,16 +53,10 @@
     <loc>https://mostxeon.github.io/tags/desirialization/</loc>
     <lastmod>2022-09-27T22:16:35+03:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/difficulty/</loc>
-    <lastmod>2022-09-27T22:16:35+03:00</lastmod>
-  </url><url>
     <loc>https://mostxeon.github.io/tags/kerberos/</loc>
     <lastmod>2022-09-27T22:16:35+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/difficulty/medium/</loc>
-    <lastmod>2022-09-27T22:16:35+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/posts/</loc>
     <lastmod>2022-09-27T22:16:35+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/reverse-engineering/</loc>
@@ -39,9 +66,6 @@
     <lastmod>2022-09-27T22:16:35+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/silver-ticket/</loc>
-    <lastmod>2022-09-27T22:16:35+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/</loc>
     <lastmod>2022-09-27T22:16:35+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/windows/</loc>

@@ -6,7 +6,16 @@
     <description>Recent content on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Sep 2022 22:16:35 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Opensource</title>
+      <link>https://mostxeon.github.io/posts/opensource/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/opensource/</guid>
+      <description>false</description>
+    </item>
+    
     <item>
       <title>MØst@Xeon:~# whoami</title>
       <link>https://mostxeon.github.io/about/</link>
@@ -24,8 +33,7 @@ Happy hacking!! </description>
       <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
       
       <guid>https://mostxeon.github.io/posts/scrambled/</guid>
-      <description>Initial Recon Nmap Starting with a full tcp port scan we got the below results
-$ nmap -vvv -p- -A -oN nmap/tcp-all.txt 10.10.11.168 Nmap scan report for 10.10.11.168 Host is up, received syn-ack (0.084s latency). Scanned at 2022-09-20 03:50:10 EEST for 512s Not shown: 65513 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack Simple DNS Plus 80/tcp open http syn-ack Microsoft IIS httpd 10.0 |_http-title: Scramble Corp Intranet |_http-server-header: Microsoft-IIS/10.</description>
+      <description>false</description>
     </item>
     
   </channel>
