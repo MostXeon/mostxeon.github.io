@@ -6,22 +6,22 @@
     <description>Recent content in Difficulty on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/difficulty/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 Oct 2022 20:50:11 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/difficulty/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Medium</title>
+      <link>https://mostxeon.github.io/difficulty/medium/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/difficulty/medium/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Easy</title>
       <link>https://mostxeon.github.io/difficulty/easy/</link>
       <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
       
       <guid>https://mostxeon.github.io/difficulty/easy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Medium</title>
-      <link>https://mostxeon.github.io/difficulty/medium/</link>
-      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
-      
-      <guid>https://mostxeon.github.io/difficulty/medium/</guid>
       <description></description>
     </item>
     

