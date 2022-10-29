@@ -6,7 +6,16 @@
     <description>Recent content in Easy on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/difficulty/easy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Oct 2022 13:44:37 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/difficulty/easy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trick</title>
+      <link>https://mostxeon.github.io/posts/trick/</link>
+      <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/trick/</guid>
+      <description>false</description>
+    </item>
+    
     <item>
       <title>Opensource</title>
       <link>https://mostxeon.github.io/posts/opensource/</link>

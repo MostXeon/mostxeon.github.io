@@ -3,15 +3,39 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mostxeon.github.io/</loc>
-    <lastmod>2022-10-18T20:50:11+03:00</lastmod>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/bruteforce/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/difficulty/</loc>
-    <lastmod>2022-10-18T20:50:11+03:00</lastmod>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/posts/faculty/</loc>
-    <lastmod>2022-10-18T20:50:11+03:00</lastmod>
+    <loc>https://mostxeon.github.io/tags/dns/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/difficulty/easy/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/fail2ban/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/lfi/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/trick/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/virtual-host-enumeration/</loc>
+    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/faculty/</loc>
     <lastmod>2022-10-18T20:50:11+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/linux-capabilities/</loc>
@@ -26,17 +50,8 @@
     <loc>https://mostxeon.github.io/tags/mpdf/</loc>
     <lastmod>2022-10-18T20:50:11+03:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/posts/</loc>
-    <lastmod>2022-10-18T20:50:11+03:00</lastmod>
-  </url><url>
     <loc>https://mostxeon.github.io/tags/sql-injection/</loc>
     <lastmod>2022-10-18T20:50:11+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/</loc>
-    <lastmod>2022-10-18T20:50:11+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/difficulty/easy/</loc>
-    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/git/</loc>
     <lastmod>2022-09-28T08:35:17+03:00</lastmod>

