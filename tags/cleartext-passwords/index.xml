@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ClearText-Passwords on MØst Xeon</title>
+    <link>https://mostxeon.github.io/tags/cleartext-passwords/</link>
+    <description>Recent content in ClearText-Passwords on MØst Xeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Nov 2022 14:54:40 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/cleartext-passwords/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Moderators</title>
+      <link>https://mostxeon.github.io/posts/moderators/</link>
+      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/moderators/</guid>
+      <description>false</description>
+    </item>
+    
+  </channel>
+</rss>

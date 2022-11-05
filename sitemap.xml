@@ -3,13 +3,64 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mostxeon.github.io/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/bruteforce/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/bypass-file-extension-validation/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/chisel/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/cleartext-passwords/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/cracking/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/difficulty/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/disable-functions/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/file-upload/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/difficulty/hard/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/luks2/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/moderators/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/mysql/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/php/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/port-forwarding/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/uploading-files-curl/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/virtualbox-encryption/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/wordpress/</loc>
+    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/dns/</loc>
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
@@ -21,12 +72,6 @@
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/lfi/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/posts/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/</loc>
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/posts/trick/</loc>
@@ -63,9 +108,6 @@
     <lastmod>2022-09-28T08:35:17+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/path-traversal/</loc>
-    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/port-forwarding/</loc>
     <lastmod>2022-09-28T08:35:17+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/python/</loc>
