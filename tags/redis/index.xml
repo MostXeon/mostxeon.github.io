@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redis on MØst Xeon</title>
+    <link>https://mostxeon.github.io/tags/redis/</link>
+    <description>Recent content in Redis on MØst Xeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shared</title>
+      <link>https://mostxeon.github.io/posts/shared/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/shared/</guid>
+      <description>false</description>
+    </item>
+    
+  </channel>
+</rss>

