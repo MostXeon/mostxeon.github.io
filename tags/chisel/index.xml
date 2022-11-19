@@ -8,7 +8,7 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/chisel/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Shared</title>
+      <title>Shared Write-Up</title>
       <link>https://mostxeon.github.io/posts/shared/</link>
       <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
       
@@ -17,11 +17,20 @@
     </item>
     
     <item>
-      <title>Moderators</title>
+      <title>Moderators Write-Up</title>
       <link>https://mostxeon.github.io/posts/moderators/</link>
       <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
       
       <guid>https://mostxeon.github.io/posts/moderators/</guid>
+      <description>false</description>
+    </item>
+    
+    <item>
+      <title>Opensource Write-Up</title>
+      <link>https://mostxeon.github.io/posts/opensource/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/opensource/</guid>
       <description>false</description>
     </item>
     

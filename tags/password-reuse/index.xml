@@ -8,11 +8,29 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/password-reuse/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Shared</title>
+      <title>Shared Write-Up</title>
       <link>https://mostxeon.github.io/posts/shared/</link>
       <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
       
       <guid>https://mostxeon.github.io/posts/shared/</guid>
+      <description>false</description>
+    </item>
+    
+    <item>
+      <title>Moderators Write-Up</title>
+      <link>https://mostxeon.github.io/posts/moderators/</link>
+      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/moderators/</guid>
+      <description>false</description>
+    </item>
+    
+    <item>
+      <title>Faculty Write-Up</title>
+      <link>https://mostxeon.github.io/posts/faculty/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/faculty/</guid>
       <description>false</description>
     </item>
     

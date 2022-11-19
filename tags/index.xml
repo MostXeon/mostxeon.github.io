@@ -8,6 +8,15 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Burp-Suite</title>
+      <link>https://mostxeon.github.io/tags/burp-suite/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/burp-suite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Chisel</title>
       <link>https://mostxeon.github.io/tags/chisel/</link>
       <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
@@ -35,11 +44,38 @@
     </item>
     
     <item>
+      <title>HackTheBox</title>
+      <link>https://mostxeon.github.io/tags/hackthebox/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/hackthebox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hashcat</title>
+      <link>https://mostxeon.github.io/tags/hashcat/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/hashcat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>ipython</title>
       <link>https://mostxeon.github.io/tags/ipython/</link>
       <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
       
       <guid>https://mostxeon.github.io/tags/ipython/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://mostxeon.github.io/tags/linux/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/linux/</guid>
       <description></description>
     </item>
     
@@ -98,6 +134,15 @@
     </item>
     
     <item>
+      <title>Redis-Tools</title>
+      <link>https://mostxeon.github.io/tags/redis-tools/</link>
+      <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/redis-tools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>SQL-Injection</title>
       <link>https://mostxeon.github.io/tags/sql-injection/</link>
       <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>
@@ -125,6 +170,15 @@
     </item>
     
     <item>
+      <title>bruteforce-luks</title>
+      <link>https://mostxeon.github.io/tags/bruteforce-luks/</link>
+      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/bruteforce-luks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Bypass-File-Extension-Validation</title>
       <link>https://mostxeon.github.io/tags/bypass-file-extension-validation/</link>
       <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
@@ -134,11 +188,11 @@
     </item>
     
     <item>
-      <title>ClearText-Passwords</title>
-      <link>https://mostxeon.github.io/tags/cleartext-passwords/</link>
+      <title>Clear-Text-Credentials</title>
+      <link>https://mostxeon.github.io/tags/clear-text-credentials/</link>
       <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
       
-      <guid>https://mostxeon.github.io/tags/cleartext-passwords/</guid>
+      <guid>https://mostxeon.github.io/tags/clear-text-credentials/</guid>
       <description></description>
     </item>
     
@@ -197,6 +251,15 @@
     </item>
     
     <item>
+      <title>VirtualBox</title>
+      <link>https://mostxeon.github.io/tags/virtualbox/</link>
+      <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/virtualbox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>VirtualBox-Encryption</title>
       <link>https://mostxeon.github.io/tags/virtualbox-encryption/</link>
       <pubDate>Thu, 03 Nov 2022 14:54:40 +0200</pubDate>
@@ -233,6 +296,33 @@
     </item>
     
     <item>
+      <title>Ffuf</title>
+      <link>https://mostxeon.github.io/tags/ffuf/</link>
+      <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/ffuf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gobuster</title>
+      <link>https://mostxeon.github.io/tags/gobuster/</link>
+      <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/gobuster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hydra</title>
+      <link>https://mostxeon.github.io/tags/hydra/</link>
+      <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/hydra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>LFI</title>
       <link>https://mostxeon.github.io/tags/lfi/</link>
       <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
@@ -242,11 +332,47 @@
     </item>
     
     <item>
+      <title>SSHPass</title>
+      <link>https://mostxeon.github.io/tags/sshpass/</link>
+      <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/sshpass/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Virtual-Host-Enumeration</title>
       <link>https://mostxeon.github.io/tags/virtual-host-enumeration/</link>
       <pubDate>Fri, 28 Oct 2022 13:44:37 +0300</pubDate>
       
       <guid>https://mostxeon.github.io/tags/virtual-host-enumeration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cap_sys_ptrace</title>
+      <link>https://mostxeon.github.io/tags/cap_sys_ptrace/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/cap_sys_ptrace/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ExifTool</title>
+      <link>https://mostxeon.github.io/tags/exiftool/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/exiftool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GDB</title>
+      <link>https://mostxeon.github.io/tags/gdb/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/gdb/</guid>
       <description></description>
     </item>
     
@@ -278,7 +404,25 @@
     </item>
     
     <item>
-      <title>git</title>
+      <title>Python3-Script</title>
+      <link>https://mostxeon.github.io/tags/python3-script/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/python3-script/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Flask</title>
+      <link>https://mostxeon.github.io/tags/flask/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/flask/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
       <link>https://mostxeon.github.io/tags/git/</link>
       <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
       
@@ -296,6 +440,24 @@
     </item>
     
     <item>
+      <title>Git-Pre-Commit</title>
+      <link>https://mostxeon.github.io/tags/git-pre-commit/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/git-pre-commit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gitea</title>
+      <link>https://mostxeon.github.io/tags/gitea/</link>
+      <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/gitea/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Path-Traversal</title>
       <link>https://mostxeon.github.io/tags/path-traversal/</link>
       <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
@@ -305,7 +467,7 @@
     </item>
     
     <item>
-      <title>python</title>
+      <title>Python</title>
       <link>https://mostxeon.github.io/tags/python/</link>
       <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
       
@@ -332,7 +494,7 @@
     </item>
     
     <item>
-      <title>Active Directory</title>
+      <title>Active-Directory</title>
       <link>https://mostxeon.github.io/tags/active-directory/</link>
       <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
       
@@ -341,11 +503,20 @@
     </item>
     
     <item>
-      <title>Bruteforcing</title>
-      <link>https://mostxeon.github.io/tags/bruteforcing/</link>
+      <title>BinaryFormatter</title>
+      <link>https://mostxeon.github.io/tags/binaryformatter/</link>
       <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
       
-      <guid>https://mostxeon.github.io/tags/bruteforcing/</guid>
+      <guid>https://mostxeon.github.io/tags/binaryformatter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Custom-Application</title>
+      <link>https://mostxeon.github.io/tags/custom-application/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/custom-application/</guid>
       <description></description>
     </item>
     
@@ -359,6 +530,24 @@
     </item>
     
     <item>
+      <title>DNSpy</title>
+      <link>https://mostxeon.github.io/tags/dnspy/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/dnspy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Impacket-Scripts</title>
+      <link>https://mostxeon.github.io/tags/impacket-scripts/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/impacket-scripts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Kerberos</title>
       <link>https://mostxeon.github.io/tags/kerberos/</link>
       <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
@@ -368,11 +557,38 @@
     </item>
     
     <item>
+      <title>Kerbrute</title>
+      <link>https://mostxeon.github.io/tags/kerbrute/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/kerbrute/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MSSQL</title>
+      <link>https://mostxeon.github.io/tags/mssql/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/mssql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Reverse-Engineering</title>
       <link>https://mostxeon.github.io/tags/reverse-engineering/</link>
       <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
       
       <guid>https://mostxeon.github.io/tags/reverse-engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Service-Principal-Names</title>
+      <link>https://mostxeon.github.io/tags/service-principal-names/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/service-principal-names/</guid>
       <description></description>
     </item>
     
@@ -391,6 +607,24 @@
       <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
       
       <guid>https://mostxeon.github.io/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>xp_cmdshell</title>
+      <link>https://mostxeon.github.io/tags/xp_cmdshell/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/xp_cmdshell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ysoserial</title>
+      <link>https://mostxeon.github.io/tags/ysoserial/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/tags/ysoserial/</guid>
       <description></description>
     </item>
     

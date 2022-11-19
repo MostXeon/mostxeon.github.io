@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>python on MØst Xeon</title>
+    <title>Python on MØst Xeon</title>
     <link>https://mostxeon.github.io/tags/python/</link>
-    <description>Recent content in python on MØst Xeon</description>
+    <description>Recent content in Python on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Opensource</title>
+      <title>Opensource Write-Up</title>
       <link>https://mostxeon.github.io/posts/opensource/</link>
       <pubDate>Wed, 28 Sep 2022 08:35:17 +0300</pubDate>
       

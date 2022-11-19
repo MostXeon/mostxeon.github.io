@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cap_sys_ptrace on MØst Xeon</title>
+    <link>https://mostxeon.github.io/tags/cap_sys_ptrace/</link>
+    <description>Recent content in cap_sys_ptrace on MØst Xeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Oct 2022 20:50:11 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/cap_sys_ptrace/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Faculty Write-Up</title>
+      <link>https://mostxeon.github.io/posts/faculty/</link>
+      <pubDate>Tue, 18 Oct 2022 20:50:11 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/faculty/</guid>
+      <description>false</description>
+    </item>
+    
+  </channel>
+</rss>

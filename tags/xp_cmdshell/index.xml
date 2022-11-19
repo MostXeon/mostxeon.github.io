@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xp_cmdshell on MØst Xeon</title>
+    <link>https://mostxeon.github.io/tags/xp_cmdshell/</link>
+    <description>Recent content in xp_cmdshell on MØst Xeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Sep 2022 22:16:35 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/xp_cmdshell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Scrambled Write-Up</title>
+      <link>https://mostxeon.github.io/posts/scrambled/</link>
+      <pubDate>Tue, 27 Sep 2022 22:16:35 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/scrambled/</guid>
+      <description>false</description>
+    </item>
+    
+  </channel>
+</rss>

