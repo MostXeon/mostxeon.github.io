@@ -6,7 +6,16 @@
     <description>Recent content in Chisel on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Nov 2022 21:01:23 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/chisel/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Dec 2022 07:44:37 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/chisel/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Carpediem Write-Up</title>
+      <link>https://mostxeon.github.io/posts/carpediem/</link>
+      <pubDate>Fri, 02 Dec 2022 07:44:37 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/carpediem/</guid>
+      <description>false</description>
+    </item>
+    
     <item>
       <title>Shared Write-Up</title>
       <link>https://mostxeon.github.io/posts/shared/</link>

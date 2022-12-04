@@ -25,7 +25,7 @@
 
 
 
-<link rel="stylesheet" href="/main.95aad797b4ac37875a27d7418e1f17962c12ae6eba2ef3abc677cd14fad7fc5e.css">
+<link rel="stylesheet" href="/main.653e12f307c49620b5b1ba68d8bf5a05c6ab0038af0589bca65686d5dbc02602.css">
 
 
 
@@ -160,7 +160,9 @@ if (!doNotTrack) {
           <img src="https://www.hackthebox.com/storage/avatars/bf928375e067672d42a572d81684537b.png" alt="Shared Write-Up" />
           
           
-            <figcaption class="center">Machine created by <a href="https://www.hackthebox.com/profile/27582">Nauten</a></figcaption>
+            <figcaption class="center">Machine created by 
+
+<a href="https://www.hackthebox.com/profile/27582" target="_blank">Nauten</a></figcaption>
           
         </figure>
       
@@ -254,7 +256,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 620.08 seconds
 </span></span></code></pre></div><h2 id="surfing-webpage">Surfing WebPage</h2>
-<p>When I tried to access the page on port <em>80</em>, I got redirected to <em><a href="https://shared.htb/">https://shared.htb/</a></em>, so I&rsquo;ll add this host to my <em>/etc/hosts</em> file.</p>
+<p>When I tried to access the page on port <em>80</em>, I got redirected to <em>
+
+<a href="https://shared.htb/" target="_blank">https://shared.htb/</a></em>, so I&rsquo;ll add this host to my <em>/etc/hosts</em> file.</p>
 <p><code>echo -e '10.10.11.172\tshared.htb' | sudo tee -a /etc/hosts</code></p>
 <p>Now I am able to surf the page:</p>
 <p><img src="index_page_ssl.png" alt="Index Page"></p>
@@ -571,7 +575,9 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>james_mason@shared:~$ ipython --version
 </span></span><span style="display:flex;"><span>8.0.0
 </span></span></code></pre></div><h2 id="escalating-to-dan_smith-and-getting-user-flag">Escalating To dan_smith And Getting User Flag</h2>
-<p>And searching a little bit on google for possible exploits, I can see that it is vulnerable to <em>CVE-2022-21699</em> and the poc is in this github <a href="https://github.com/advisories/GHSA-pq7m-3gw7-gq5x"><em>repo</em></a>.</p>
+<p>And searching a little bit on google for possible exploits, I can see that it is vulnerable to <em>CVE-2022-21699</em> and the poc is in this github 
+
+<a href="https://github.com/advisories/GHSA-pq7m-3gw7-gq5x" target="_blank"><em>repo</em></a>.</p>
 <p>In brief, I can abuse my privileges to write files to <em>/opt/scripts_review/</em> and gain code execution as any user that runs <em>ipython</em> in this directory, which in this case is the user of <em>UID=1001</em>:</p>
 <ul>
 <li>
@@ -647,7 +653,11 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:443             0.0.0.0:*               LISTEN      -                   
 </span></span><span style="display:flex;"><span>tcp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::22                   :::*                    LISTEN      -                   
 </span></span></code></pre></div><p>Which means that the executable is connecting to <em>127.0.0.1</em> on port <em>6379</em> running redis version <em>6.0.15</em> by providing a password.</p>
-<p>Googling a little bit for exploits, I can see that this version is vulnerable to <a href="https://nvd.nist.gov/vuln/detail/CVE-2022-0543"><em>CVE-2022-0543</em></a>. And there is also a public <a href="https://github.com/vulhub/vulhub/blob/master/redis/CVE-2022-0543/README.md"><em>POC here</em></a>.</p>
+<p>Googling a little bit for exploits, I can see that this version is vulnerable to 
+
+<a href="https://nvd.nist.gov/vuln/detail/CVE-2022-0543" target="_blank"><em>CVE-2022-0543</em></a>. And there is also a public 
+
+<a href="https://github.com/vulhub/vulhub/blob/master/redis/CVE-2022-0543/README.md" target="_blank"><em>POC here</em></a>.</p>
 <h3 id="getting-password-for-redis-server">Getting Password For Redis Server</h3>
 <p>So, what I&rsquo;ll do first is to import this executable to my machine and listen on port 6379 using <code>nc</code>, then execute it to catch the password sent.</p>
 <ul>
@@ -681,9 +691,15 @@ if (!doNotTrack) {
 </ul>
 <p>I got the password: <em>F2WHqJUz2WEz=Gqq</em>.</p>
 <h2 id="port-forwarding-redis-server">Port Forwarding Redis Server</h2>
-<p>Now, I&rsquo;ll forward it to my attacking machine using <a href="https://github.com/jpillora/chisel"><em>chisel</em></a>, and exploit the server using the payload from the previous <a href="https://github.com/aodsec/CVE-2022-0543.git"><em>exploit poc</em></a> I found:</p>
+<p>Now, I&rsquo;ll forward it to my attacking machine using 
+
+<a href="https://github.com/jpillora/chisel" target="_blank"><em>chisel</em></a>, and exploit the server using the payload from the previous 
+
+<a href="https://github.com/aodsec/CVE-2022-0543.git" target="_blank"><em>exploit poc</em></a> I found:</p>
 <ul>
-<li>First, I&rsquo;ll host the <a href="https://github.com/jpillora/chisel"><em>chisel</em></a> using <code>python3 -m http.server</code>.</li>
+<li>First, I&rsquo;ll host the 
+
+<a href="https://github.com/jpillora/chisel" target="_blank"><em>chisel</em></a> using <code>python3 -m http.server</code>.</li>
 <li>On my attacking machine:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /opt/chisel/chisel_1.7.7_linux_amd64 server -p <span style="color:#ae81ff">9001</span> --reverse
 </span></span><span style="display:flex;"><span>
@@ -887,6 +903,13 @@ if (!doNotTrack) {
         
 
         <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="https://mostxeon.github.io/posts/carpediem/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">Carpediem Write-Up</span>
+                </a>
+            </span>
             
 
             

