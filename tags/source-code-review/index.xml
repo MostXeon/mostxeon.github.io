@@ -6,7 +6,16 @@
     <description>Recent content in Source-Code-Review on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Sep 2022 08:35:17 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/source-code-review/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Nov 2022 08:06:04 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/source-code-review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redpanda</title>
+      <link>https://mostxeon.github.io/posts/redpanda/</link>
+      <pubDate>Sun, 27 Nov 2022 08:06:04 +0200</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/redpanda/</guid>
+      <description>false</description>
+    </item>
+    
     <item>
       <title>Opensource Write-Up</title>
       <link>https://mostxeon.github.io/posts/opensource/</link>

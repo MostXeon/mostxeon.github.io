@@ -92,6 +92,36 @@
     <loc>https://mostxeon.github.io/tags/zoiper/</loc>
     <lastmod>2022-12-02T07:44:37+02:00</lastmod>
   </url><url>
+    <loc>https://mostxeon.github.io/difficulty/easy/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/fully-interactive-shell/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/process-snooping/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/pspy/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/posts/redpanda/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/server-side-template-injection/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/source-code-review/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/spring-boot-java/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/wfuzz/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
+    <loc>https://mostxeon.github.io/tags/xml-external-entity-injection/</loc>
+    <lastmod>2022-11-27T08:06:04+02:00</lastmod>
+  </url><url>
     <loc>https://mostxeon.github.io/tags/cve-2022-0543/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
@@ -111,12 +141,6 @@
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/password-reuse/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/process-snooping/</loc>
-    <lastmod>2022-11-11T21:01:23+02:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/pspy/</loc>
     <lastmod>2022-11-11T21:01:23+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/redis/</loc>
@@ -168,9 +192,6 @@
     <lastmod>2022-11-03T14:54:40+02:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/dns/</loc>
-    <lastmod>2022-10-28T13:44:37+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/difficulty/easy/</loc>
     <lastmod>2022-10-28T13:44:37+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/fail2ban/</loc>
@@ -237,9 +258,6 @@
     <lastmod>2022-09-28T08:35:17+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/tags/python/</loc>
-    <lastmod>2022-09-28T08:35:17+03:00</lastmod>
-  </url><url>
-    <loc>https://mostxeon.github.io/tags/source-code-review/</loc>
     <lastmod>2022-09-28T08:35:17+03:00</lastmod>
   </url><url>
     <loc>https://mostxeon.github.io/about/</loc>
