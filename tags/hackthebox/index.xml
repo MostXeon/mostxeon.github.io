@@ -6,7 +6,16 @@
     <description>Recent content in HackTheBox on MØst Xeon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Dec 2022 07:44:37 +0200</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Dec 2022 22:57:40 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Outdated Write-Up</title>
+      <link>https://mostxeon.github.io/posts/outdated/</link>
+      <pubDate>Thu, 08 Dec 2022 22:57:40 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/outdated/</guid>
+      <description>false</description>
+    </item>
+    
     <item>
       <title>Carpediem Write-Up</title>
       <link>https://mostxeon.github.io/posts/carpediem/</link>

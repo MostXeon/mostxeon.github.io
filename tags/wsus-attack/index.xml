@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WSUS-Attack on MØst Xeon</title>
+    <link>https://mostxeon.github.io/tags/wsus-attack/</link>
+    <description>Recent content in WSUS-Attack on MØst Xeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Dec 2022 22:57:40 +0300</lastBuildDate><atom:link href="https://mostxeon.github.io/tags/wsus-attack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Outdated Write-Up</title>
+      <link>https://mostxeon.github.io/posts/outdated/</link>
+      <pubDate>Thu, 08 Dec 2022 22:57:40 +0300</pubDate>
+      
+      <guid>https://mostxeon.github.io/posts/outdated/</guid>
+      <description>false</description>
+    </item>
+    
+  </channel>
+</rss>
